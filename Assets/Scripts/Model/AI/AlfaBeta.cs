@@ -10,7 +10,7 @@ namespace FoxAndGeese {
 		private Move bestMove;
 		//indica chi è il giocatore controllato dalla IA
 		private PawnType aiPlayer;
-		
+
 		public AlfaBeta(PawnType aiPlayer) {
 			this.aiPlayer = aiPlayer;
 		}
@@ -26,25 +26,47 @@ namespace FoxAndGeese {
 			if (board.GameOver()) {
 				return board.EvaluateBoard(aiPlayer);
 			}
-			int v = int.MinValue;
 			List<Move> moves = board.GetPossibleMoves();
 
 			foreach (Move move in moves) {
 				Board deepCopiedBoard = board.GetDeepCopy();
 				deepCopiedBoard.Move(move); //serve cambiare il player attuale nella board
 				int score = MinValue(deepCopiedBoard, alpha, beta);
-				
+
 				if (score > alpha) {
 					alpha = score;
 					bestMove = move;
 				}
+
+				if (alpha >= beta) {
+					break;
+				}
 			}
-			return v;
+			return alpha;
 		}
 
 		//Volpe
 		private int MinValue(Board board, int alpha, int beta) {
-			return 0;
+			if (board.GameOver()) {
+				return board.EvaluateBoard(aiPlayer);
+			}
+			List<Move> moves = board.GetPossibleMoves();
+
+			foreach (Move move in moves) {
+				Board deepCopiedBoard = board.GetDeepCopy();
+				deepCopiedBoard.Move(move); //serve cambiare il player attuale nella board
+				int score = MaxValue(deepCopiedBoard, alpha, beta);
+
+				if (score < beta) {
+					beta = score;
+					bestMove = move;
+				}
+
+				if (alpha >= beta) {
+					break;
+				}
+			}
+			return beta;
 		}
 
 	}
