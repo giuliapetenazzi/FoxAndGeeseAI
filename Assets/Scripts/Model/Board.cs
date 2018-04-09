@@ -22,8 +22,12 @@ namespace FoxAndGeese {
 			return moves;
 		}
 
-		public Board GetDeepCopied() {
+		public Board GetDeepCopy() {
 			return new Board();
+		}
+		
+		public void Move(Move move) {
+		
 		}
 	}
 }
