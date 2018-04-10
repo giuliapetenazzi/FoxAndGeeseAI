@@ -30,16 +30,18 @@ namespace FoxAndGeese {
         private Dictionary<string, PawnType[,]> winningBoards;
         private Dictionary<string, List<Move>> correctMoves;
         private bool hasJustEaten = false;
+        private bool isSimulation = false;
 
         //costruttore
-		public Game(int geeseNumber) {
+		public Game(int geeseNumber, bool isSimulationReceived) {
 			this.geeseNumber = geeseNumber;
 			board = new PawnType[7, 7]; //inizializzata a 0, quindi con tutti PawnType a None
             winningBoards = MyUtility.CreateWinningBoards();
             correctMoves = MyUtility.CreateCorrectMoves();
+            isSimulation = isSimulationReceived;
 			//InitializeBoard();
 			Reset();
-			this.PostNotification(beginGameNotification);
+            if (!isSimulation) this.PostNotification(beginGameNotification);
 		}
 
         // inizializza la board
@@ -142,11 +144,11 @@ namespace FoxAndGeese {
                 int x = (int)interpolPawn.x;
                 int y = (int)interpolPawn.y;
                 board[x, y] = PawnType.None;
-                this.PostNotification(pawnEatenNotification, interpolPawn);
+                if (!isSimulation) this.PostNotification(pawnEatenNotification, interpolPawn);
                 hasJustEaten = true;
                 existsEatingMove = ExistsEatingMove(move.finalX, move.finalZ);
                 if (existsEatingMove) {
-                    this.PostNotification(canEatAnotherTimeNotification);
+                    if (!isSimulation) this.PostNotification(canEatAnotherTimeNotification);
                 }
             }
 			bool isWinningState = CheckForWin();
@@ -158,7 +160,7 @@ namespace FoxAndGeese {
         // cambia il turno
 		public void ChangeTurn() {
 			turn = (turn == PawnType.Fox) ? PawnType.Goose : PawnType.Fox;
-			this.PostNotification(changeTurnNotification);
+			if (!isSimulation) this.PostNotification(changeTurnNotification);
             hasJustEaten = false;
 		}
 
@@ -169,7 +171,7 @@ namespace FoxAndGeese {
                 //o le oche o la volpe hanno vinto, controllo quale dei due e reimposto il gioco
                 winner = (foxWon == true) ? PawnType.Fox : PawnType.Goose;
 				turn = PawnType.None;
-				this.PostNotification(endGameNotification);
+				if (!isSimulation) this.PostNotification(endGameNotification);
                 return true;
 			}
             //nessuno dei due ha vinto
@@ -187,13 +189,13 @@ namespace FoxAndGeese {
 			turn = PawnType.Goose; //inizia sempre l'oca
             hasJustEaten = false;
 			InitializeBoard();
-			//this.PostNotification(beginGameNotification);
+			//if (!isSimulation) this.PostNotification(beginGameNotification);
 		}
 
 		// piazza la pedina di tipo pawnType in board[x][y]
 		private void PlacePawn(Placement placement) {
 			this.board[placement.x, placement.z] = placement.pawnType;
-			this.PostNotification(placePawnNotification, placement);
+			if (!isSimulation) if (!isSimulation) this.PostNotification(placePawnNotification, placement);
 		}
 
         // dice se la volpe ha vinto
