@@ -16,22 +16,22 @@ namespace FoxAndGeese {
 		}
 
 		//board indica lo stato di gioco
-		public Move AlphaBeta(Board board) {
-			MaxValue(board, int.MinValue, int.MaxValue);
+		public Move AlphaBeta(Game game) {
+			MaxValue(game, int.MinValue, int.MaxValue);
 			return bestMove;
 		}
 
 		//Oche
-		private int MaxValue(Board board, int alpha, int beta) {
-			if (board.GameOver()) {
-				return board.EvaluateBoard(aiPlayer);
+		private int MaxValue(Game game, int alpha, int beta) {
+			if (game.GameOver()) {
+				return game.EvaluateBoard(aiPlayer);
 			}
-			List<Move> moves = board.GetPossibleMoves();
+			List<Move> moves = game.GetPossibleMoves();
 
 			foreach (Move move in moves) {
-				Board deepCopiedBoard = board.GetDeepCopy();
-				deepCopiedBoard.Move(move); //serve cambiare il player attuale nella board
-				int score = MinValue(deepCopiedBoard, alpha, beta);
+				Game deepCopiedGame = game.GetDeepCopy();
+				deepCopiedGame.MovePawn(move); //il turn viene cambiato da questo metodo
+				int score = MinValue(deepCopiedGame, alpha, beta);
 
 				if (score > alpha) {
 					alpha = score;
@@ -46,16 +46,16 @@ namespace FoxAndGeese {
 		}
 
 		//Volpe
-		private int MinValue(Board board, int alpha, int beta) {
-			if (board.GameOver()) {
-				return board.EvaluateBoard(aiPlayer);
+		private int MinValue(Game game, int alpha, int beta) {
+			if (game.GameOver()) {
+				return game.EvaluateBoard(aiPlayer);
 			}
-			List<Move> moves = board.GetPossibleMoves();
+			List<Move> moves = game.GetPossibleMoves();
 
 			foreach (Move move in moves) {
-				Board deepCopiedBoard = board.GetDeepCopy();
-				deepCopiedBoard.Move(move); //serve cambiare il player attuale nella board
-				int score = MaxValue(deepCopiedBoard, alpha, beta);
+				Game deepCopiedGame = game.GetDeepCopy();
+				deepCopiedGame.MovePawn(move); //serve cambiare il player attuale nella board
+				int score = MaxValue(deepCopiedGame, alpha, beta);
 
 				if (score < beta) {
 					beta = score;
