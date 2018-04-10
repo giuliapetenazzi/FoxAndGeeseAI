@@ -30,7 +30,7 @@ namespace FoxAndGeese {
             for (int r = 0; r < 7; r++) {
                 for (int c = 0; c < 7; c++) {
                     PawnType current_player = board[r, c];
-                    if (current_player != PawnType.None) {
+                    if (!MyUtility.IsPositionOutOfCross(r, c) && current_player != PawnType.None) {
                         if (current_player == PawnType.Fox) {
                             allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
                             allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
