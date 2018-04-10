@@ -7,6 +7,9 @@ public class MyUtilityIA {
     /*
     public PawnType[,] board { get; private set; }
 
+    //la goose non puo andare in diagonale
+    //non puo retrocedere di riga (anzi, cioò per gli indici avanzare)
+    //restano solo tre mosse: avanti, dx, sx
     public static List<Move> IACalculateGooseValidMoves(int r, int c) {
         List<Move> gooseValidMoves = new List<Move>();
         if (!MyUtility.IsPositionOutOfCross(r - 1, c) && board[r - 1, c] == PawnType.None)
@@ -18,12 +21,14 @@ public class MyUtilityIA {
         return gooseValidMoves;
     }
 
+    //la fox si puo muovere in tutte le 8 direzioni, a distanza 1
     public static List<Move> IACalculateFoxValidMoves(int r, int c) {
         List<Move> foxValidMoves = new List<Move>();
         //setto l'intorno del centro dato
         for (int roundR = r - 1; roundR <= r + 1; roundR++) {
             for (int roundC = c - 1; roundC <= c + 1; roundC++) {
-                if (!MyUtility.IsPositionOutOfCross(roundR, roundC) && !(roundR == r && roundC == C) &&
+                if (!MyUtility.IsPositionOutOfCross(roundR, roundC) &&
+                    !(roundR == r && roundC == C) &&
                     board[roundR, roundC] == PawnType.None) {
                     foxValidMoves.Add(new Move(PawnType.Fox, r, c, roundR, roundC));
                 }
@@ -32,18 +37,23 @@ public class MyUtilityIA {
         return foxValidMoves;
     }
 
-    public static List<Move> IACalculateFoxEatingValidMoves(int r, int c) {
+    //la fox per mangiare si puo muovere in tutte le 8 direzioni, a distanza 2
+    public static List<Move> IACalculateFoxValidEatingMoves(int r, int c) {
         List<Move> foxValidEatingMoves = new List<Move>;
         for (int roundR = r - 2; roundR <= r + 2; roundR+=2) {
             for (int roundC = c - 2; roundC <= c + 2; roundC+=2) {
-                if (!MyUtility.IsPositionOutOfCross(roundR, roundC) &&
-                    //TODO la casella interpolata deve essere nella board
+                if (
+                    //la casella di destinazione deve essere nella board
                     !MyUtility.IsPositionOutOfCross(roundR, roundC) &&
+                    //la casella interpolata deve essere nella board
+                    !MyUtility.IsPositionOutOfCross((roundR + r)/2, (roundC + c)/2) &&
+                    //non ci si può muovere verso la stessa casella di partenza
                     !(roundR == r && roundC == C) &&
+                    //la casella di destinazione deve essere vuota
                     board[roundR, roundC] == PawnType.None &&
-                    //TODO la casella interpolata deve avere una goose sotto
-                    board[roundR, roundC] == PawnType.Goose
-                    ) {
+                    //la casella interpolata deve avere una goose sotto
+                    board[(roundR + r)/2, (roundC + c)/2] == PawnType.Goose)
+                {
                     foxValidEatingMoves.Add(new Move(PawnType.Fox, r, c, roundR, roundC));
                 }
             }
@@ -51,14 +61,4 @@ public class MyUtilityIA {
         return foxValidEatingMoves;
     }
     */
-
-
-        /* 
-         * //APPUNTI DA GAME
-            bool eatenCorrectly = false;
-            Vector2 interpolPawn = EatingPawnPosition(move);
-            eatenCorrectly = (interpolPawn.x != -1 && interpolPawn.y != -1);
-            // la mossa è corretta sse la pedina è stata mangiata correttamente
-            return eatenCorrectly;
-         */
 }

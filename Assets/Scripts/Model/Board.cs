@@ -17,9 +17,18 @@ namespace FoxAndGeese {
 			return 0;
 		}
 
-		public List<Move> GetPossibleMoves() {
-			List<Move> moves = new List<Move>();
-			return moves;
+		public List<Move> GetPossibleMoves(PawnType current_player, int r, int c) {
+			List<Move> allPossibleMoves = new List<Move>();
+            /*
+            if (current_player == PawnType.Fox) {
+                allPossibleMoves.AddRange(MyUtilityIA.IACalculateFoxValidMoves(r, c));
+                allPossibleMoves.AddRange(MyUtilityIA.IACalculateFoxValidEatingMoves(r, c));
+            }
+            if (current_player == PawnType.Goose) {
+                allPossibleMoves.AddRange(MyUtilityIA.IACalculateGooseValidMoves(r, c));
+            }
+            */
+			return allPossibleMoves;
 		}
 
 		public Board GetDeepCopy() {
