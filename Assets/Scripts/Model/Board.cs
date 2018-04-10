@@ -17,18 +17,6 @@ namespace FoxAndGeese {
             return 0;
         }
 
-        public List<Move> GetPossibleMoves(PawnType current_player, int r, int c) {
-            List<Move> allPossibleMoves = new List<Move>();
-            if (current_player == PawnType.Fox) {
-                allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
-                allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
-            }
-            if (current_player == PawnType.Goose) {
-                allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
-            }
-            return allPossibleMoves;
-        }
-
         public Board GetDeepCopy() {
             return new Board();
         }
@@ -37,6 +25,37 @@ namespace FoxAndGeese {
 
         }
 
+        public List<Move> GetPossibleMoves() {
+            List<Move> allPossibleMoves = new List<Move>();
+            for (int r = 0; r < 7; r++) {
+                for (int c = 0; c < 7; c++) {
+                    PawnType current_player = board[r, c];
+                    if (current_player != PawnType.None) {
+                        if (current_player == PawnType.Fox) {
+                            allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
+                            allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
+                        }
+                        if (current_player == PawnType.Goose) {
+                            allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
+                        }
+                    }
+                }
+            }
+            return allPossibleMoves;
+        }
+
+        private List<Move> GetPossibleMovesForOnePlayer(PawnType current_player, int r, int c) {
+            List<Move> possibleMoves = new List<Move>();
+            if (current_player == PawnType.Fox) {
+                possibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
+                possibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
+            }
+            if (current_player == PawnType.Goose) {
+                possibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
+            }
+            return possibleMoves;
+        }
+        
         //la goose non puo andare in diagonale
         //non puo retrocedere di riga (anzi, cioò per gli indici avanzare)
         //restano solo tre mosse: avanti, dx, sx
