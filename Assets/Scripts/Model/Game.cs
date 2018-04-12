@@ -395,8 +395,8 @@ namespace FoxAndGeese {
 				for (int roundC = c - 1; roundC <= c + 1; roundC++) {
 					if (!MyUtility.IsPositionOutOfCross(roundR, roundC) &&
 						!(roundR == r && roundC == c) &&
-                        //solo le mosse pari hanno la diagonale verso una destinazione pari
-                        ((r + c) % 2 == 0 && (roundR + roundC) % 2 == 0) &&
+                        //le mosse dispari saltano le destinazioni dispari cioe saltano la diagonale
+                        !((r + c) % 2 != 0 && (roundR + roundC) % 2 != 0) && 
 						board[roundR, roundC] == PawnType.None) {
 						foxValidMoves.Add(new Move(PawnType.Fox, r, c, roundR, roundC));
 					}
@@ -417,8 +417,8 @@ namespace FoxAndGeese {
 						!MyUtility.IsPositionOutOfCross((roundR + r) / 2, (roundC + c) / 2) &&
 						//non ci si può muovere verso la stessa casella di partenza
 						!(roundR == r && roundC == c) &&
-                        //solo le mosse pari hanno la diagonale verso una destinazione pari
-                        ((r + c) % 2 == 0 && (roundR + roundC) % 2 == 0) &&
+                        //le mosse dispari saltano le destinazioni dispari cioe saltano la diagonale
+                        !(((r + c) % 2 != 0) && ((roundR != r) && (roundC != c))) &&
 						//la casella di destinazione deve essere vuota
 						board[roundR, roundC] == PawnType.None &&
 						//la casella interpolata deve avere una goose sotto
