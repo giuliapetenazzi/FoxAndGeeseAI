@@ -117,7 +117,7 @@ public class GameController : StateMachine {
 		ClearBoard();
 		PawnType localPawnType = matchController.localPlayer.pawnType;
 		mainCamera.GetComponent<MoveCamera>().PositionCamera(localPawnType);
-		game = new Game(settings.geeseNumber);
+		game = new Game(settings.geeseNumber, false);
 		CheckState();
 	}
 

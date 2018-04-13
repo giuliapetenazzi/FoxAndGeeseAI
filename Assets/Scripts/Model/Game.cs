@@ -167,6 +167,10 @@ namespace FoxAndGeese {
             hasJustEaten = false;
 		}
 
+		public bool IsGameOver() {
+			return winner != PawnType.None;
+		}
+
         // controlla se qualcuno ha vinto
 		private bool CheckForWin() {
             bool foxWon = IsFoxWinner();
@@ -175,7 +179,7 @@ namespace FoxAndGeese {
                 winner = (foxWon == true) ? PawnType.Fox : PawnType.Goose;
 				turn = PawnType.None;
 				if (!isSimulation) this.PostNotification(endGameNotification);
-                return true;
+                return true;  
 			}
             //nessuno dei due ha vinto
             return false;
@@ -226,17 +230,23 @@ namespace FoxAndGeese {
         //la volpe vince quando ci sono 3 oche o meno in tutta la board
         private bool IsFoxWinner() {
             bool isWinner = false;
-            int counterGoose = 0; 
-            for(int r = 0; r < board.GetLength(0); r++) {
-                for (int c = 0; c < board.GetLength(1); c++) {
-                    if (board[r, c] == PawnType.Goose) {
-                        counterGoose++;
-                    }
-                }
-            }
+			int counterGoose = GetGooseNumber();
             return isWinner = counterGoose <= 4 ? true : false;
         }
-        
+
+		// ritorna il numero di oche
+		public int GetGooseNumber() {
+			int counterGoose = 0;
+			for (int r = 0; r < board.GetLength(0); r++) {
+				for (int c = 0; c < board.GetLength(1); c++) {
+					if (board[r, c] == PawnType.Goose) {
+						counterGoose++;
+					}
+				}
+			}
+			return counterGoose;
+		}
+		      
         // dice se le oche hanno vinto
         // le oche hanno vinto quando hanno circondato la volpe
         private bool IsGooseWinner () {
@@ -254,6 +264,7 @@ namespace FoxAndGeese {
                 return false;
             }
         }
+
 
         // confronta due board parzialmente, usato per capire se si vince
         private static bool AreBoardsEquals(PawnType[,] board, PawnType[,] winningBoard) {
@@ -370,6 +381,11 @@ namespace FoxAndGeese {
 				}
 			}
 			return allPossibleMoves;
+		}
+
+		public int EvaluateBoard(PawnType aiPlayer) {
+			//return winner == player ? 1 : -1;
+			return GetGooseNumber() * (aiPlayer == PawnType.Goose ? 1 : -1);
 		}
 
         // Sezione aggiunta per la IA=================================================
