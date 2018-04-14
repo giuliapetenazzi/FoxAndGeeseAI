@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 114344296741853628}
   - component: {fileID: 114208450986215056}
   - component: {fileID: 114768724792584740}
+  - component: {fileID: 114564766641976334}
   m_Layer: 0
   m_Name: Goose
   m_TagString: Untagged
@@ -114,9 +115,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &114183334945368962
@@ -181,6 +182,20 @@ MonoBehaviour:
   containingTile: {fileID: 0}
   x: 0
   z: 0
+--- !u!114 &114564766641976334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986465142665118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9019983141e9c24e955585f4bf640a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveToDestination: 0
+  travelTime: 0.2
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &114754192878312030
 MonoBehaviour:
   m_ObjectHideFlags: 1

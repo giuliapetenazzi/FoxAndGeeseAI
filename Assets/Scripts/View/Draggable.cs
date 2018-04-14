@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 using FoxAndGeese;
 
-public class Draggable : NetworkBehaviour {
+public class Draggable : MonoBehaviour {
 
     private Vector3 dist;
     private float posX;

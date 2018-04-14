@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class SendToGrave : NetworkBehaviour {
+public class SendToGrave : MonoBehaviour {
 
 	private bool hasStartedElevating = false;
 	private bool isDoneElevating = false;
@@ -10,7 +10,6 @@ public class SendToGrave : NetworkBehaviour {
 	private bool hasBeenDeactivated = false;
 	private Vector3 velocity = Vector3.zero;
 	private Vector3 verticalTargetPos;
-	[SyncVar]
 	public Vector3 horizontalTargetPos;
 	public Vector3 verticalElevation = new Vector3(0, 1, 0);
 	public float travelTime;

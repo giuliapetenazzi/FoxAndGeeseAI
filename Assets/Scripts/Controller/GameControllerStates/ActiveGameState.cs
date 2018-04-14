@@ -5,8 +5,8 @@ public class ActiveGameState : BaseGameState {
 
 	public override void Enter() {
 		base.Enter();
-		if (owner.serverGuiContainer != null) {
-			owner.serverGuiContainer.SetActive(false);
+		if (owner.choosePlayerGUIContainer != null) {
+			owner.choosePlayerGUIContainer.SetActive(false);
 		}
 		gameStateLabel.text = "Your Turn!";
 		RefreshPlayerLabels();

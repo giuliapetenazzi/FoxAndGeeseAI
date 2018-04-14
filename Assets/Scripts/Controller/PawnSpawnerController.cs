@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using FoxAndGeese;
 
-public class PawnSpawnerController : NetworkBehaviour {
+public class PawnSpawnerController : MonoBehaviour {
 
 	public GameBoard gameBoard;
 	public GameObject foxPrefab;
@@ -30,7 +29,8 @@ public class PawnSpawnerController : NetworkBehaviour {
 		PawnData pawnData = pawnToSpawn.GetComponent<PawnData>();
 		pawnData.x = refTile.x;
 		pawnData.z = refTile.z;
-		NetworkServer.Spawn(pawnToSpawn);
+		//Object.Instantiate
+		//NetworkServer.Spawn(pawnToSpawn);
 	}
 
 	/** Invoked whenever a pawn is eaten */

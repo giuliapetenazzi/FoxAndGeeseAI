@@ -57,4 +57,8 @@ public class Move {
         }
         return new Vector2(-1, -1);
     }
+
+	public override int GetHashCode() {
+		return base.GetHashCode();
+	}
 }

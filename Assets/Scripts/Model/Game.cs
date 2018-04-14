@@ -15,7 +15,7 @@ namespace FoxAndGeese {
 	public class Game {
 		private int geeseNumber;
 
-		public const string beginGameNotification = "Game.BeginGameNotification"; //iniziata partita
+		public const string finishedPlacingPawnsNotification = "Game.BeginGameNotification"; //iniziata partita
 		public const string movePawnNotification = "Game.MovePawnNotification"; //mossa pedina
 		public const string changeTurnNotification = "Game.ChangeTurnNotification"; //cambiato turno
 		public const string endGameNotification = "Game.EndGameNotification"; //finita partita
@@ -44,7 +44,9 @@ namespace FoxAndGeese {
             isSimulation = isSimulationReceived;
 			//InitializeBoard();
 			Reset();
-            if (!isSimulation) this.PostNotification(beginGameNotification);
+			if (!isSimulation) {
+				this.PostNotification(finishedPlacingPawnsNotification);
+			}
 		}
 
         // inizializza la board
@@ -81,8 +83,10 @@ namespace FoxAndGeese {
 
         // ritorna se una mossa è valida
         public bool IsMoveValid(Move move) {
+			Debug.Log("Game inizio IsMoveValid");
             // questo copre sia i casi di destinazione occupata sia i casi di movimento nella stessa posizione
 			if (board[move.finalX, move.finalZ] != PawnType.None) {
+				Debug.Log("Game IsMoveValid false - casella occupata");
 				return false;
 			}
             // il passo è al massimo 1 per le oche e 2 per la volpe
@@ -95,7 +99,8 @@ namespace FoxAndGeese {
                 Math.Abs(move.finalX - move.startingX) > maxStep ||
                 Math.Abs(move.finalZ - move.startingZ) > maxStep
                 ) {
-                return false;
+				Debug.Log("Game inizio IsMoveValid false - torna indietro o in diagonale");
+				return false;
             }
             // controlli le mosse normali solo se al passo precedente non hai mangiato
             if (!hasJustEaten) {
@@ -104,15 +109,19 @@ namespace FoxAndGeese {
                 List<Move> correctMovesForThisPosition = correctMoves[coordinatesString];
                 bool found = false;
                 for (int i = 0; i < correctMovesForThisPosition.Count && !found; i++) {
-                    if (correctMovesForThisPosition[i] == move) return true;
+					if (correctMovesForThisPosition[i] == move) {
+						Debug.Log("Game inizio IsMoveValid true");
+						return true;
+					}
                 }
             }
             // se non è una mossa normale allora guarda se è una mangiata
             bool eatenCorrectly = false;
             Vector2 interpolPawn = EatingPawnPosition(move);
             eatenCorrectly = (interpolPawn.x != -1 && interpolPawn.y != -1);
-            // la mossa è corretta sse la pedina è stata mangiata correttamente
-            return eatenCorrectly;
+			// la mossa è corretta sse la pedina è stata mangiata correttamente
+			Debug.Log("Game inizio IsMoveValid " + eatenCorrectly + " - mangiata");
+			return eatenCorrectly;
 		}
 
         // torna le coordinate della pedina mangiata
@@ -137,6 +146,9 @@ namespace FoxAndGeese {
 
         //muove la pedina, e se la mossa è di mangiamento allora mangia
 		public void MovePawn(Move move) {
+			if (!isSimulation) {
+				Debug.Log("Game MovePawn");
+			}
 			board[move.startingX, move.startingZ] = PawnType.None;
 			board[move.finalX, move.finalZ] = move.pawnType;
             Vector2 interpolPawn = EatingPawnPosition(move);
@@ -147,11 +159,16 @@ namespace FoxAndGeese {
                 int x = (int)interpolPawn.x;
                 int y = (int)interpolPawn.y;
                 board[x, y] = PawnType.None;
-                if (!isSimulation) this.PostNotification(pawnEatenNotification, interpolPawn);
+				if (!isSimulation) {
+					Debug.Log("Game non è simulazione");
+					this.PostNotification(pawnEatenNotification, interpolPawn);
+				}
                 hasJustEaten = true;
                 existsEatingMove = ExistsEatingMove(move.finalX, move.finalZ);
                 if (existsEatingMove) {
-                    if (!isSimulation) this.PostNotification(canEatAnotherTimeNotification);
+					if (!isSimulation) {
+						this.PostNotification(canEatAnotherTimeNotification);
+					}
                 }
             }
 			bool isWinningState = CheckForWin();
@@ -163,7 +180,9 @@ namespace FoxAndGeese {
         // cambia il turno
 		public void ChangeTurn() {
 			turn = (turn == PawnType.Fox) ? PawnType.Goose : PawnType.Fox;
-			if (!isSimulation) this.PostNotification(changeTurnNotification);
+			if (!isSimulation) {
+				this.PostNotification(changeTurnNotification);
+			}
             hasJustEaten = false;
 		}
 
@@ -178,7 +197,9 @@ namespace FoxAndGeese {
                 //o le oche o la volpe hanno vinto, controllo quale dei due e reimposto il gioco
                 winner = (foxWon == true) ? PawnType.Fox : PawnType.Goose;
 				turn = PawnType.None;
-				if (!isSimulation) this.PostNotification(endGameNotification);
+				if (!isSimulation) {
+					this.PostNotification(endGameNotification);
+				}
                 return true;  
 			}
             //nessuno dei due ha vinto
@@ -223,7 +244,9 @@ namespace FoxAndGeese {
 		// piazza la pedina di tipo pawnType in board[x][y]
 		private void PlacePawn(Placement placement) {
 			this.board[placement.x, placement.z] = placement.pawnType;
-			if (!isSimulation) if (!isSimulation) this.PostNotification(placePawnNotification, placement);
+			if (!isSimulation) {
+				this.PostNotification(placePawnNotification, placement);
+			}
 		}
 
         // dice se la volpe ha vinto

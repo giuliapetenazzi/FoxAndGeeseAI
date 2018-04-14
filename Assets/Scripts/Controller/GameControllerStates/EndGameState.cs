@@ -5,9 +5,9 @@ using FoxAndGeese;
 public class EndGameState : BaseGameState {
 	public override void Enter() {
 		base.Enter();
-			string winner = game.winner == PawnType.Fox ? "Fox wins!" : "Geese win!";
-			gameStateLabel.text = "The " + winner;
-			localPlayer.score++;
+		string winner = game.winner == PawnType.Fox ? "Fox wins!" : "Geese win!";
+		gameStateLabel.text = "The " + winner;
+		owner.humanPlayerScore++;
 		RefreshPlayerLabels();
 		StartCoroutine(Restart());
 	}

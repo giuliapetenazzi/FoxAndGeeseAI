@@ -1,16 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using FoxAndGeese;
 
-public class PawnData : NetworkBehaviour {
+public class PawnData : MonoBehaviour {
 
 	public PawnType pawnType;
 	public Tile containingTile;
-	[SyncVar]
 	public int x;
-	[SyncVar]
 	public int z;
 
 	/** Returns the tile this pawn is on */

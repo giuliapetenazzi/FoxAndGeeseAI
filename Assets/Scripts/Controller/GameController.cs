@@ -9,73 +9,75 @@ public class GameController : StateMachine {
 
 	public Game game;
 	public GameBoard gameBoard;
-	public Settings settings;
-	public MatchController matchController;
+	public PawnType humanPlayer;
+	public PawnType cpuPlayer;
+	public int humanPlayerScore;
+	public int cpuPlayerScore;
+	public AlphaBeta alphaBeta;
 	public PawnSpawnerController pawnSpawnerController;
-	public Text localPlayerLabel;
-	public Text remotePlayerLabel;
+	public Text humanPlayerLabel;
+	public Text cpuPlayerLabel;
 	public Text gameStateLabel;
 	public Text hintLabel;
-	public GameObject serverGuiContainer;
-	public GameObject endTurnButton;
+	public GameObject choosePlayerGUIContainer;
 	public GameObject mainCamera;
 
 	/** Called when the components enabled, before Start() */
 	private void OnEnable() {
-		this.AddObserver(OnMatchReady, MatchController.matchReadyNotification);
-		this.AddObserver(OnMatchNoLongerReady, MatchController.matchNoLongerReadyNotification);
-		this.AddObserver(OnConfigure, MatchController.configureNotification);
-		this.AddObserver(OnCoinToss, PlayerController.coinTossNotification);
-		this.AddObserver(OnPawnMoved, PlayerController.pawnMovedNotification);
+		this.AddObserver(OnPlayerChosen, Menu.confirmPlayerChosenNotification);
+		this.AddObserver(OnFinishedPlacingPawns, Game.finishedPlacingPawnsNotification);
+
 		this.AddObserver(OnChangeTurn, Game.changeTurnNotification);
 		this.AddObserver(OnEndGame, Game.endGameNotification);
-		this.AddObserver(OnBeginGame, Game.beginGameNotification);
-		this.AddObserver(OnConfirmNumberOfGeese, Menu.confirmNumberOfGeeseNotification);
-		this.AddObserver(OnNumberOfGeeseConfirmed, PlayerController.numberOfGeeseConfirmedNotification);
-		this.AddObserver(OnEatAgain, Game.canEatAnotherTimeNotification);
-		this.AddObserver(OnEndTurn, PlayerController.endTurnNotification);
 	}
 
 	private void OnDisable() {
-		this.RemoveObserver(OnMatchReady, MatchController.matchReadyNotification);
-		this.RemoveObserver(OnMatchNoLongerReady, MatchController.matchNoLongerReadyNotification);
-		this.RemoveObserver(OnConfigure, MatchController.configureNotification);
-		this.RemoveObserver(OnCoinToss, PlayerController.coinTossNotification);
-		this.RemoveObserver(OnPawnMoved, PlayerController.pawnMovedNotification);
+		this.RemoveObserver(OnPlayerChosen, Menu.confirmPlayerChosenNotification);
+		this.RemoveObserver(OnFinishedPlacingPawns, Game.finishedPlacingPawnsNotification);
+
 		this.RemoveObserver(OnChangeTurn, Game.changeTurnNotification);
 		this.RemoveObserver(OnEndGame, Game.endGameNotification);
-		this.RemoveObserver(OnBeginGame, Game.beginGameNotification);
-		this.RemoveObserver(OnConfirmNumberOfGeese, Menu.confirmNumberOfGeeseNotification);
-		this.RemoveObserver(OnNumberOfGeeseConfirmed, PlayerController.numberOfGeeseConfirmedNotification);
-		this.RemoveObserver(OnEatAgain, Game.canEatAnotherTimeNotification);
-		this.RemoveObserver(OnEndTurn, PlayerController.endTurnNotification);
+		this.RemoveObserver(OnFinishedPlacingPawns, Game.finishedPlacingPawnsNotification);
 	}
 
 	private void Awake() {
 		CheckState();
 	}
 
-	private void OnBeginGame(object sender, object args) {
-		StartCoroutine(this.RotatePawns(matchController.localPlayer.pawnType));
+	/* Invoked when the user has chosen which player he wants to play as */
+	private void OnPlayerChosen(object sender, object args) {
+		humanPlayer = (PawnType)args;
+		cpuPlayer = humanPlayer == PawnType.Fox ? PawnType.Goose : PawnType.Fox;
+		ClearBoard();
+		mainCamera.GetComponent<MoveCamera>().PositionCamera(humanPlayer);
+		game = new Game(15, false);
+		alphaBeta = new AlphaBeta(cpuPlayer, 5);
+		StartCoroutine(this.RotatePawns());
+		CheckState();
 	}
 
-	/** Called when the clients disconnects before the host has chosen geese number*/
-	private void OnMatchNoLongerReady(object sender, object args) {
-		ClearBoard();
+	/*Invoked when all pawns have been placed on the board */
+	private void OnFinishedPlacingPawns(object sender, object args) {
+		StartCoroutine(RotatePawns());
 		CheckState();
 	}
 
 	private void OnChangeTurn(object sender, object args) {
-		if (endTurnButton.activeSelf) {
-			endTurnButton.SetActive(false);
+		if (game.turn == cpuPlayer) {
+			Debug.Log("GC OnChangeTurn muove computer");
+			Move move = alphaBeta.RunAlphaBeta(game);
+			Debug.Log("GC OnChangeTurn mossa computer " + move.ToString());
+			game.MovePawn(move); // makes move in the model
+			PawnData pawn = gameBoard.GetPawnAtCoord(move.startingX, move.startingZ);
+			pawn.x = move.finalX;
+			pawn.z = move.finalZ;
+			pawn.GetComponent<MovePawnAnimation>().moveToDestination = true; // moves pawn in the view (graphically)
 		}
 		CheckState();
+
 	}
 
 	private void OnEndGame(object sender, object args) {
-		if (endTurnButton.activeSelf) {
-			endTurnButton.SetActive(false);
-		}
 		CheckState();
 	}
 
@@ -83,62 +85,22 @@ public class GameController : StateMachine {
 		CheckState();
 	}
 
+	private void OnEndTurn(object sender, object args) {
+		game.ChangeTurn();
+	}
+
 	private void CheckState() {
-		if (matchController.IsOffline) {
-			ChangeState<OfflineGameState>();
-		}
-		else if (!matchController.IsReady) {
-			ChangeState<LoadGameState>();
-		}
-		else if (game == null) {
-			ChangeState<ChooseGeeseGameState>();
+		if (game == null) {
+			ChangeState<ChoosePlayerGameState>();
 		}
 		else if (game.turn == PawnType.None) {
 			ChangeState<EndGameState>();
 		}
-		else if (game.turn == matchController.localPlayer.pawnType) {
+		else if (game.turn == humanPlayer) {
 			ChangeState<ActiveGameState>();
 		}
 		else {
 			ChangeState<PassiveGameState>();
-		}
-	}
-
-	private void OnMatchReady(object sender, object args) {
-		game = null;
-		CheckState();
-	}					
-
-	/** Receives the results of the coin toss*/
-	private void OnCoinToss(object sender, object args) {
-		bool coinToss = (bool)args;
-		matchController.hostPlayer.pawnType = coinToss ? PawnType.Fox : PawnType.Goose;
-		matchController.clientPlayer.pawnType = coinToss ? PawnType.Goose : PawnType.Fox;
-		ClearBoard();
-		PawnType localPawnType = matchController.localPlayer.pawnType;
-		mainCamera.GetComponent<MoveCamera>().PositionCamera(localPawnType);
-		game = new Game(settings.geeseNumber, false);
-		CheckState();
-	}
-
-	/** Invoked host side when the number of geese has been chosen */
-	private void OnConfirmNumberOfGeese(object sender, object args) {
-		PlayerController pc = matchController.localPlayer;
-		if (pc != null && pc.isServer) {
-			int numberOfGeese = (int)args;
-			pc.CmdSendNumberOfGeese(numberOfGeese);
-		}
-	}
-
-	/** Invoked client side when the number of geese has been chosen */
-	private void OnNumberOfGeeseConfirmed(object sender, object args) {
-		int numberOfGeese = (int)args;
-		settings = new Settings();
-		settings.geeseNumber = numberOfGeese;
-		PlayerController clientPlayer = matchController.clientPlayer;
-
-		if (clientPlayer != null && clientPlayer.isLocalPlayer) {
-			matchController.clientPlayer.CmdCoinToss();
 		}
 	}
 
@@ -151,20 +113,18 @@ public class GameController : StateMachine {
 	public void MovePawn(object sender, object args) {
 		Draggable draggablePawn = (Draggable)sender;
 		PawnData pawn = draggablePawn.gameObject.GetComponent<PawnData>();
-		PlayerController localPlayer = matchController.localPlayer;
-		if (!IsPawnTypeValid(pawn, localPlayer.pawnType)) {
+		if (!IsPawnTypeValid(pawn, humanPlayer)) {
 			//StartCoroutine(WriteHint("You can only move a pawn of your type!", 3));
 			return;
 		}
 		GameObject obj = pawn.gameObject;
 		Vector3 pos = (Vector3)args;
         pawn.gameObject.transform.localPosition = pos; // moves the pawn locally (client side)
-		matchController.localPlayer.PlayerMovesThePawn(draggablePawn.gameObject, pos); // moves the pawn over the network
 	}
 
 	/** Manages when the user releases the mouse and tries to make a move */
 	public void ConfirmMovePawn(object sender, object args) {
-		PlayerController localPlayer = matchController.localPlayer;
+		Debug.Log("GC ConfirmMovePawn ");
 		GameObject obj = ((Draggable)sender).gameObject;
 		PawnData pawn = obj.GetComponent<PawnData>();
 		Tile initialTile = pawn.GetContainingTile(); // gets the pawn previous position (Tile)
@@ -175,35 +135,15 @@ public class GameController : StateMachine {
 		if (finalTile != null) {
 			Move move = new Move(pawn.pawnType, initialTile.x, initialTile.z, finalTile.x, finalTile.z);
 			if (game.IsMoveValid(move)) {
+				Debug.Log("GC mossa valida ");
 				realFinalPos = finalTile.transform.localPosition;
-				localPlayer.UpdatePawnCoordinates(pawn, finalTile.x, finalTile.z);
-				localPlayer.PawnMoved(move); 
+				pawn.x = finalTile.x;
+				pawn.z = finalTile.z;
+				game.MovePawn(move); 
 			}
 		}
 		realFinalPos.y = oldPos.y;
-		obj.transform.localPosition = realFinalPos; // moves the pawn locally (client side)
-		localPlayer.PlayerMovesThePawn(pawn.gameObject, realFinalPos); // moves the pawn over the network
-	}
-
-	/** Called when the Fox can eat again */
-	private void OnEatAgain(object sender, object args) {
-		if (matchController.localPlayer.pawnType == PawnType.Fox) {
-			endTurnButton.SetActive(true);
-		}
-	}
-
-	public void EndTurn() {
-		endTurnButton.SetActive(false);
-		matchController.localPlayer.CmdEndTurn();
-	}
-
-	private void OnEndTurn(object sender, object args) {
-		game.ChangeTurn();
-	}
-
-	private void OnPawnMoved(object sender, object args) {
-		Move move = (Move)args;
-		game.MovePawn(move);
+		obj.transform.localPosition = realFinalPos; // moves the pawn locally (graphically)
 	}
 
 	private bool IsPawnTypeValid(PawnData pawnData, PawnType pawnType) {
@@ -212,10 +152,7 @@ public class GameController : StateMachine {
 
 	/** Clear the (graphical) gameBoard */
 	private void ClearBoard() {
-		PlayerController localPlayer = matchController.localPlayer;
-		if (localPlayer != null && localPlayer.isServer) {
-			pawnSpawnerController.ClearBoard();
-		}
+		pawnSpawnerController.ClearBoard();
 	}
 
 	/** Writes a hint on the screen */
@@ -226,11 +163,11 @@ public class GameController : StateMachine {
 	}
 
 	/** Rotates pawns */
-	private IEnumerator RotatePawns(PawnType pawnType) {
+	private IEnumerator RotatePawns() {
 		yield return new WaitForSeconds(0.3f);
 		RotatePawn[] pawns = FindObjectsOfType<RotatePawn>();
 		foreach (RotatePawn pawn in pawns) {
-			pawn.Rotate(matchController.localPlayer.pawnType);
+			pawn.Rotate(humanPlayer);
 		}
 	}
 }

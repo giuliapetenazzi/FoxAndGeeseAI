@@ -72,7 +72,6 @@ public class GameBoard : MonoBehaviour {
 			if (pawn.IsAtCoord(x, z)) {
 				return pawn;
 			}
-			
 		}
 		return null;
 	}

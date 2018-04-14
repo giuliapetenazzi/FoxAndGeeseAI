@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using FoxAndGeese;
 
 public class Menu : MonoBehaviour {
 
-	public int numberOfGeese = 13;
+	private PawnType humanPlayer = PawnType.Goose;
 	public Slider slider;
+	public const string confirmPlayerChosenNotification = "Menu.ConfirmPlayerChosenNotification";
 
-	public const string confirmNumberOfGeeseNotification = "Menu.ConfirmNumberOfGeeseNotification";
-	
-	/** Called whenever the user changes the number on the slide */
+	/** Called whenever the user changes the player on the slider */
 	public void OnSliderChange() {
 		int num = (int)slider.value;
-		numberOfGeese = 13 + num * 2;
+		humanPlayer = num == 0 ? PawnType.Goose : PawnType.Fox;
+		Debug.Log("Menu OnSliderChange cambiato in " + num + " " + humanPlayer);
 	}
 
-	/** Called when the user confirms the number of geese */
-	public void ConfirmNumberOfGeese() {
-		this.PostNotification(confirmNumberOfGeeseNotification, numberOfGeese);
+	/** Called when the user starts the game */
+	public void ConfirmPlayerChosen() {
+		Debug.Log("Menu ConfirmPlayer " + humanPlayer);
+		this.PostNotification(confirmPlayerChosenNotification, humanPlayer);
 	}
 
 }
