@@ -93,13 +93,13 @@ namespace FoxAndGeese {
             int maxStep = move.pawnType == PawnType.Goose ? 1 : 2;
             if (
                 // questa riga controlla che solo la volpe può tornare indietro
-                (PawnType.Goose == move.pawnType && move.startingX - move.finalX < 0) ||
+                (PawnType.Goose == move.pawnType && move.startingZ - move.finalZ < 0) ||
                 // questa riga controlla che l'oca NON puo andare in diagonale
-                (PawnType.Goose == move.pawnType && Math.Abs(move.finalX - move.startingX) > 0 && Math.Abs(move.finalX - move.startingX) > 0) || 
+                (PawnType.Goose == move.pawnType && Math.Abs(move.finalX - move.startingX) > 0 && Math.Abs(move.finalZ - move.startingZ) > 0) || 
                 Math.Abs(move.finalX - move.startingX) > maxStep ||
                 Math.Abs(move.finalZ - move.startingZ) > maxStep
                 ) {
-				Debug.Log("Game inizio IsMoveValid false - torna indietro o in diagonale");
+				Debug.Log("Game inizio IsMoveValid false - torna indietro o in diagonale" + move);
 				return false;
             }
             // controlli le mosse normali solo se al passo precedente non hai mangiato
