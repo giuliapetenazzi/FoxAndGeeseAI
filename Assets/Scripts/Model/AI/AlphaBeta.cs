@@ -35,7 +35,6 @@ public class AlphaBeta {
 		return moves[rInt];
 	}
 
-	//Oche
 	private int MaxValue(Game game, int alpha, int beta, int currentPly) {
 		//Debug.Log("MaxValue " + currentPly);
 		currentPly++;
@@ -51,7 +50,9 @@ public class AlphaBeta {
 
 			if (score > alpha) {
 				alpha = score;
-				bestMove = move;
+				if (currentPly == 0) {
+					bestMove = move;
+				}
 			}
 
 			if (alpha >= beta) {
@@ -61,7 +62,6 @@ public class AlphaBeta {
 		return alpha;
 	}
 
-	//Volpe
 	private int MinValue(Game game, int alpha, int beta, int currentPly) {
 		//Debug.Log("MinValue " + currentPly);
 		currentPly++;
@@ -72,12 +72,12 @@ public class AlphaBeta {
 
 		foreach (Move move in moves) {
 			Game deepCopiedGame = game.GetDeepCopy();
-			deepCopiedGame.MovePawn(move); //serve cambiare il player attuale nella board
+			deepCopiedGame.MovePawn(move); //il turn viene cambiato da questo metodo
 			int score = MaxValue(deepCopiedGame, alpha, beta, currentPly);
 
 			if (score < beta) {
 				beta = score;
-				bestMove = move;
+				//bestMove = move;
 			}
 
 			if (alpha >= beta) {

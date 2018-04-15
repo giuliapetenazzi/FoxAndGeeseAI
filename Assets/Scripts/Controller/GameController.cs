@@ -64,7 +64,8 @@ public class GameController : StateMachine {
 
 	private void OnChangeTurn(object sender, object args) {
 		if (game.turn == cpuPlayer) {
-			Debug.Log("GC OnChangeTurn muove computer");
+			//Debug.Log("GC OnChangeTurn muove computer");
+			Debug.Log("GC OnChangeTurn muove PC game turno = " + game.turn);
 			Move move = alphaBeta.RunAlphaBeta(game);
 			Debug.Log("GC OnChangeTurn mossa computer " + move.ToString());
 			game.MovePawn(move); // makes move in the model
