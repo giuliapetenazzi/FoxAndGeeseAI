@@ -50,7 +50,7 @@ public class AlphaBeta {
 
 			if (score > alpha) {
 				alpha = score;
-				if (currentPly == 0) {
+				if (currentPly == 1) {
 					bestMove = move;
 				}
 			}
