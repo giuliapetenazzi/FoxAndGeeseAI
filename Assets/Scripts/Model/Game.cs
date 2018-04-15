@@ -393,11 +393,11 @@ namespace FoxAndGeese {
 				for (int c = 0; c < 7; c++) {
 					PawnType current_player = board[r, c];
 					if (!MyUtility.IsPositionOutOfCross(r, c) && current_player != PawnType.None) {
-						if (current_player == PawnType.Fox) {
+						if (current_player == PawnType.Fox && turn == PawnType.Fox) {
 							allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
 							allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
 						}
-						if (current_player == PawnType.Goose) {
+						else if (current_player == PawnType.Goose && turn == PawnType.Goose) {
 							allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
 						}
 					}
