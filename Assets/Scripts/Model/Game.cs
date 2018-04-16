@@ -11,43 +11,43 @@ namespace FoxAndGeese {
 		Fox, //1
 		Goose, //2	
 	}
-	
-	public class Game {
-		private int geeseNumber;
 
-		public const string finishedPlacingPawnsNotification = "Game.BeginGameNotification"; //iniziata partita
-		public const string movePawnNotification = "Game.MovePawnNotification"; //mossa pedina
-		public const string changeTurnNotification = "Game.ChangeTurnNotification"; //cambiato turno
-		public const string endGameNotification = "Game.EndGameNotification"; //finita partita
-		//aggiunte da me
-		public const string placePawnNotification = "Game.PlacePawnNotification";
-		public const string pawnEatenNotification = "Game.pawnEatenNotification";
-		public const string canEatAnotherTimeNotification = "Game.canEatAnotherTimeNotification";
+    public class Game {
+        private int geeseNumber;
 
-		public PawnType turn { get; private set; } // inizia sempre l'oca
-		public PawnType winner { get; private set; }
-		public PawnType[,] board { get; private set; }
+        public const string finishedPlacingPawnsNotification = "Game.BeginGameNotification"; //iniziata partita
+        public const string movePawnNotification = "Game.MovePawnNotification"; //mossa pedina
+        public const string changeTurnNotification = "Game.ChangeTurnNotification"; //cambiato turno
+        public const string endGameNotification = "Game.EndGameNotification"; //finita partita
+                                                                              //aggiunte da me
+        public const string placePawnNotification = "Game.PlacePawnNotification";
+        public const string pawnEatenNotification = "Game.pawnEatenNotification";
+        public const string canEatAnotherTimeNotification = "Game.canEatAnotherTimeNotification";
+
+        public PawnType turn { get; private set; } // inizia sempre l'oca
+        public PawnType winner { get; private set; }
+        public PawnType[,] board { get; private set; }
         private Dictionary<string, PawnType[,]> winningBoards;
         private Dictionary<string, List<Move>> correctMoves;
         private bool hasJustEaten = false;
         private bool isSimulation = false;
 
-		public Game() {
-		}
+        public Game() {
+        }
 
         //costruttore
-		public Game(int geeseNumber, bool isSimulationReceived) {
-			this.geeseNumber = geeseNumber;
-			board = new PawnType[7, 7]; //inizializzata a 0, quindi con tutti PawnType a None
+        public Game(int geeseNumber, bool isSimulationReceived) {
+            this.geeseNumber = geeseNumber;
+            board = new PawnType[7, 7]; //inizializzata a 0, quindi con tutti PawnType a None
             winningBoards = MyUtility.CreateWinningBoards();
             correctMoves = MyUtility.CreateCorrectMoves();
             isSimulation = isSimulationReceived;
-			//InitializeBoard();
-			Reset();
-			if (!isSimulation) {
-				this.PostNotification(finishedPlacingPawnsNotification);
-			}
-		}
+            //InitializeBoard();
+            Reset();
+            if (!isSimulation) {
+                this.PostNotification(finishedPlacingPawnsNotification);
+            }
+        }
 
         // inizializza la board
         private void InitializeBoard() {
@@ -77,12 +77,13 @@ namespace FoxAndGeese {
         }
 
         // setta a null il turno
-        public void SetToNullTheTurn () {
+        public void SetToNullTheTurn() {
             this.turn = PawnType.None;
         }
 
         // ritorna se una mossa è valida
         public bool IsMoveValid(Move move) {
+            /*
 			Debug.Log("Game inizio IsMoveValid");
             // questo copre sia i casi di destinazione occupata sia i casi di movimento nella stessa posizione
 			if (board[move.finalX, move.finalZ] != PawnType.None) {
@@ -122,7 +123,16 @@ namespace FoxAndGeese {
 			// la mossa è corretta sse la pedina è stata mangiata correttamente
 			Debug.Log("Game inizio IsMoveValid " + eatenCorrectly + " - mangiata");
 			return eatenCorrectly;
-		}
+            */
+            List<Move> possibleMoves = GetPossibleMoves();
+            foreach (Move possibleMove in possibleMoves) {
+                if (possibleMove == move) {
+                    return true;
+                }
+            }
+            Debug.Log("Mossa non valida per la " + turn);
+            return false;
+        }
 
         // torna le coordinate della pedina mangiata
         // se la mossa ricevuta non è una mangiata corretta torna (-1, -1)
@@ -399,10 +409,11 @@ namespace FoxAndGeese {
                 }
             } else if (turn == PawnType.Fox) {
                 Vector2 foxCoordinates = FindFoxCoordinates();
-                int c = (int)foxCoordinates.x;
-                int r = (int)foxCoordinates.y;
+                // nel vector2 la x è la rz e la y è la xc
+                int r = (int)foxCoordinates.x;
+                int c = (int)foxCoordinates.y;
                 if (!MyUtility.IsPositionOutOfCross(r, c)) {
-                    Debug.Log("Fox posC=" + c + " posR=" + r + " simulation=" + isSimulation);
+                    //Debug.Log("Fox posC=" + c + " posR=" + r + " simulation=" + isSimulation);
                     allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
                     allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
                 }
