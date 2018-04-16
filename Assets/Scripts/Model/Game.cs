@@ -22,14 +22,12 @@ namespace FoxAndGeese {
                                                                               //aggiunte da me
         public const string placePawnNotification = "Game.PlacePawnNotification";
         public const string pawnEatenNotification = "Game.pawnEatenNotification";
-        public const string canEatAnotherTimeNotification = "Game.canEatAnotherTimeNotification";
 
         public PawnType turn { get; private set; } // inizia sempre l'oca
         public PawnType winner { get; private set; }
         public PawnType[,] board { get; private set; }
         private Dictionary<string, PawnType[,]> winningBoards;
         private Dictionary<string, List<Move>> correctMoves;
-        private bool hasJustEaten = false;
         private bool isSimulation = false;
 
         public Game() {
@@ -104,16 +102,14 @@ namespace FoxAndGeese {
 				return false;
             }
             // controlli le mosse normali solo se al passo precedente non hai mangiato
-            if (!hasJustEaten) {
                 //se è una mossa normale e la trova, torna true
                 String coordinatesString = move.startingX.ToString() + move.startingZ.ToString();
                 List<Move> correctMovesForThisPosition = correctMoves[coordinatesString];
                 bool found = false;
                 for (int i = 0; i < correctMovesForThisPosition.Count && !found; i++) {
-					if (correctMovesForThisPosition[i] == move) {
-						Debug.Log("Game inizio IsMoveValid true");
-						return true;
-					}
+                    if (correctMovesForThisPosition[i] == move) {
+                        Debug.Log("Game inizio IsMoveValid true");
+                        return true;
                 }
             }
             // se non è una mossa normale allora guarda se è una mangiata
@@ -173,13 +169,6 @@ namespace FoxAndGeese {
 					Debug.Log("Game non è simulazione");
 					this.PostNotification(pawnEatenNotification, interpolPawn);
 				}
-                hasJustEaten = true;
-                existsEatingMove = ExistsEatingMove(move.finalX, move.finalZ);
-                if (existsEatingMove) {
-					if (!isSimulation) {
-						this.PostNotification(canEatAnotherTimeNotification);
-					}
-                }
             }
 			bool isWinningState = CheckForWin();
             if (!isWinningState && turn != PawnType.None && !existsEatingMove) {
@@ -193,7 +182,6 @@ namespace FoxAndGeese {
 			if (!isSimulation) {
 				this.PostNotification(changeTurnNotification);
 			}
-            hasJustEaten = false;
 		}
 
 		public bool IsGameOver() {
@@ -225,7 +213,6 @@ namespace FoxAndGeese {
 			}
 			winner = PawnType.None;
 			turn = PawnType.Goose; //inizia sempre l'oca
-            hasJustEaten = false;
 			InitializeBoard();
 			//if (!isSimulation) this.PostNotification(beginGameNotification);
 		}
@@ -242,7 +229,6 @@ namespace FoxAndGeese {
 			}
 			game.winningBoards = winningBoards;
 			game.correctMoves = correctMoves;
-			game.hasJustEaten = hasJustEaten;
 			game.isSimulation = true;
 			return game;
 		}
