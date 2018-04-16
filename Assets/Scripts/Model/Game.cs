@@ -408,8 +408,19 @@ namespace FoxAndGeese {
 		}
 
 		public int EvaluateBoard(PawnType aiPlayer) {
-			//return winner == player ? 1 : -1;
-			return GetGooseNumber() * (aiPlayer == PawnType.Goose ? 1 : -1);
+            //return winner == player ? 1 : -1;
+            //pesi
+            int wGooseNumber = 3; // meglio per volpe se basso
+            int wEatingMoves = -2; // meglio per volpe se alto
+            int score = 0;
+            //gooseNumber
+            score += GetGooseNumber() * wGooseNumber * (aiPlayer == PawnType.Goose ? 1 : -1);
+            //eatingMoves
+            Vector2 foxCoordinates = FindFoxCoordinates();
+            int r = (int)foxCoordinates.x;
+            int c = (int)foxCoordinates.y;
+            score += IACalculateFoxValidEatingMoves(r, c).Count() * wEatingMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
+            return score;
 		}
 
         // Sezione aggiunta per la IA=================================================
