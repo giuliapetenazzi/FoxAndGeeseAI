@@ -284,6 +284,27 @@ namespace FoxAndGeese {
             }
         }
 
+        //date le coordinate della fox torna quante oche ci sono a distanza euclidea >2
+        private int GetNumberOfFarGoose(int r, int c) {
+            int count = 0;
+            for (int currentR = 0; currentR < 7; currentR++) {
+                for (int currentC = 0; currentC < 7; currentC++) {
+                    if (
+                        !MyUtility.IsPositionOutOfCross(currentR, currentC) &&
+                        currentR != r-1 &&
+                        currentC != r-1 &&
+                        currentR != r &&
+                        currentC != r &&
+                        currentR != r+1 &&
+                        currentC != r+1 &&
+                        board[currentR, currentC] == PawnType.Goose
+                        ) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
 
         // confronta due board parzialmente, usato per capire se si vince
         private static bool AreBoardsEquals(PawnType[,] board, PawnType[,] winningBoard) {
@@ -311,7 +332,6 @@ namespace FoxAndGeese {
             return new Vector2(0, 0);
         }
 
-        // Sezione ExistsEatingMove=================================================
         //ritorna se esiste una eatingMove da un certo centro
         private bool ExistsEatingMove(int r, int c) {
             //le mosse pari hanno la diagonale
@@ -383,6 +403,7 @@ namespace FoxAndGeese {
             return false;
         }
 
+        //dato un game (board e turno) ritorna tutte le mosse possibili per quel turno
 		public List<Move> GetPossibleMoves() {
             List<Move> allPossibleMoves = new List<Move>();
             if (turn == PawnType.Goose) {
@@ -407,19 +428,27 @@ namespace FoxAndGeese {
             return allPossibleMoves;
 		}
 
+        //valuta la qualità della board
 		public int EvaluateBoard(PawnType aiPlayer) {
             //return winner == player ? 1 : -1;
             //pesi
             int wGooseNumber = 3; // meglio per volpe se basso
-            int wEatingMoves = -2; // meglio per volpe se alto
+            int wFoxEatingMoves = -2; // meglio per volpe se alto
+            int wFoxMoves = -1; // meglio per volpe se alto
+            int wNumberOfFarGoose = 1; // meglio per volpe se basso // far vuol dire > 2
+            //int wHowMuchFoxIsExtern = 1; // meglio per volpe se basso
             int score = 0;
             //gooseNumber
             score += GetGooseNumber() * wGooseNumber * (aiPlayer == PawnType.Goose ? 1 : -1);
-            //eatingMoves
+            //foxEatingMoves
             Vector2 foxCoordinates = FindFoxCoordinates();
             int r = (int)foxCoordinates.x;
             int c = (int)foxCoordinates.y;
-            score += IACalculateFoxValidEatingMoves(r, c).Count() * wEatingMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += IACalculateFoxValidEatingMoves(r, c).Count() * wFoxEatingMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
+            //foxMoves
+            score += IACalculateFoxValidMoves(r, c).Count() * wFoxMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
+            //howManyFarGooseAreThere
+            score += GetNumberOfFarGoose(r, c) * wNumberOfFarGoose * (aiPlayer == PawnType.Goose ? 1 : -1);
             return score;
 		}
 
