@@ -26,7 +26,7 @@ public class Move {
     }
 
     public override string ToString() {
-        return "pawnType = " + pawnType + "x = " + startingX + "z = " + startingZ + "finalX = " + finalX + "finalZ = " + finalZ + " intPawnType = ";
+        return "pawnType=" + pawnType + "   x=" + startingX + " z=" + startingZ + " finalX=" + finalX + " finalZ=" + finalZ;
     }
 
     // ritorna se due mosse sono uguali

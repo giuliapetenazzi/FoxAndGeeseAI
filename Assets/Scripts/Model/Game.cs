@@ -388,22 +388,26 @@ namespace FoxAndGeese {
         }
 
 		public List<Move> GetPossibleMoves() {
-			List<Move> allPossibleMoves = new List<Move>();
-			for (int r = 0; r < 7; r++) {
-				for (int c = 0; c < 7; c++) {
-					PawnType current_player = board[r, c];
-					if (!MyUtility.IsPositionOutOfCross(r, c) && current_player != PawnType.None) {
-						if (current_player == PawnType.Fox && turn == PawnType.Fox) {
-							allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
-							allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
-						}
-						else if (current_player == PawnType.Goose && turn == PawnType.Goose) {
-							allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
-						}
-					}
-				}
-			}
-			return allPossibleMoves;
+            List<Move> allPossibleMoves = new List<Move>();
+            if (turn == PawnType.Goose) {
+                for (int r = 0; r < 7; r++) {
+                    for (int c = 0; c < 7; c++) {
+                        if (board[r, c] == PawnType.Goose && !MyUtility.IsPositionOutOfCross(r, c)) {
+                            allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
+                        }
+                    }
+                }
+            } else if (turn == PawnType.Fox) {
+                Vector2 foxCoordinates = FindFoxCoordinates();
+                int c = (int)foxCoordinates.x;
+                int r = (int)foxCoordinates.y;
+                if (!MyUtility.IsPositionOutOfCross(r, c)) {
+                    Debug.Log("Fox posC=" + c + " posR=" + r + " simulation=" + isSimulation);
+                    allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
+                    allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
+                }
+            } else if (turn == null) { throw new Exception("Game::GetPossibileMoves::turno null"); }
+            return allPossibleMoves;
 		}
 
 		public int EvaluateBoard(PawnType aiPlayer) {
