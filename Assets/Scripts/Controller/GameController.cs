@@ -52,8 +52,10 @@ public class GameController : StateMachine {
 		mainCamera.GetComponent<MoveCamera>().PositionCamera(humanPlayer);
 		game = new Game(15, false);
 		alphaBeta = new AlphaBeta(cpuPlayer, 5);
-		StartCoroutine(this.RotatePawns());
 		CheckState();
+		if (game.turn == cpuPlayer) {
+			AiMoves();
+		}
 	}
 
 	/*Invoked when all pawns have been placed on the board */
@@ -64,15 +66,7 @@ public class GameController : StateMachine {
 
 	private void OnChangeTurn(object sender, object args) {
 		if (game.turn == cpuPlayer) {
-			//Debug.Log("GC OnChangeTurn muove computer");
-			Debug.Log("GC OnChangeTurn muove PC game turno = " + game.turn);
-			Move move = alphaBeta.RunAlphaBeta(game);
-			Debug.Log("GC OnChangeTurn mossa computer " + move.ToString());
-			game.MovePawn(move); // makes move in the model
-			PawnData pawn = gameBoard.GetPawnAtCoord(move.startingX, move.startingZ);
-			pawn.x = move.finalX;
-			pawn.z = move.finalZ;
-			pawn.GetComponent<MovePawnAnimation>().moveToDestination = true; // moves pawn in the view (graphically)
+			AiMoves();
 		}
 		CheckState();
 
@@ -105,6 +99,17 @@ public class GameController : StateMachine {
 		}
 	}
 
+	/* The ai makes a move */
+	private void AiMoves() {
+		Move move = alphaBeta.RunAlphaBeta(game);
+		Debug.Log("GC OnChangeTurn mossa computer " + move.ToString());
+		game.MovePawn(move); // makes move in the model
+		PawnData pawn = gameBoard.GetPawnAtCoord(move.startingX, move.startingZ);
+		pawn.x = move.finalX;
+		pawn.z = move.finalZ;
+		pawn.GetComponent<MovePawnAnimation>().moveToDestination = true; // moves pawn in the view (graphically)
+	}
+
 	public void SetGameToNull() {
 		game = null;
 		CheckState();
@@ -120,7 +125,7 @@ public class GameController : StateMachine {
 		}
 		GameObject obj = pawn.gameObject;
 		Vector3 pos = (Vector3)args;
-        pawn.gameObject.transform.localPosition = pos; // moves the pawn locally (client side)
+		pawn.gameObject.transform.localPosition = pos; // moves the pawn locally (client side)
 	}
 
 	/** Manages when the user releases the mouse and tries to make a move */
@@ -140,7 +145,7 @@ public class GameController : StateMachine {
 				realFinalPos = finalTile.transform.localPosition;
 				pawn.x = finalTile.x;
 				pawn.z = finalTile.z;
-				game.MovePawn(move); 
+				game.MovePawn(move);
 			}
 		}
 		realFinalPos.y = oldPos.y;
