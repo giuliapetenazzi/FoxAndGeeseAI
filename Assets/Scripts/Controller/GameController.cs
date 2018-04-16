@@ -101,6 +101,11 @@ public class GameController : StateMachine {
 
 	/* The ai makes a move */
 	private void AiMoves() {
+		StartCoroutine(AiMovesCoroutine());
+	}
+
+	private IEnumerator AiMovesCoroutine() {
+		yield return new WaitForSeconds(0.1f);
 		Move move = alphaBeta.RunAlphaBeta(game);
 		Debug.Log("GC OnChangeTurn mossa computer " + move.ToString());
 		game.MovePawn(move); // makes move in the model
