@@ -301,7 +301,7 @@ namespace FoxAndGeese {
         }
 
         //date le coordinate della fox torna quante oche ci sono a distanza euclidea >2
-        private int GetNumberOfFarGoose(int rFox, int cFox) {
+        private double GetNumberOfFarGoose(int rFox, int cFox) {
             int count = 0;
             for (int currentR = 0; currentR < 7; currentR++) {
                 for (int currentC = 0; currentC < 7; currentC++) {
@@ -322,18 +322,30 @@ namespace FoxAndGeese {
             return count;
         }
 
-        //date le coordinate della fox torna il grado di compattezza della board
-        private int GetCompactness(int rFox, int cFox ) {
+        //torna il grado di compattezza della board come media delle posizioni libere in ogni oca
+        private double GetGooseFreedomness() {
             //TODO
-            int degree = 0;
+            double degree = 0;
             for (int r = 0; r < board.GetLength(0); r++) {
                 for (int c = 0; c < board.GetLength(1); c++) {
                     if (board[r, c] == PawnType.Goose) {
-                        degree += 0;
+                        degree += calculateMeanOfFreePositions(r, c);
                     }
                 }
             }
-            return degree;
+            return degree / GetGooseNumber();
+        }
+
+        private double calculateMeanOfFreePositions(int r, int c) {
+            int counter = 0;
+            for (int roundR = r - 1; roundR <= r + 1; roundR++) {
+                for (int roundC = c - 1; roundC <= c + 1; roundC++) {
+                    if (board[r, c] == PawnType.None && r != roundR && c != roundC) {
+                        counter++;
+                    }
+                }
+            }
+            return counter / 8;
         }
 
         // confronta due board parzialmente, usato per capire se si vince
@@ -467,7 +479,7 @@ namespace FoxAndGeese {
             int wAheadGooseNumber = 4; // meglio per volpe se basso
             int wFoxEatingMoves = -2; // meglio per volpe se alto
             int wFoxMoves = -2; // meglio per volpe se alto
-            int wCompactness = 1; // meglio per volpe se basso
+            int wGooseFreedomness = -1; // meglio per volpe se alta
             int wInterness = -1; // meglio per volpe se alto
             int wExterness = 1; // meglio per volpe se basso
             int score = 0;
@@ -486,7 +498,7 @@ namespace FoxAndGeese {
             //foxMoves
             score += IACalculateFoxValidMoves(rFox, cFox).Count() * wFoxMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
             //compactness
-            //score += GetCompactness(rFox, cFox) * wCompactness * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += (int) Math.Round(GetGooseFreedomness() * wGooseFreedomness * (aiPlayer == PawnType.Goose ? 1 : -1), 0);
             //interness
             score += GetInterness(rFox, cFox) * wInterness * (aiPlayer == PawnType.Goose ? 1 : -1);
             //externess
@@ -510,6 +522,8 @@ namespace FoxAndGeese {
         //ritorna 1 se la volpe è in una delle 8 posizioni svantaggiate else -1
         private int GetExterness (int rFox, int cFox) {
             if (
+                (rFox == 0 && cFox == 3) || (rFox == 3 && cFox == 6) ||
+                (rFox == 6 && cFox == 3) || (rFox == 3 && cFox == 0) ||
                 (rFox == 1 && cFox == 2) || (rFox == 1 && cFox == 4) ||
                 (rFox == 2 && cFox == 5) || (rFox == 4 && cFox == 5) ||
                 (rFox == 2 && cFox == 1) || (rFox == 4 && cFox == 1) ||
