@@ -20,10 +20,8 @@ public class AlphaBeta {
 
 	//board indica lo stato di gioco
 	public Move RunAlphaBeta(Game game) {
-		Debug.Log("AlphaBeta RunAlphaBeta");
 		Game deepCopiedGame = game.GetDeepCopy();
 		MaxValue(deepCopiedGame, int.MinValue, int.MaxValue, 0);
-		Debug.LogWarning("AlphaBeta RunAlphaBeta ritorno move " + bestMove);
 		return bestMove;
 	}
 
