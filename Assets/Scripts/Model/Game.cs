@@ -471,17 +471,18 @@ namespace FoxAndGeese {
 		}
 
         //valuta la qualità della board
-		public int EvaluateBoard(PawnType aiPlayer) {
+		public int EvaluateBoard(PawnType aiPlayer,
             //return winner == player ? 1 : -1;
             //pesi
-            int wWinningState = 200; // meglio per volpe se basso
-            int wGooseNumber = 2; // meglio per volpe se basso
-            int wAheadGooseNumber = 4; // meglio per volpe se basso
-            int wFoxEatingMoves = -2; // meglio per volpe se alto
-            int wFoxMoves = -2; // meglio per volpe se alto
-            int wGooseFreedomness = -1; // meglio per volpe se alta
-            int wInterness = -1; // meglio per volpe se alto
-            int wExterness = 1; // meglio per volpe se basso
+            int wWinningState, // meglio per volpe se basso
+            int wGooseNumber, // meglio per volpe se basso
+            int wAheadGooseNumber, // meglio per volpe se basso
+            int wFoxEatingMoves, // meglio per volpe se alto
+            int wFoxMoves, // meglio per volpe se alto
+            int wGooseFreedomness, // meglio per volpe se alta
+            int wInterness, // meglio per volpe se alto
+            int wExterness // meglio per volpe se basso
+        ) {
             int score = 0;
             //winningState
             score += (IsFoxWinner() ? 1 : -1) * wWinningState * (aiPlayer == PawnType.Goose ? 1 : -1);
