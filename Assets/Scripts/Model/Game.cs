@@ -471,39 +471,29 @@ namespace FoxAndGeese {
 		}
 
         //valuta la qualità della board
-		public int EvaluateBoard(PawnType aiPlayer,
+		public int EvaluateBoard(PawnType aiPlayer, WeightsForBoardEval weights) {
             //return winner == player ? 1 : -1;
-            //pesi
-            int wWinningState, // meglio per volpe se basso
-            int wGooseNumber, // meglio per volpe se basso
-            int wAheadGooseNumber, // meglio per volpe se basso
-            int wFoxEatingMoves, // meglio per volpe se alto
-            int wFoxMoves, // meglio per volpe se alto
-            int wGooseFreedomness, // meglio per volpe se alta
-            int wInterness, // meglio per volpe se alto
-            int wExterness // meglio per volpe se basso
-        ) {
             int score = 0;
             //winningState
-            score += (IsFoxWinner() ? 1 : -1) * wWinningState * (aiPlayer == PawnType.Goose ? 1 : -1);
-            score += (IsGooseWinner() ? -1 : 1) * wWinningState * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += (IsFoxWinner() ? 1 : -1) * weights.WWinningState * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += (IsGooseWinner() ? -1 : 1) * weights.WWinningState * (aiPlayer == PawnType.Goose ? 1 : -1);
             //gooseNumber
-            score += GetGooseNumber() * wGooseNumber * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += GetGooseNumber() * weights.WGooseNumber * (aiPlayer == PawnType.Goose ? 1 : -1);
             //aheadGooseNumber
-            score += GetAheadGooseNumber() * wAheadGooseNumber * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += GetAheadGooseNumber() * weights.WAheadGooseNumber * (aiPlayer == PawnType.Goose ? 1 : -1);
             //foxEatingMoves
             Vector2 foxCoordinates = FindFoxCoordinates();
             int rFox = (int)foxCoordinates.x;
             int cFox = (int)foxCoordinates.y;
-            score += IACalculateFoxValidEatingMoves(rFox, cFox).Count() * wFoxEatingMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += IACalculateFoxValidEatingMoves(rFox, cFox).Count() * weights.WFoxEatingMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
             //foxMoves
-            score += IACalculateFoxValidMoves(rFox, cFox).Count() * wFoxMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += IACalculateFoxValidMoves(rFox, cFox).Count() * weights.WFoxMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
             //compactness
-            score += (int) Math.Round(GetGooseFreedomness() * wGooseFreedomness * (aiPlayer == PawnType.Goose ? 1 : -1), 0);
+            score += (int) Math.Round(GetGooseFreedomness() * weights.WGooseFreedomness * (aiPlayer == PawnType.Goose ? 1 : -1), 0);
             //interness
-            score += GetInterness(rFox, cFox) * wInterness * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += GetInterness(rFox, cFox) * weights.WInterness * (aiPlayer == PawnType.Goose ? 1 : -1);
             //externess
-            score += GetExterness(rFox, cFox) * wExterness * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += GetExterness(rFox, cFox) * weights.WExterness * (aiPlayer == PawnType.Goose ? 1 : -1);
             return score;
 		}
 

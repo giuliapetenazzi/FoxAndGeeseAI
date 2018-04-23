@@ -37,6 +37,8 @@ public class AlphaBeta {
 		//Debug.Log("MaxValue " + currentPly);
 		currentPly++;
 		if (currentPly > maxPly || game.GameOver()) {
+            WeightsForBoardEval weights = new WeightsForBoardEval(200, 2, 4, -2, -2, -1, -1, 1);
+            /*
             int wWinningState = 200; // meglio per volpe se basso
             int wGooseNumber = 2; // meglio per volpe se basso
             int wAheadGooseNumber = 4; // meglio per volpe se basso
@@ -45,8 +47,8 @@ public class AlphaBeta {
             int wGooseFreedomness = -1; // meglio per volpe se alta
             int wInterness = -1; // meglio per volpe se alto
             int wExterness = 1; // meglio per volpe se basso
-			return game.EvaluateBoard(aiPlayer, wWinningState, wGooseNumber,
-                wAheadGooseNumber, wFoxEatingMoves, wFoxMoves, wGooseFreedomness, wInterness, wExterness);
+            */
+			return game.EvaluateBoard(aiPlayer, weights);
 		}
 		List<Move> moves = game.GetPossibleMoves();
 
@@ -73,6 +75,8 @@ public class AlphaBeta {
 		//Debug.Log("MinValue " + currentPly);
 		currentPly++;
 		if (currentPly > maxPly || game.GameOver()) {
+            WeightsForBoardEval weights = new WeightsForBoardEval(200, 2, 4, -2, -2, -1, -1, 1);
+            /*
             int wWinningState = 200; // meglio per volpe se basso
             int wGooseNumber = 2; // meglio per volpe se basso
             int wAheadGooseNumber = 4; // meglio per volpe se basso
@@ -81,8 +85,8 @@ public class AlphaBeta {
             int wGooseFreedomness = -1; // meglio per volpe se alta
             int wInterness = -1; // meglio per volpe se alto
             int wExterness = 1; // meglio per volpe se basso
-			return game.EvaluateBoard(aiPlayer, wWinningState, wGooseNumber,
-                wAheadGooseNumber, wFoxEatingMoves, wFoxMoves, wGooseFreedomness, wInterness, wExterness);
+            */
+			return game.EvaluateBoard(aiPlayer, weights);
 		}
 		List<Move> moves = game.GetPossibleMoves();
 
