@@ -8,18 +8,25 @@ public class AlphaBeta {
 
 	//indica la mossa migliore da fare a partire 
 	//dallo stato da cui viene invocato AlfaBeta
-	private Move bestMove;
+	public Move bestMove { get; set; }
 	//indica chi è il giocatore controllato dalla IA
-	private PawnType aiPlayer;
-	private int maxPly;
+	public PawnType aiPlayer {  get; set; }
+	public int maxPly { get; set; }
+	public WeightsForBoardEval weights { get; set; }
+	public bool random { get; set; }
 
-	public AlphaBeta(PawnType aiPlayer, int maxPly) {
+	public AlphaBeta(PawnType aiPlayer, int maxPly, WeightsForBoardEval weights, bool random) {
 		this.aiPlayer = aiPlayer;
 		this.maxPly = maxPly;
+		this.weights = weights;
+		this.random = random;
 	}
 
 	//board indica lo stato di gioco
 	public Move RunAlphaBeta(Game game) {
+		if (random) {
+			return RandomMove(game);
+		}
 		Game deepCopiedGame = game.GetDeepCopy();
 		MaxValue(deepCopiedGame, int.MinValue, int.MaxValue, 0);
 		return bestMove;
@@ -37,17 +44,6 @@ public class AlphaBeta {
 		//Debug.Log("MaxValue " + currentPly);
 		currentPly++;
 		if (currentPly > maxPly || game.GameOver()) {
-            WeightsForBoardEval weights = new WeightsForBoardEval(200, 2, 4, -2, -2, -1, -1, 1);
-            /*
-            int wWinningState = 200; // meglio per volpe se basso
-            int wGooseNumber = 2; // meglio per volpe se basso
-            int wAheadGooseNumber = 4; // meglio per volpe se basso
-            int wFoxEatingMoves = -2; // meglio per volpe se alto
-            int wFoxMoves = -2; // meglio per volpe se alto
-            int wGooseFreedomness = -1; // meglio per volpe se alta
-            int wInterness = -1; // meglio per volpe se alto
-            int wExterness = 1; // meglio per volpe se basso
-            */
 			return game.EvaluateBoard(aiPlayer, weights);
 		}
 		List<Move> moves = game.GetPossibleMoves();
@@ -75,17 +71,6 @@ public class AlphaBeta {
 		//Debug.Log("MinValue " + currentPly);
 		currentPly++;
 		if (currentPly > maxPly || game.GameOver()) {
-            WeightsForBoardEval weights = new WeightsForBoardEval(200, 2, 4, -2, -2, -1, -1, 1);
-            /*
-            int wWinningState = 200; // meglio per volpe se basso
-            int wGooseNumber = 2; // meglio per volpe se basso
-            int wAheadGooseNumber = 4; // meglio per volpe se basso
-            int wFoxEatingMoves = -2; // meglio per volpe se alto
-            int wFoxMoves = -2; // meglio per volpe se alto
-            int wGooseFreedomness = -1; // meglio per volpe se alta
-            int wInterness = -1; // meglio per volpe se alto
-            int wExterness = 1; // meglio per volpe se basso
-            */
 			return game.EvaluateBoard(aiPlayer, weights);
 		}
 		List<Move> moves = game.GetPossibleMoves();
