@@ -12,17 +12,25 @@ public class AiTester : MonoBehaviour {
 	public void StartTest() {
 		WeightsForBoardEval w1 = new WeightsForBoardEval(Int16.MaxValue, 2, 0, 0, 0, 0, 0, 0);
 		AlphaBeta player1 = new AlphaBeta(PawnType.Fox, 5, w1, false);
-		Match(player1, 100);
+		WeightsForBoardEval w2 = new WeightsForBoardEval(Int16.MaxValue, 0, 0, 0, 2, 0, 0, 0);
+		AlphaBeta player2 = new AlphaBeta(PawnType.Fox, 5, w2, false);
+		MatchTwoAi(player1, player2, 100);
 	}
 
-	public void Match(AlphaBeta player1, int numberOfMatches) {
+	public void MatchTwoAi(AlphaBeta p1, AlphaBeta p2, int numberOfMatches) {
 		int player1Score = 0;
-		PawnType pawnType1 = player1.aiPlayer;
+		int player2Score = 0;
+		PawnType pawnType1 = p1.aiPlayer;
 		PawnType opponentPawnType = pawnType1 == PawnType.Goose ? PawnType.Fox : PawnType.Goose;
-		AlphaBeta randomPlayer = new AlphaBeta(opponentPawnType, 5, null, true);
-		AlphaBeta goosePlayer = pawnType1 == PawnType.Goose ? player1 : randomPlayer;
-		AlphaBeta foxPlayer = goosePlayer == player1 ? randomPlayer : player1;
-
+		AlphaBeta player2;
+		if (p2 == null) {
+			player2 = new AlphaBeta(opponentPawnType, 5, null, true);
+		} else {
+			player2 = p2;
+		}
+		AlphaBeta goosePlayer = pawnType1 == PawnType.Goose ? p1 : player2;
+		AlphaBeta foxPlayer = goosePlayer == p1 ? player2 : p1;
+		Debug.Log("inizio partite");
 		for (int i = 0; i < numberOfMatches; i++) {
 			int turnLimit = 500;
 			int turnCounter = 0;
@@ -38,11 +46,14 @@ public class AiTester : MonoBehaviour {
 				game.MovePawn(move2);
 				turnCounter++;
 			}
-			if (game.winner == player1.aiPlayer) {
+			if (game.winner == p1.aiPlayer) {
 				player1Score++;
 			}
+			if (game.winner == p2.aiPlayer) {
+				player2Score++;
+			}
 		}
-		Debug.Log("player1 ha vinto " + player1Score + " volte ");
+		Debug.Log("player1 ha vinto " + player1Score + " volte contro le " + player2Score + " di player2");
 	}
 }
 
