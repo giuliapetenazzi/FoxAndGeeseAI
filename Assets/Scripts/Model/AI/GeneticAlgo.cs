@@ -5,7 +5,7 @@ using System;
 
 public class GeneticAlgo {
 
-	public void Evolve(SortedList<WeightScore, int> population, float retain, float randomSelect, float mutate) {
+	public SortedList<WeightScore, int> Evolve(SortedList<WeightScore, int> population, double retain, double randomSelect, double mutate) {
 		new MatchAlgo().LaunchTournament(population); //lancia un torneo sulla popolazione e aggiorna population con i nuovi score
 		System.Random rand = new System.Random();
 		int retainIndex = (int)((population.Count * retain) / 100);
@@ -19,7 +19,7 @@ public class GeneticAlgo {
 			iter.MoveNext();
 		}
 
-		//aggiunge altri soggetti con una percentuale di aggiunta di randomSelect %
+		//aggiunge altri soggetti con una percentuale di aggiunta pari a randomSelect
 		foreach (var ws in population) {
 			if (randomSelect > rand.NextDouble()) {
 				if (!parents.ContainsKey(ws.Key)) {
@@ -28,9 +28,33 @@ public class GeneticAlgo {
 			}
 		}
 
+		int parentsCount = parents.Count;
+		int childrenToGenerate = population.Count - parentsCount; //quanti figli devo generare per ritornare ad avere una popolazione completa
+		int generatedChildren = 0;
 		//crossover
-		//mutation? o muovere mutation prima del crossover?
+		while (generatedChildren < childrenToGenerate) {
+			WeightsForBoardEval male = parents.Keys[rand.Next(parentsCount)].weights;
+			WeightsForBoardEval female = parents.Keys[rand.Next(parentsCount)].weights;
+			if (!male.Equals(female)) {
+				WeightsForBoardEval child = Crossover(male, female);
+				child = Mutation(child);
+				WeightScore ws = new WeightScore(child, 0);
+				parents[ws] = 0;
+				generatedChildren++;
+			}
+		}
+		return parents;
+	}
 
+	private WeightsForBoardEval Crossover(WeightsForBoardEval male, WeightsForBoardEval female) {
+		// TODO: ritorna un WeightsForBoardEval nato dalla SCOPAZZA senza cappuccio tra male e female. Implementare operazioni bitwise 
+		// invece della classica media fra pesi?
+		return null;
+	}
+
+	private WeightsForBoardEval Mutation(WeightsForBoardEval child) {
+		//TODO: implementare una qualche forma di mutazione (bitwise?)
+		return null;
 	}
 
 }
