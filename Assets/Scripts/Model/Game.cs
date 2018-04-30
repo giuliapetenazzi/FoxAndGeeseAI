@@ -184,10 +184,6 @@ namespace FoxAndGeese {
 			}
 		}
 
-		public bool IsGameOver() {
-			return winner != PawnType.None;
-		}
-
         // controlla se qualcuno ha vinto
 		private bool CheckForWin() {
             bool foxWon = IsFoxWinner();
@@ -252,7 +248,12 @@ namespace FoxAndGeese {
 			//int counterGoose = GetGooseNumber();
 			int counterAheadGoose = GetAheadGooseNumber();
             //return isWinner = counterGoose <= 4 ? true : false;
-            return isWinner = counterAheadGoose <= 4 ? true : false;
+            if (isWinner = counterAheadGoose <= 4) {
+                return true;
+            } else {
+                List<Move> possibleMovesOtherPlayer = GetPossibleMovesOtherPlayer();
+                return possibleMovesOtherPlayer.Count() == 0;
+            }
         }
 
         private int GetAheadGooseNumber() {
@@ -285,6 +286,9 @@ namespace FoxAndGeese {
         // dice se le oche hanno vinto
         // le oche hanno vinto quando hanno circondato la volpe
         private bool IsGooseWinner () {
+            List<Move> possibleMovesOtherPlayer = GetPossibleMovesOtherPlayer();
+            return possibleMovesOtherPlayer.Count() == 0;
+            /*\
             Vector2 foxCoordinates = FindFoxCoordinates();
             if (foxCoordinates.x == 0 && foxCoordinates.y == 0) {
                 // caso eccezionale
@@ -298,6 +302,7 @@ namespace FoxAndGeese {
             } else {
                 return false;
             }
+            */
         }
 
         //date le coordinate della fox torna quante oche ci sono a distanza euclidea >2
@@ -457,6 +462,30 @@ namespace FoxAndGeese {
                     }
                 }
             } else if (turn == PawnType.Fox) {
+                Vector2 foxCoordinates = FindFoxCoordinates();
+                // nel vector2 la x è la rz e la y è la xc
+                int r = (int)foxCoordinates.x;
+                int c = (int)foxCoordinates.y;
+                if (!MyUtility.IsPositionOutOfCross(r, c)) {
+                    //Debug.Log("Fox posC=" + c + " posR=" + r + " simulation=" + isSimulation);
+                    allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
+                    allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
+                }
+            } else if (turn == null) { throw new Exception("Game::GetPossibileMoves::turno null"); }
+            return allPossibleMoves;
+		}
+
+		public List<Move> GetPossibleMovesOtherPlayer() {
+            List<Move> allPossibleMoves = new List<Move>();
+            if (turn == PawnType.Fox) {
+                for (int r = 0; r < 7; r++) {
+                    for (int c = 0; c < 7; c++) {
+                        if (board[r, c] == PawnType.Goose && !MyUtility.IsPositionOutOfCross(r, c)) {
+                            allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
+                        }
+                    }
+                }
+            } else if (turn == PawnType.Goose) {
                 Vector2 foxCoordinates = FindFoxCoordinates();
                 // nel vector2 la x è la rz e la y è la xc
                 int r = (int)foxCoordinates.x;
