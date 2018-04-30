@@ -37,7 +37,15 @@ public class AlphaBeta {
 		int size = moves.Count;
 		System.Random r = new System.Random();
 		int rInt = r.Next(0, size); //for ints
-		return moves[rInt];
+		Debug.Log(game.board);
+		try {
+			return moves[rInt];
+		}
+		catch (Exception e) {
+			Debug.Log(game.board);
+			Debug.Log("estratta mossa numero " + rInt + " mosse disponibili " + moves.Count);
+			return moves[rInt];
+		}
 	}
 
 	private int MaxValue(Game game, int alpha, int beta, int currentPly) {
