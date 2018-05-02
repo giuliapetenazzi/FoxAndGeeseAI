@@ -6,7 +6,6 @@ using System;
 public class GeneticAlgo {
 
 	public SortedList<WeightScore, int> Evolve(SortedList<WeightScore, int> population, double retain, double randomSelect, double mutate) {
-		new MatchAlgo().LaunchTournament(population); //lancia un torneo sulla popolazione e aggiorna population con i nuovi score
 		System.Random rand = new System.Random();
 		int retainIndex = (int)((population.Count * retain) / 100);
 
@@ -43,6 +42,7 @@ public class GeneticAlgo {
 				generatedChildren++;
 			}
 		}
+		new MatchAlgo().LaunchTournament(parents); //lancia un torneo sulla popolazione e aggiorna population con i nuovi score
 		return parents;
 	}
 
