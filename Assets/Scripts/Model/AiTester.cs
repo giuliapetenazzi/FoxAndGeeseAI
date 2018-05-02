@@ -45,10 +45,10 @@ public class AiTester : MonoBehaviour {
 			Debug.Log("inizio evoluzione turno " + i);
 			scoreMap = geneticAlgo.Evolve(scoreMap, 0.2, 0.05, 0.01);
 		}
-
+		
 	}
 
-	
+
 }
 
 

@@ -14,7 +14,8 @@ public class WeightScore : IComparable {
 	}	
 
 	public int CompareTo(object obj) {
-		return score.CompareTo(obj);
+		WeightScore w = (WeightScore)obj;
+		return score.CompareTo(w.score);
 	}
 
 	public override bool Equals(object obj) {
