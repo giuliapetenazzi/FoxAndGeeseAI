@@ -531,6 +531,7 @@ namespace FoxAndGeese {
             score -= GetInterness(rFox, cFox) * weights.wInterness;
             //externess
             score += GetExterness(rFox, cFox) * weights.wExterness;
+            Debug.Log("score evaluated: " + score * signOfPlayer);
             return score * signOfPlayer;
 		}
 
