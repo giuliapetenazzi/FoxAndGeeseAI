@@ -6,6 +6,7 @@ using System;
 public class GeneticAlgo {
 
 	public SortedList<WeightScore, int> Evolve(SortedList<WeightScore, int> population, double retain, double randomSelect, double mutate) {
+		Debug.Log("start genetic algo");
 		System.Random rand = new System.Random();
 		int retainIndex = (int)((population.Count * retain) / 100);
 
@@ -32,6 +33,7 @@ public class GeneticAlgo {
 		int generatedChildren = 0;
 		//crossover
 		while (generatedChildren < childrenToGenerate) {
+			Debug.Log("GeneticAlgo genero figli");
 			WeightsForBoardEval male = parents.Keys[rand.Next(parentsCount)].weights;
 			WeightsForBoardEval female = parents.Keys[rand.Next(parentsCount)].weights;
 			if (!male.Equals(female)) {
@@ -47,14 +49,17 @@ public class GeneticAlgo {
 	}
 
 	private WeightsForBoardEval Crossover(WeightsForBoardEval male, WeightsForBoardEval female) {
+		Debug.Log("genetic algo crossover");
 		// TODO: ritorna un WeightsForBoardEval nato dalla SCOPAZZA senza cappuccio tra male e female. Implementare operazioni bitwise 
 		// invece della classica media fra pesi?
-		return null;
+		male.wAheadGooseNumber++;
+		return male;
 	}
 
 	private WeightsForBoardEval Mutation(WeightsForBoardEval child) {
+		Debug.Log("genetic algo mutation");
 		//TODO: implementare una qualche forma di mutazione (bitwise?)
-		return null;
+		return child;
 	}
 
 }

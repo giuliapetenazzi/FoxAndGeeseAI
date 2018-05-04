@@ -6,6 +6,7 @@ using System;
 
 public class MatchAlgo {
 
+	//lancia un torneo su population e ne fa side effects; alla fine di tutto, ordine i pesi in population in base al migliore risultato del torneo
 	public void LaunchTournament(SortedList<WeightScore, int> population) {
 		foreach (var ws1 in population) {
 			int ws1Score = 0;
