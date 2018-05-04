@@ -22,6 +22,7 @@ public class AiTester : MonoBehaviour {
 		for (int i = 0; i < 3; i++) { //scorre le feature
 			for (int j = 0; j < 1; j++) { //indica quanti giocatori per ogni tipologia di feature singola creare
 				weights.Add(new WeightsForBoardEval(i, rand.Next(Int32.MinValue, Int32.MaxValue)));
+                //TODO JORDAN solo num positivi
 			}
 		}
 		SortedList<WeightScore, int> scoreMap = new SortedList<WeightScore, int>();
@@ -33,8 +34,8 @@ public class AiTester : MonoBehaviour {
 			WeightsForBoardEval weight = weights[i];
 			AlphaBeta playerAsFox = new AlphaBeta(PawnType.Fox, 3, weight, false);
 			AlphaBeta playerAsGoose = new AlphaBeta(PawnType.Goose, 3, weight, false);
-			score = matchAlgo.MatchTwoAi(playerAsFox, null, 3);
-			score += matchAlgo.MatchTwoAi(playerAsGoose, null, 3);
+			score = matchAlgo.MatchTwoAi(playerAsFox, null, 3).first;
+			score += matchAlgo.MatchTwoAi(playerAsGoose, null, 3).first;
 			WeightScore ws = new WeightScore(weight, score);
 			scoreMap[ws] = score;
 		}

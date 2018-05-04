@@ -38,10 +38,12 @@ public class GeneticAlgo {
 			WeightsForBoardEval female = parents.Keys[rand.Next(parentsCount)].weights;
 			if (!male.Equals(female)) {
 				WeightsForBoardEval child = Crossover(male, female);
-				child = Mutation(child);
+				child = Mutation(child, mutate);
 				WeightScore ws = new WeightScore(child, 0);
-				parents[ws] = 0;
-				generatedChildren++;
+                if (!parents.ContainsKey(ws)) {
+                    parents[ws] = 0;
+                    generatedChildren++;
+                }
 			}
 		}
 		new MatchAlgo().LaunchTournament(parents); //lancia un torneo sulla popolazione e aggiorna population con i nuovi score
@@ -56,7 +58,7 @@ public class GeneticAlgo {
 		return male;
 	}
 
-	private WeightsForBoardEval Mutation(WeightsForBoardEval child) {
+	private WeightsForBoardEval Mutation(WeightsForBoardEval child, double mutate) {
 		Debug.Log("genetic algo mutation");
 		//TODO: implementare una qualche forma di mutazione (bitwise?)
 		return child;

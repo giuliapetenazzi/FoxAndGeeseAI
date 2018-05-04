@@ -8,27 +8,33 @@ public class MatchAlgo {
 
 	//lancia un torneo su population e ne fa side effects; alla fine di tutto, ordine i pesi in population in base al migliore risultato del torneo
 	public void LaunchTournament(SortedList<WeightScore, int> population) {
-		foreach (var ws1 in population) {
-			int ws1Score = 0;
-			foreach (var ws2 in population) {
+        Dictionary<WeightScore, int> scores = new Dictionary<WeightScore, int>();
+        for (int i = 0; i < population.Count; i++) {
+            WeightScore ws1 = population.Keys[i];
+            for (int j = i + 1; j < population.Keys.Count; j++) {
+                WeightScore ws2 = population.Keys[j];
 				if (!ws1.Equals(ws2)) {
-					AlphaBeta ws1AsGoose = new AlphaBeta(PawnType.Goose, 5, ws1.Key.weights, false);
-					AlphaBeta ws1AsFox= new AlphaBeta(PawnType.Fox, 5, ws1.Key.weights, false);
-					AlphaBeta ws2AsGoose = new AlphaBeta(PawnType.Goose, 5, ws2.Key.weights, false);
-					AlphaBeta ws2AsFox= new AlphaBeta(PawnType.Fox, 5, ws2.Key.weights, false);
-					ws1Score += MatchTwoAi(ws1AsGoose, ws2AsFox, 1);
-					ws1Score += MatchTwoAi(ws1AsFox, ws2AsGoose, 1);
+					AlphaBeta ws1AsGoose = new AlphaBeta(PawnType.Goose, 3, ws1.weights, false);
+					AlphaBeta ws1AsFox= new AlphaBeta(PawnType.Fox, 3, ws1.weights, false);
+					AlphaBeta ws2AsGoose = new AlphaBeta(PawnType.Goose, 3, ws2.weights, false);
+					AlphaBeta ws2AsFox= new AlphaBeta(PawnType.Fox, 3, ws2.weights, false);
+                    PairOfScores pairOfScoresGoose = MatchTwoAi(ws1AsGoose, ws2AsFox, 1);
+                    PairOfScores pairOfScoresFox = MatchTwoAi(ws1AsFox, ws2AsGoose, 1);
+                    scores[ws1] += pairOfScoresGoose.first;
+                    scores[ws1] += pairOfScoresFox.first;
+                    scores[ws2] += pairOfScoresGoose.second;
+                    scores[ws2] += pairOfScoresFox.second;
 				}
 			}
-			WeightScore ws = new WeightScore(ws1.Key.weights, ws1Score);
-			population.Remove(ws1.Key);
-			population.Add(ws, ws1Score);
+			WeightScore ws = new WeightScore(ws1.weights, scores[ws1]);
+			population.Remove(ws1);
+            population.Add(ws, scores[ws1]);
 		}
 	}
 
 
 	//fa giocare due ai l'uno contro l'altro per numberOfMatches volte. Se p2 è null, crea un giocatore random.
-	public int MatchTwoAi(AlphaBeta p1, AlphaBeta p2, int numberOfMatches) {
+	public PairOfScores MatchTwoAi(AlphaBeta p1, AlphaBeta p2, int numberOfMatches) {
 		Debug.Log("gioco2game");
 		int player1Score = 0;
 		int player2Score = 0;
@@ -69,7 +75,7 @@ public class MatchAlgo {
 			//Debug.LogWarning("game numero " + i + " finito vincitore = " + game.winner + " oche rimaste = " + game.GetGooseNumber());
 		}
 		//Debug.Log("player1 ha vinto " + player1Score + " volte contro le " + player2Score + " di player2");
-		return player1Score;
+		return new PairOfScores(player1Score, player2Score);
 	}
 
 }

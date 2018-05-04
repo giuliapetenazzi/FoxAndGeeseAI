@@ -501,6 +501,7 @@ namespace FoxAndGeese {
 
         //valuta la qualità della board
 		public int EvaluateBoard(PawnType aiPlayer, WeightsForBoardEval weights) {
+            //TODO GIULIA
             //return winner == player ? 1 : -1;
             int score = 0;
             //winningState
