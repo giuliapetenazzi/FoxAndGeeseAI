@@ -515,23 +515,23 @@ namespace FoxAndGeese {
             // else non ha vinto nessuno
             Debug.Log("game weights = " + weights);
             //gooseNumber
-            score += GetGooseNumber() * weights.wGooseNumber * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += GetGooseNumber() * weights.wGooseNumber;
             //aheadGooseNumber
-            score += GetAheadGooseNumber() * weights.wAheadGooseNumber * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score += GetAheadGooseNumber() * weights.wAheadGooseNumber;
             //foxEatingMoves
             Vector2 foxCoordinates = FindFoxCoordinates();
             int rFox = (int)foxCoordinates.x;
             int cFox = (int)foxCoordinates.y;
-            score += IACalculateFoxValidEatingMoves(rFox, cFox).Count() * weights.wFoxEatingMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score -= IACalculateFoxValidEatingMoves(rFox, cFox).Count() * weights.wFoxEatingMoves;
             //foxMoves
-            score += IACalculateFoxValidMoves(rFox, cFox).Count() * weights.wFoxMoves * (aiPlayer == PawnType.Goose ? 1 : -1);
-            //compactness
-            score += (int)Math.Round(GetGooseFreedomness() * weights.wGooseFreedomness * (aiPlayer == PawnType.Goose ? 1 : -1), 0);
+            score -= IACalculateFoxValidMoves(rFox, cFox).Count() * weights.wFoxMoves;
+            //freedomness
+            score -= (int)Math.Round(GetGooseFreedomness() * weights.wGooseFreedomness, 0);
             //interness
-            score += GetInterness(rFox, cFox) * weights.wInterness * (aiPlayer == PawnType.Goose ? 1 : -1);
+            score -= GetInterness(rFox, cFox) * weights.wInterness;
             //externess
-            score += GetExterness(rFox, cFox) * weights.wExterness * (aiPlayer == PawnType.Goose ? 1 : -1);
-            return score;
+            score += GetExterness(rFox, cFox) * weights.wExterness;
+            return score * signOfPlayer;
 		}
 
         //ritorna 1 se la volpe è nel quadrante centrale else -1
