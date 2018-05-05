@@ -15,28 +15,27 @@ public class WeightsForBoardEval {
 
 
 	public WeightsForBoardEval(int numberOfFeature, int weight) {
+		this.wWinningState = Int32.MaxValue / 2;
 		if (numberOfFeature == 0) {
-			wWinningState = weight;
-		} else if (numberOfFeature == 1) {
 			wGooseNumber = weight;
-		} else if (numberOfFeature == 2) {
+		} else if (numberOfFeature == 1) {
 			wAheadGooseNumber = weight;
-		} else if (numberOfFeature == 3) {
+		} else if (numberOfFeature == 2) {
 			wFoxEatingMoves = weight;
-		} else if (numberOfFeature == 4) {
+		} else if (numberOfFeature == 3) {
 			wFoxMoves = weight;
-		} else if (numberOfFeature == 5) {
+		} else if (numberOfFeature == 4) {
 			wGooseFreedomness = weight;
-		} else if (numberOfFeature == 6) {
+		} else if (numberOfFeature == 5) {
 			wInterness = weight;
-		} else if (numberOfFeature == 7) {
+		} else if (numberOfFeature == 6) {
 			wExterness = weight;
 		}
 	}
 
-	public WeightsForBoardEval(int wWinningState, int wGooseNumber, int wAheadGooseNumber,
+	public WeightsForBoardEval(int wGooseNumber, int wAheadGooseNumber,
         int wFoxEatingMoves, int wFoxMoves, int wGooseFreedomness, int wInterness, int wExterness) {
-        this.wWinningState = wWinningState;
+		this.wWinningState = Int32.MaxValue / 2;
         this.wGooseNumber = wGooseNumber;
         this.wAheadGooseNumber = wAheadGooseNumber;
         this.wFoxEatingMoves = wFoxEatingMoves;
