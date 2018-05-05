@@ -93,15 +93,16 @@ public class GeneticAlgo {
 	}
 
     private BitArray mutate(BitArray bitArray) {
-        throw new NotImplementedException();
+        System.Random rand = new System.Random();
+        int pos = rand.Next() * 100 % 6;
+        bitArray.Set(pos + 1, !bitArray[pos]);
+        return bitArray;
     }
 
     private BitArray mix(BitArray bitFather, BitArray bitMother) {
         BitArray bitChild = new BitArray(bitFather);
-        for (int i = 0; i < bitChild.Count; i++) {
-            if (i % 2 == 1) {
-                bitChild[i] = bitMother[i];
-            }
+        for (int i = bitChild.Count/2; i < bitChild.Count; i++) {
+            bitChild[i] = bitMother[i];
         }
         throw new NotImplementedException();
     }
