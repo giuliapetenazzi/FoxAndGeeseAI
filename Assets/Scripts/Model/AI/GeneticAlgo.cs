@@ -28,8 +28,6 @@ public class GeneticAlgo {
 			}
 		}
 		
-		
-		
 		int parentsCount = parents.Count;
 		int childrenToGenerate = population.Count - parentsCount; //quanti figli devo generare per ritornare ad avere una popolazione completa
 		int generatedChildren = 0;
@@ -44,8 +42,7 @@ public class GeneticAlgo {
 			WeightsForBoardEval male = parents.Keys[firstN].weights;
 			WeightsForBoardEval female = parents.Keys[secondN].weights;
 			if (!male.Equals(female)) {
-				WeightsForBoardEval child = Crossover(male, female);
-				child = Mutation(child, mutate);
+				WeightsForBoardEval child = CrossoverAndMutate(male, female, mutate);
 				WeightScore ws = new WeightScore(child, 0);
 				parents[ws] = 0;
 				generatedChildren++;
@@ -55,19 +52,12 @@ public class GeneticAlgo {
 		
 	}
 
-    private Int16 getIntFromBitArray(BitArray bitArray) {
-        if (bitArray.Length > 16)
-            throw new ArgumentException("Genetic Algo Argument length shall be at most 16 bits.");
-        Int16[] array = new Int16[1];
-        bitArray.CopyTo(array, 0);
-        return array[0];
-    }
-
     // ritorna un WeightsForBoardEval nato da male e female con operazioni bitwise 
-    private WeightsForBoardEval Crossover(WeightsForBoardEval male, WeightsForBoardEval female) {
+    private WeightsForBoardEval CrossoverAndMutate(WeightsForBoardEval male, WeightsForBoardEval female, double mutate) {
+        //crossover
 		Debug.Log("genetic algo crossover");
-        //inserisco le feature nel figlio (alternativamente tra padre e madre)
         /*
+        //variazione scema scema
         WeightsForBoardEval child = new WeightsForBoardEval(male.wGooseNumber, female.wAheadGooseNumber, male.wFoxEatingMoves, female.wFoxMoves,
             male.wGooseFreedomness, female.wInterness, male.wExterness);
         */
@@ -82,6 +72,18 @@ public class GeneticAlgo {
         Dictionary<String, BitArray> bitChild = new Dictionary<String, BitArray>();
         foreach ( String key in male.weightDict.Keys) {
             bitChild[key] = mix(bitFather[key], bitMother[key]);
+        }
+
+        //mutazione
+        System.Random random = new System.Random();
+        double prob = random.NextDouble();
+        if (prob > mutate) {
+            int pos = random.Next(0, 7);
+            //faccio la variazione della feature in posizione pos
+            /*
+            bitChild[pos] = (new BitArray(new int[] { child.wExterness }));
+            int everyOrUnique = random.NextDouble();
+            */
         }
 
         WeightsForBoardEval child = new WeightsForBoardEval(
@@ -106,27 +108,11 @@ public class GeneticAlgo {
         throw new NotImplementedException();
     }
 
-    private WeightsForBoardEval Mutation(WeightsForBoardEval child, double mutate) {
-        //TODO: implementare una qualche forma di mutazione (bitwise?)
-        System.Random random = new System.Random();
-        double prob = random.NextDouble();
-        if (prob > mutate) {
-            int pos = random.Next(0, 7);
-            List<BitArray> bitChild = new List<BitArray>();
-            bitChild[0] = (new BitArray(new int[] { child.wGooseNumber }));
-            bitChild[1] = (new BitArray(new int[] { child.wAheadGooseNumber }));
-            bitChild[2] = (new BitArray(new int[] { child.wFoxEatingMoves }));
-            bitChild[3] = (new BitArray(new int[] { child.wFoxMoves }));
-            bitChild[4] = (new BitArray(new int[] { child.wGooseFreedomness }));
-            bitChild[5] = (new BitArray(new int[] { child.wInterness }));
-            bitChild[6] = (new BitArray(new int[] { child.wExterness }));
-            //faccio la variazione della feature in posizione pos
-            bitChild[pos] = (new BitArray(new int[] { child.wExterness }));
-            int everyOrUnique = random.NextDouble();
-        }
-        return child;
-	}
-
-
-
+    private Int16 getIntFromBitArray(BitArray bitArray) {
+        if (bitArray.Length > 16)
+            throw new ArgumentException("Genetic Algo Argument length shall be at most 16 bits.");
+        Int16[] array = new Int16[1];
+        bitArray.CopyTo(array, 0);
+        return array[0];
+    }
 }
