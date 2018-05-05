@@ -55,18 +55,78 @@ public class GeneticAlgo {
 		
 	}
 
-	private WeightsForBoardEval Crossover(WeightsForBoardEval male, WeightsForBoardEval female) {
-		Debug.Log("genetic algo crossover");
-		// TODO: ritorna un WeightsForBoardEval nato dalla SCOPAZZA senza cappuccio tra male e female. Implementare operazioni bitwise 
-		// invece della classica media fra pesi?
-		male.wAheadGooseNumber++;
-		return male;
-	}
+    private Int16 getIntFromBitArray(BitArray bitArray) {
+        if (bitArray.Length > 16)
+            throw new ArgumentException("Genetic Algo Argument length shall be at most 16 bits.");
+        Int16[] array = new Int16[1];
+        bitArray.CopyTo(array, 0);
+        return array[0];
+    }
 
-	private WeightsForBoardEval Mutation(WeightsForBoardEval child, double mutate) {
-		Debug.Log("genetic algo mutation");
-		//TODO: implementare una qualche forma di mutazione (bitwise?)
+    // ritorna un WeightsForBoardEval nato da male e female con operazioni bitwise 
+    private WeightsForBoardEval Crossover(WeightsForBoardEval male, WeightsForBoardEval female) {
+		Debug.Log("genetic algo crossover");
+        //inserisco le feature nel figlio (alternativamente tra padre e madre)
+        /*
+        WeightsForBoardEval child = new WeightsForBoardEval(male.wGooseNumber, female.wAheadGooseNumber, male.wFoxEatingMoves, female.wFoxMoves,
+            male.wGooseFreedomness, female.wInterness, male.wExterness);
+        */
+        Dictionary<String, BitArray> bitFather = new Dictionary<String, BitArray>();
+        foreach (String key in male.weightDict.Keys) {
+            bitFather[key] = new BitArray(new int[] { male.weightDict[key] });
+        }
+        Dictionary<String, BitArray> bitMother = new Dictionary<String, BitArray>();
+        foreach (String key in female.weightDict.Keys) {
+            bitMother[key] = new BitArray(new int[] { female.weightDict[key] });
+        }
+        Dictionary<String, BitArray> bitChild = new Dictionary<String, BitArray>();
+        foreach ( String key in male.weightDict.Keys) {
+            bitChild[key] = mix(bitFather[key], bitMother[key]);
+        }
+
+        WeightsForBoardEval child = new WeightsForBoardEval(
+            getIntFromBitArray(bitChild["wGooseNumber"]),
+            getIntFromBitArray(bitChild["wAheadGooseNumber"]),
+            getIntFromBitArray(bitChild["wFoxEatingMoves"]),
+            getIntFromBitArray(bitChild["wFoxMoves"]),
+            getIntFromBitArray(bitChild["wGooseFreedomness"]),
+            getIntFromBitArray(bitChild["wInterness"]),
+            getIntFromBitArray(bitChild["wExterness"])
+            );
 		return child;
 	}
+
+    private BitArray mix(BitArray bitFather, BitArray bitMother) {
+        BitArray bitChild = new BitArray(bitFather);
+        for (int i = 0; i < bitChild.Count; i++) {
+            if (i % 2 == 1) {
+                bitChild[i] = bitMother[i];
+            }
+        }
+        throw new NotImplementedException();
+    }
+
+    private WeightsForBoardEval Mutation(WeightsForBoardEval child, double mutate) {
+        //TODO: implementare una qualche forma di mutazione (bitwise?)
+        System.Random random = new System.Random();
+        double prob = random.NextDouble();
+        if (prob > mutate) {
+            int pos = random.Next(0, 7);
+            List<BitArray> bitChild = new List<BitArray>();
+            bitChild[0] = (new BitArray(new int[] { child.wGooseNumber }));
+            bitChild[1] = (new BitArray(new int[] { child.wAheadGooseNumber }));
+            bitChild[2] = (new BitArray(new int[] { child.wFoxEatingMoves }));
+            bitChild[3] = (new BitArray(new int[] { child.wFoxMoves }));
+            bitChild[4] = (new BitArray(new int[] { child.wGooseFreedomness }));
+            bitChild[5] = (new BitArray(new int[] { child.wInterness }));
+            bitChild[6] = (new BitArray(new int[] { child.wExterness }));
+            //faccio la variazione della feature in posizione pos
+            bitChild[pos] = (new BitArray(new int[] { child.wExterness }));
+            int everyOrUnique = random.NextDouble();
+        }
+        return child;
+	}
+
+
 
 }
