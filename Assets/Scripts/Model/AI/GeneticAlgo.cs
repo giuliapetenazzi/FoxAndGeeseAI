@@ -53,8 +53,7 @@ public class GeneticAlgo {
 	}
 
     // ritorna un WeightsForBoardEval nato da male e female con operazioni bitwise 
-    private WeightsForBoardEval CrossoverAndMutate(WeightsForBoardEval male, WeightsForBoardEval female, double mutate) {
-        //crossover
+    private WeightsForBoardEval CrossoverAndMutate(WeightsForBoardEval male, WeightsForBoardEval female, double mutationProbability) {
 		Debug.Log("genetic algo crossover");
         /*
         //variazione scema scema
@@ -70,20 +69,15 @@ public class GeneticAlgo {
             bitMother[key] = new BitArray(new int[] { female.weightDict[key] });
         }
         Dictionary<String, BitArray> bitChild = new Dictionary<String, BitArray>();
-        foreach ( String key in male.weightDict.Keys) {
-            bitChild[key] = mix(bitFather[key], bitMother[key]);
-        }
-
-        //mutazione
         System.Random random = new System.Random();
-        double prob = random.NextDouble();
-        if (prob > mutate) {
-            int pos = random.Next(0, 7);
-            //faccio la variazione della feature in posizione pos
-            /*
-            bitChild[pos] = (new BitArray(new int[] { child.wExterness }));
-            int everyOrUnique = random.NextDouble();
-            */
+        foreach ( String key in male.weightDict.Keys) {
+            //crossover
+            bitChild[key] = mix(bitFather[key], bitMother[key]);
+            //mutazione
+            double prob = random.NextDouble();
+            if (prob > mutationProbability) {
+                bitChild[key] = mutate(bitChild[key]);
+            }
         }
 
         WeightsForBoardEval child = new WeightsForBoardEval(
@@ -97,6 +91,10 @@ public class GeneticAlgo {
             );
 		return child;
 	}
+
+    private BitArray mutate(BitArray bitArray) {
+        throw new NotImplementedException();
+    }
 
     private BitArray mix(BitArray bitFather, BitArray bitMother) {
         BitArray bitChild = new BitArray(bitFather);
