@@ -37,7 +37,7 @@ public class AlphaBeta {
 		int size = moves.Count;
 		System.Random r = new System.Random();
 		int rInt = r.Next(0, size); //for ints
-		Debug.Log(game.board);
+		//Debug.Log(game.board);
 		try {
 			return moves[rInt];
 		}

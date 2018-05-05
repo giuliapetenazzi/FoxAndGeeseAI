@@ -7,8 +7,10 @@ using System;
 public class MatchAlgo {
 
 	//lancia un torneo su population e ne fa side effects; alla fine di tutto, ordine i pesi in population in base al migliore risultato del torneo
-	public void LaunchTournament(SortedList<WeightScore, int> population) {
-        Dictionary<WeightScore, int> scores = new Dictionary<WeightScore, int>();
+	public SortedList<WeightScore, int> LaunchTournament(SortedList<WeightScore, int> population) {
+		SortedList<WeightScore, int> newPopulation = new SortedList<WeightScore, int>();
+		Dictionary<WeightScore, int> scores = new Dictionary<WeightScore, int>();
+
         for (int i = 0; i < population.Count; i++) {
             WeightScore ws1 = population.Keys[i];
             for (int j = i + 1; j < population.Keys.Count; j++) {
@@ -20,16 +22,22 @@ public class MatchAlgo {
 					AlphaBeta ws2AsFox= new AlphaBeta(PawnType.Fox, 3, ws2.weights, false);
                     PairOfScores pairOfScoresGoose = MatchTwoAi(ws1AsGoose, ws2AsFox, 1);
                     PairOfScores pairOfScoresFox = MatchTwoAi(ws1AsFox, ws2AsGoose, 1);
-                    scores[ws1] += pairOfScoresGoose.first;
+					if (!scores.ContainsKey(ws1)) {
+						scores[ws1] = 0;
+					}
+					if (!scores.ContainsKey(ws2)) {
+						scores[ws2] = 0;
+					}
+					scores[ws1] += pairOfScoresGoose.first;
                     scores[ws1] += pairOfScoresFox.first;
                     scores[ws2] += pairOfScoresGoose.second;
                     scores[ws2] += pairOfScoresFox.second;
 				}
 			}
 			WeightScore ws = new WeightScore(ws1.weights, scores[ws1]);
-			population.Remove(ws1);
-            population.Add(ws, scores[ws1]);
+			newPopulation.Add(ws, scores[ws1]);
 		}
+		return newPopulation;
 	}
 
 
@@ -50,7 +58,7 @@ public class MatchAlgo {
 		AlphaBeta foxPlayer = goosePlayer == p1 ? player2 : p1;
 		//Debug.Log("inizio partite");
 		for (int i = 0; i < numberOfMatches; i++) {
-			int turnLimit = 200;
+			int turnLimit = 100;
 			int turnCounter = 0;
 			Game game = new Game(15, true);
 

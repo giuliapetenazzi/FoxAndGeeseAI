@@ -71,4 +71,10 @@ public class WeightsForBoardEval {
 		hashCode = hashCode * -1521134295 + wExterness.GetHashCode();
 		return hashCode;
 	}
+
+	public override string ToString() {
+		return "winningState = " + wWinningState + "gooseNumber = " + wGooseNumber + "aheadGooseNumber = " + wAheadGooseNumber +
+			"foxEatingMoves = " + wFoxEatingMoves + "foxMoves = " + wFoxMoves + "gooseFreedomness = " + wGooseFreedomness + "interness = "
+			+ wInterness + "externess = " + wExterness;
+	}
 }

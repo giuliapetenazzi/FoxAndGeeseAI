@@ -513,7 +513,7 @@ namespace FoxAndGeese {
             //AIplayer == volpe e vince volpe torna +200
             //AIplayer == volpe e vince oca -200
             // else non ha vinto nessuno
-            Debug.Log("game weights = " + weights);
+            //Debug.Log("game weights = " + weights);
             //gooseNumber
             score += GetGooseNumber() * weights.wGooseNumber;
             //aheadGooseNumber
@@ -531,7 +531,7 @@ namespace FoxAndGeese {
             score -= GetInterness(rFox, cFox) * weights.wInterness;
             //externess
             score += GetExterness(rFox, cFox) * weights.wExterness;
-            Debug.Log("score evaluated: " + score * signOfPlayer);
+            //Debug.Log("score evaluated: " + score * signOfPlayer);
             return score * signOfPlayer;
 		}
 

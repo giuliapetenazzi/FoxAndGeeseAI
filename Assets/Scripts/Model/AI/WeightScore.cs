@@ -15,7 +15,10 @@ public class WeightScore : IComparable {
 
 	public int CompareTo(object obj) {
 		WeightScore w = (WeightScore)obj;
-		return score.CompareTo(w.score);
+		if (score <= w.score) {
+			return -1;
+		}
+		return 0;
 	}
 
 	public override bool Equals(object obj) {
@@ -26,5 +29,9 @@ public class WeightScore : IComparable {
 
 	public override int GetHashCode() {
 		return -1248457298 + EqualityComparer<WeightsForBoardEval>.Default.GetHashCode(weights);
+	}
+
+	public override string ToString() {
+		return "weightScore weights = " + weights.ToString() + " score = " + score;
 	}
 }
