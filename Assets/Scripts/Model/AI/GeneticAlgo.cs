@@ -37,7 +37,7 @@ public class GeneticAlgo {
 		
 		//crossover
 		while (parents.Count < population.Count) {
-			Debug.Log("GeneticAlgo genero figli");
+			//Debug.Log("GeneticAlgo genero figli");
 			int firstN = rand.Next(parentsCount);
 			int secondN = rand.Next(parentsCount);
 			Debug.Log("GeneticAlgo parentsCount = " + parents.Count + "firstN = " + firstN + " secondN " + secondN);
