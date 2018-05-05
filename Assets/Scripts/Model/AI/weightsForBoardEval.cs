@@ -3,77 +3,84 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class WeightsForBoardEval { 
-    public int wWinningState { get; set; } // meglio per volpe se basso
-	public int wGooseNumber { get; set; } // meglio per volpe se basso
-	public int wAheadGooseNumber { get; set; } // meglio per volpe se basso
-	public int wFoxEatingMoves { get; set; } // meglio per volpe se alto
-	public int wFoxMoves { get; set; } // meglio per volpe se alto
-	public int wGooseFreedomness { get; set; } // meglio per volpe se alta
-	public int wInterness { get; set; } // meglio per volpe se alto
-	public int wExterness { get; set; } // meglio per volpe se basso
+
+public class WeightsForBoardEval {
+	
+    public Int32 wWinningState { get; set; } // meglio per volpe se basso
+	public Dictionary<string, Int16> weightDict { get; set; }
+
+	//public Int16 wGooseNumber { get; set; } // meglio per volpe se basso
+	//public Int16 wAheadGooseNumber { get; set; } // meglio per volpe se basso
+	//public Int16 wFoxEatingMoves { get; set; } // meglio per volpe se alto
+	//public Int16 wFoxMoves { get; set; } // meglio per volpe se alto
+	//public Int16 wGooseFreedomness { get; set; } // meglio per volpe se alta
+	//public Int16 wInterness { get; set; } // meglio per volpe se alto
+	//public Int16 wExterness { get; set; } // meglio per volpe se basso
 
 
-	public WeightsForBoardEval(int numberOfFeature, int weight) {
+	public WeightsForBoardEval(int numberOfFeature, Int16 weight) {
 		this.wWinningState = Int32.MaxValue / 2;
+		weightDict = new Dictionary<string, short>();
+		weightDict.Add("wGooseNumber", 0);
+		weightDict.Add("wAheadGooseNumber", 0);
+		weightDict.Add("wFoxEatingMoves", 0);
+		weightDict.Add("wFoxMoves", 0);
+		weightDict.Add("wGooseFreedomness", 0);
+		weightDict.Add("wInterness", 0);
+		weightDict.Add("wExterness", 0);
+		string selectedFeature = "";
+		
 		if (numberOfFeature == 0) {
-			wGooseNumber = weight;
+			selectedFeature = "wGooseNumber";
 		} else if (numberOfFeature == 1) {
-			wAheadGooseNumber = weight;
+			selectedFeature = "wAheadGooseNumber";
 		} else if (numberOfFeature == 2) {
-			wFoxEatingMoves = weight;
+			selectedFeature = "wFoxEatingMoves";
 		} else if (numberOfFeature == 3) {
-			wFoxMoves = weight;
+			selectedFeature = "wFoxMoves";
 		} else if (numberOfFeature == 4) {
-			wGooseFreedomness = weight;
+			selectedFeature = "wGooseFreedomness";
 		} else if (numberOfFeature == 5) {
-			wInterness = weight;
+			selectedFeature = "wInterness"; 
 		} else if (numberOfFeature == 6) {
-			wExterness = weight;
+			selectedFeature = "wExterness";
 		}
+		weightDict[selectedFeature] = weight;
 	}
 
-	public WeightsForBoardEval(int wGooseNumber, int wAheadGooseNumber,
-        int wFoxEatingMoves, int wFoxMoves, int wGooseFreedomness, int wInterness, int wExterness) {
+	public WeightsForBoardEval(Int16 wGooseNumber, Int16 wAheadGooseNumber,
+		Int16 wFoxEatingMoves, Int16 wFoxMoves, Int16 wGooseFreedomness, Int16 wInterness, Int16 wExterness) {
 		this.wWinningState = Int32.MaxValue / 2;
-        this.wGooseNumber = wGooseNumber;
-        this.wAheadGooseNumber = wAheadGooseNumber;
-        this.wFoxEatingMoves = wFoxEatingMoves;
-        this.wFoxMoves = wFoxMoves;
-        this.wGooseFreedomness = wGooseFreedomness;
-        this.wInterness = wInterness;
-        this.wExterness = wExterness;
+		weightDict = new Dictionary<string, short>();
+		weightDict.Add("wGooseNumber", wGooseNumber);
+		weightDict.Add("wAheadGooseNumber", wAheadGooseNumber);
+		weightDict.Add("wFoxEatingMoves", wFoxEatingMoves);
+		weightDict.Add("wFoxMoves", wFoxMoves);
+		weightDict.Add("wGooseFreedomness", wGooseFreedomness);
+		weightDict.Add("wInterness", wInterness);
+		weightDict.Add("wExterness", wExterness);
     }
+
+
+
+	public override string ToString() {
+		return "winningState = " + wWinningState + "gooseNumber = " + weightDict["wGooseNumber"] + "aheadGooseNumber = " +
+			weightDict["wAheadGooseNumber"] + "foxEatingMoves = " + weightDict["wFoxEatingMoves"] + "foxMoves = " +
+			weightDict["wFoxMoves"] + "gooseFreedomness = " + weightDict["wGooseFreedomness"] + "interness = "
+			+ weightDict["wInterness"] + "externess = " + weightDict["wExterness"];
+	}
 
 	public override bool Equals(object obj) {
 		var eval = obj as WeightsForBoardEval;
 		return eval != null &&
 			   wWinningState == eval.wWinningState &&
-			   wGooseNumber == eval.wGooseNumber &&
-			   wAheadGooseNumber == eval.wAheadGooseNumber &&
-			   wFoxEatingMoves == eval.wFoxEatingMoves &&
-			   wFoxMoves == eval.wFoxMoves &&
-			   wGooseFreedomness == eval.wGooseFreedomness &&
-			   wInterness == eval.wInterness &&
-			   wExterness == eval.wExterness;
+			   EqualityComparer<Dictionary<string, short>>.Default.Equals(weightDict, eval.weightDict);
 	}
 
 	public override int GetHashCode() {
-		var hashCode = -1428641248;
+		var hashCode = -685122608;
 		hashCode = hashCode * -1521134295 + wWinningState.GetHashCode();
-		hashCode = hashCode * -1521134295 + wGooseNumber.GetHashCode();
-		hashCode = hashCode * -1521134295 + wAheadGooseNumber.GetHashCode();
-		hashCode = hashCode * -1521134295 + wFoxEatingMoves.GetHashCode();
-		hashCode = hashCode * -1521134295 + wFoxMoves.GetHashCode();
-		hashCode = hashCode * -1521134295 + wGooseFreedomness.GetHashCode();
-		hashCode = hashCode * -1521134295 + wInterness.GetHashCode();
-		hashCode = hashCode * -1521134295 + wExterness.GetHashCode();
+		hashCode = hashCode * -1521134295 + EqualityComparer<Dictionary<string, short>>.Default.GetHashCode(weightDict);
 		return hashCode;
-	}
-
-	public override string ToString() {
-		return "winningState = " + wWinningState + "gooseNumber = " + wGooseNumber + "aheadGooseNumber = " + wAheadGooseNumber +
-			"foxEatingMoves = " + wFoxEatingMoves + "foxMoves = " + wFoxMoves + "gooseFreedomness = " + wGooseFreedomness + "interness = "
-			+ wInterness + "externess = " + wExterness;
 	}
 }

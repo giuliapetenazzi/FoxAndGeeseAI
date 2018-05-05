@@ -37,7 +37,7 @@ public class AiTester : MonoBehaviour {
 		//creo 10 giocatori per ogni feature, ognuno con pesi casuali sulla singola feature
 		for (int i = 0; i < 4; i++) { //scorre le feature
 			for (int j = 0; j < 3; j++) { //indica quanti giocatori per ogni tipologia di feature singola creare
-				WeightsForBoardEval w =  new WeightsForBoardEval(i, rand.Next(10000));
+				WeightsForBoardEval w =  new WeightsForBoardEval(i, (Int16)rand.Next(Int16.MaxValue));
 				weights.Add(w);
 				Debug.Log("pesi = " + w);
 			}

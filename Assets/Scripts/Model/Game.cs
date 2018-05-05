@@ -515,22 +515,22 @@ namespace FoxAndGeese {
             // else non ha vinto nessuno
             //Debug.Log("game weights = " + weights);
             //gooseNumber
-            score += GetGooseNumber() * weights.wGooseNumber;
+            score += GetGooseNumber() * weights.weightDict["wGooseNumber"];
             //aheadGooseNumber
-            score += GetAheadGooseNumber() * weights.wAheadGooseNumber;
+            score += GetAheadGooseNumber() * weights.weightDict["wAheadGooseNumber"];
             //foxEatingMoves
             Vector2 foxCoordinates = FindFoxCoordinates();
             int rFox = (int)foxCoordinates.x;
             int cFox = (int)foxCoordinates.y;
-            score -= IACalculateFoxValidEatingMoves(rFox, cFox).Count() * weights.wFoxEatingMoves;
+            score -= IACalculateFoxValidEatingMoves(rFox, cFox).Count() * weights.weightDict["wFoxEatingMoves"];
             //foxMoves
-            score -= IACalculateFoxValidMoves(rFox, cFox).Count() * weights.wFoxMoves;
+            score -= IACalculateFoxValidMoves(rFox, cFox).Count() * weights.weightDict["wFoxMoves"];
             //freedomness
-            score -= (int)Math.Round(GetGooseFreedomness() * weights.wGooseFreedomness, 0);
+            score -= (int)Math.Round(GetGooseFreedomness() * weights.weightDict["wGooseFreedomness"], 0);
             //interness
-            score -= GetInterness(rFox, cFox) * weights.wInterness;
+            score -= GetInterness(rFox, cFox) * weights.weightDict["wInterness"];
             //externess
-            score += GetExterness(rFox, cFox) * weights.wExterness;
+            score += GetExterness(rFox, cFox) * weights.weightDict["wExterness"];
             //Debug.Log("score evaluated: " + score * signOfPlayer);
             return score * signOfPlayer;
 		}
