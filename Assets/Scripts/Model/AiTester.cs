@@ -13,28 +13,33 @@ public class AiTester : MonoBehaviour {
 	public void StartTest() {
 		Debug.Log("0 ");
 
-		//WeightScore ws1 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0 ,0 ,0 ,0 ,0), 3);
-		//WeightScore ws2 = new WeightScore(new WeightsForBoardEval(0, 101, 0, 0, 0, 0, 0, 0), 3);
+		//WeightScore ws1 = new WeightScore(new WeightsForBoardEval(0, 101, 0, 0, 0, 0, 0, 0), 3);
+		//WeightScore ws2 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
+		//WeightScore ws3 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
+		//WeightScore ws4 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
+
+
 		//Debug.LogWarning("equals = " + ws1.Equals(ws2));
 		//Debug.LogWarning("compareTO = " + ws1.CompareTo(ws2));
 		//SortedList<WeightScore, int> test = new SortedList<WeightScore, int>();
 		//test.Add(ws1, 0);
 		//test.Add(ws2, 8);
+		//test.Add(ws3, 0);
+		//test.Add(ws4, 0);
 		//Debug.LogWarning("test size = " + test.Count);
-		////test.Remove(ws1);
-		//Debug.LogWarning("test size = after remove " + test.Count);
-		//test.Keys.RemoveAt(0);
-		//Debug.LogWarning("test size = " + test.Count);
-
+		//Debug.LogWarning("containsKey = " + test.ContainsKey(ws3));
+		
 		MatchAlgo matchAlgo = new MatchAlgo();
 		GeneticAlgo geneticAlgo = new GeneticAlgo();
 		System.Random rand = new System.Random();
 		List<WeightsForBoardEval> weights = new List<WeightsForBoardEval>();
 		int counter = 0;
 		//creo 10 giocatori per ogni feature, ognuno con pesi casuali sulla singola feature
-		for (int i = 0; i < 3; i++) { //scorre le feature
-			for (int j = 0; j < 2; j++) { //indica quanti giocatori per ogni tipologia di feature singola creare
-				weights.Add(new WeightsForBoardEval(i, rand.Next(10000)));
+		for (int i = 0; i < 4; i++) { //scorre le feature
+			for (int j = 0; j < 3; j++) { //indica quanti giocatori per ogni tipologia di feature singola creare
+				WeightsForBoardEval w =  new WeightsForBoardEval(i, rand.Next(10000));
+				weights.Add(w);
+				Debug.Log("pesi = " + w);
 			}
 		}
 		SortedList<WeightScore, int> scoreMap = new SortedList<WeightScore, int>();
@@ -50,7 +55,16 @@ public class AiTester : MonoBehaviour {
 			score = matchAlgo.MatchTwoAi(playerAsFox, null, 3).first;
 			score += matchAlgo.MatchTwoAi(playerAsGoose, null, 3).first;
 			WeightScore ws = new WeightScore(weight, score);
-			scoreMap[ws] = score;
+			//for (int j = 0; i < scoreMap.Count; j++) {
+			//	WeightScore w = scoreMap.Keys[j];
+			//	if (w.CompareTo(ws) == 0) {
+			//		Debug.LogWarning("w già contenuto =  " + w);
+			//		Debug.LogWarning("ws nuovo = " + ws);
+			//	}
+			//}
+
+			//Debug.Log("ws = " + ws + " contains = " + scoreMap.ContainsKey(ws));
+			scoreMap.Add(ws, score);
 		}
 		Debug.Log("aiTester prima di evoluzione");
 		Debug.Log("aiTester scoreMap size = " + scoreMap.Count);
@@ -60,7 +74,7 @@ public class AiTester : MonoBehaviour {
 			scoreMap = geneticAlgo.Evolve(scoreMap, 0.6, 0.05, 0.01);
 		}
 		Debug.LogWarning("best weights " + scoreMap.Keys[0]);
-
+		
 	}
 
 

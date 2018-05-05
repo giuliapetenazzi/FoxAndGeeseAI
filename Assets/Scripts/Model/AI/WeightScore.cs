@@ -18,7 +18,7 @@ public class WeightScore : IComparable {
 		if (score <= w.score) {
 			return -1;
 		}
-		return 0;
+		return 1;
 	}
 
 	public override bool Equals(object obj) {

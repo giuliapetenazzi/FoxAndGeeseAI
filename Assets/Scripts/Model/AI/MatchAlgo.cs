@@ -43,7 +43,7 @@ public class MatchAlgo {
 
 	//fa giocare due ai l'uno contro l'altro per numberOfMatches volte. Se p2 è null, crea un giocatore random.
 	public PairOfScores MatchTwoAi(AlphaBeta p1, AlphaBeta p2, int numberOfMatches) {
-		Debug.Log("gioco2game");
+		//Debug.Log("gioco2game");
 		int player1Score = 0;
 		int player2Score = 0;
 		PawnType pawnType1 = p1.aiPlayer;
