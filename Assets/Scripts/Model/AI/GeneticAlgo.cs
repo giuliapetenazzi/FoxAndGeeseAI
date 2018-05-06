@@ -62,52 +62,74 @@ public class GeneticAlgo {
         */
         Dictionary<String, BitArray> bitFather = new Dictionary<String, BitArray>();
         Dictionary<String, BitArray> bitMother = new Dictionary<String, BitArray>();
-        Dictionary<String, BitArray> bitChild = new Dictionary<String, BitArray>();
+        Dictionary<String, bool[]> boolMatrixChild = new Dictionary<String, bool[]>();
         foreach (String key in male.weightDict.Keys) {
             bitFather[key] = new BitArray(new int[] { male.weightDict[key] });
             bitMother[key] = new BitArray(new int[] { female.weightDict[key] });
+            bool[] boolFather = new bool[16];
+            bool[] boolMother = new bool[16];
+            bool[] boolChild = new bool[16];
+            for (int i = 0; i < 16; i++) {
+                boolFather[i] = bitFather[key][i + 16];
+                boolMother[i] = bitMother[key][i + 16];
+            }
+            //POST ho riempito i due genitori booleani
             //crossover
-            bitChild[key] = Mix(bitFather[key], bitMother[key]);
+            boolChild = Mix(boolFather, boolMother);
             //mutazione
             System.Random random = new System.Random();
             double prob = random.NextDouble();
             if (prob > mutationProbability) {
-                bitChild[key] = mutate(bitChild[key]);
+                boolChild = Mutate(boolChild);
             }
+            boolMatrixChild.Add(key, boolChild);
         }
+        
+        //TODO conversione da boolChild in bitChild
 
         WeightsForBoardEval child = new WeightsForBoardEval(
-            getIntFromBitArray(bitChild["wGooseNumber"]),
-            getIntFromBitArray(bitChild["wAheadGooseNumber"]),
-            getIntFromBitArray(bitChild["wFoxEatingMoves"]),
-            getIntFromBitArray(bitChild["wFoxMoves"]),
-            getIntFromBitArray(bitChild["wGooseFreedomness"]),
-            getIntFromBitArray(bitChild["wInterness"]),
-            getIntFromBitArray(bitChild["wExterness"])
+            GetIntFromBoolArray(boolMatrixChild["wGooseNumber"]),
+            GetIntFromBoolArray(boolMatrixChild["wAheadGooseNumber"]),
+            GetIntFromBoolArray(boolMatrixChild["wFoxEatingMoves"]),
+            GetIntFromBoolArray(boolMatrixChild["wFoxMoves"]),
+            GetIntFromBoolArray(boolMatrixChild["wGooseFreedomness"]),
+            GetIntFromBoolArray(boolMatrixChild["wInterness"]),
+            GetIntFromBoolArray(boolMatrixChild["wExterness"])
             );
 		return child;
 	}
 
-    private BitArray mutate(BitArray bitArray) {
-        System.Random rand = new System.Random();
-        int pos = rand.Next() * 100 % 6;
-        bitArray.Set(pos + 1, !bitArray[pos]);
-        return bitArray;
-    }
-
-    private BitArray Mix(BitArray bitFather, BitArray bitMother) {
-        BitArray bitChild = new BitArray(bitFather);
-        for (int i = bitChild.Count/2; i < bitChild.Count; i++) {
-            bitChild[i] = bitMother[i];
+    private bool[] Mutate(bool[] boolArray) {
+        if (boolArray.Length > 16) {
+            throw new ArgumentException ("metodo mutate ho piu di 16 bit");
         }
-        return bitChild;
+        System.Random rand = new System.Random();
+        int pos = rand.Next() * 100 % 15;
+        boolArray[pos + 1] = !boolArray[pos + 1];
+        return boolArray;
     }
 
-    private Int16 getIntFromBitArray(BitArray bitArray) {
-        if (bitArray.Length > 16)
+    private bool[] Mix(bool[] boolFather, bool[] boolMother) {
+        if (boolFather.Length > 16 || boolMother.Length > 16) {
+            throw new ArgumentException ("metodo mix ho piu di 16 bit");
+        }
+        bool[] boolChild = new bool[16];
+        //copio la prima metà dal padre
+        for (int i = 0; i < 8; i++) {
+            boolChild[i] = boolFather[i];
+        }
+        //copio la seconda metà dalla madre
+        for (int i = 8; i < 16; i++) {
+            boolChild[i] = boolMother[i];
+        }
+        return boolChild;
+    }
+
+    private Int16 GetIntFromBoolArray(bool[] boolArray) {
+        if (boolArray.Length > 16)
             throw new ArgumentException("Genetic Algo :: getIntFromBitArray :: ci sono piu di 16 bits");
         Int16[] array = new Int16[1];
-        bitArray.CopyTo(array, 0);
+        boolArray.CopyTo(array, 0);
         return array[0];
     }
 }
