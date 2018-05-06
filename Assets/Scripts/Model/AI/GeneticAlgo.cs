@@ -128,8 +128,7 @@ public class GeneticAlgo {
     private Int16 GetIntFromBoolArray(bool[] boolArray) {
         if (boolArray.Length > 16)
             throw new ArgumentException("Genetic Algo :: getIntFromBitArray :: ci sono piu di 16 bits");
-        Int16[] array = new Int16[1];
-        boolArray.CopyTo(array, 0);
-        return array[0];
+        Int16 number = Convert.ToInt16(boolArray);
+        return number;
     }
 }
