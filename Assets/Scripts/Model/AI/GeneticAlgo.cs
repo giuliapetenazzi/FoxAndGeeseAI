@@ -61,19 +61,15 @@ public class GeneticAlgo {
             male.wGooseFreedomness, female.wInterness, male.wExterness);
         */
         Dictionary<String, BitArray> bitFather = new Dictionary<String, BitArray>();
+        Dictionary<String, BitArray> bitMother = new Dictionary<String, BitArray>();
+        Dictionary<String, BitArray> bitChild = new Dictionary<String, BitArray>();
         foreach (String key in male.weightDict.Keys) {
             bitFather[key] = new BitArray(new int[] { male.weightDict[key] });
-        }
-        Dictionary<String, BitArray> bitMother = new Dictionary<String, BitArray>();
-        foreach (String key in female.weightDict.Keys) {
             bitMother[key] = new BitArray(new int[] { female.weightDict[key] });
-        }
-        Dictionary<String, BitArray> bitChild = new Dictionary<String, BitArray>();
-        System.Random random = new System.Random();
-        foreach ( String key in male.weightDict.Keys) {
             //crossover
-            bitChild[key] = mix(bitFather[key], bitMother[key]);
+            bitChild[key] = Mix(bitFather[key], bitMother[key]);
             //mutazione
+            System.Random random = new System.Random();
             double prob = random.NextDouble();
             if (prob > mutationProbability) {
                 bitChild[key] = mutate(bitChild[key]);
@@ -99,17 +95,17 @@ public class GeneticAlgo {
         return bitArray;
     }
 
-    private BitArray mix(BitArray bitFather, BitArray bitMother) {
+    private BitArray Mix(BitArray bitFather, BitArray bitMother) {
         BitArray bitChild = new BitArray(bitFather);
         for (int i = bitChild.Count/2; i < bitChild.Count; i++) {
             bitChild[i] = bitMother[i];
         }
-        throw new NotImplementedException();
+        return bitChild;
     }
 
     private Int16 getIntFromBitArray(BitArray bitArray) {
         if (bitArray.Length > 16)
-            throw new ArgumentException("Genetic Algo Argument length shall be at most 16 bits.");
+            throw new ArgumentException("Genetic Algo :: getIntFromBitArray :: ci sono piu di 16 bits");
         Int16[] array = new Int16[1];
         bitArray.CopyTo(array, 0);
         return array[0];
