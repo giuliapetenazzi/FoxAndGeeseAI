@@ -17,17 +17,18 @@ public class WeightsForBoardEval {
 	//public Int16 wInterness { get; set; } // meglio per volpe se alto
 	//public Int16 wExterness { get; set; } // meglio per volpe se basso
 
+	public WeightsForBoardEval(System.Random rand) {
+		Initialize();
+		List<string> keys = new List<string>(weightDict.Keys);
+
+		foreach (var key in keys) {
+			weightDict[key] = (Int16)(rand.Next(Int16.MaxValue));
+		}
+	}
+
 
 	public WeightsForBoardEval(int numberOfFeature, Int16 weight) {
-		this.wWinningState = Int32.MaxValue / 2;
-		weightDict = new Dictionary<string, short>();
-		weightDict.Add("wGooseNumber", 0);
-		weightDict.Add("wAheadGooseNumber", 0);
-		weightDict.Add("wFoxEatingMoves", 0);
-		weightDict.Add("wFoxMoves", 0);
-		weightDict.Add("wGooseFreedomness", 0);
-		weightDict.Add("wInterness", 0);
-		weightDict.Add("wExterness", 0);
+		Initialize();
 		string selectedFeature = "";
 		
 		if (numberOfFeature == 0) {
@@ -60,6 +61,18 @@ public class WeightsForBoardEval {
 		weightDict.Add("wInterness", wInterness);
 		weightDict.Add("wExterness", wExterness);
     }
+
+	private void Initialize() {
+		this.wWinningState = Int32.MaxValue / 2;
+		weightDict = new Dictionary<string, short>();
+		weightDict.Add("wGooseNumber", 0);
+		weightDict.Add("wAheadGooseNumber", 0);
+		weightDict.Add("wFoxEatingMoves", 0);
+		weightDict.Add("wFoxMoves", 0);
+		weightDict.Add("wGooseFreedomness", 0);
+		weightDict.Add("wInterness", 0);
+		weightDict.Add("wExterness", 0);
+	}
 
 
 
