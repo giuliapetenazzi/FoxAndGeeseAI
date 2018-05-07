@@ -74,32 +74,34 @@ public class GeneticAlgo {
             System.Random random = new System.Random();
             double prob = random.NextDouble();
             if (prob > mutationProbability) {
-                bitChild[key] = mutate(bitChild[key]);
+                bitChild[key] = Mutate(bitChild[key]);
             }
         }
 
         WeightsForBoardEval child = new WeightsForBoardEval(
-            getIntFromBitArray(bitChild["wGooseNumber"]),
-            getIntFromBitArray(bitChild["wAheadGooseNumber"]),
-            getIntFromBitArray(bitChild["wFoxEatingMoves"]),
-            getIntFromBitArray(bitChild["wFoxMoves"]),
-            getIntFromBitArray(bitChild["wGooseFreedomness"]),
-            getIntFromBitArray(bitChild["wInterness"]),
-            getIntFromBitArray(bitChild["wExterness"])
+            GetIntFromBitArray(bitChild["wGooseNumber"]),
+            GetIntFromBitArray(bitChild["wAheadGooseNumber"]),
+            GetIntFromBitArray(bitChild["wFoxEatingMoves"]),
+            GetIntFromBitArray(bitChild["wFoxMoves"]),
+            GetIntFromBitArray(bitChild["wGooseFreedomness"]),
+            GetIntFromBitArray(bitChild["wInterness"]),
+            GetIntFromBitArray(bitChild["wExterness"])
             );
         return child;
     }
 
-    private BitArray mutate(BitArray bitArray) {
+    private BitArray Mutate(BitArray bitArray) {
+        if (bitArray.Count != 16)
+            throw new ArgumentException("Genetic Algo :: mutate :: non ci sono esattamente 16 bits");
         System.Random rand = new System.Random();
-        int pos = rand.Next() * 100 % 15;
+        int pos = Math.Abs((rand.Next()) % 15);
         bitArray.Set(pos + 1, !bitArray[pos + 1]);
         return bitArray;
     }
 
     private BitArray Mix(BitArray bitFather, BitArray bitMother) {
-        if (bitFather.Length > 16 || bitMother.Length > 16)
-            throw new ArgumentException("Genetic Algo :: getIntFromBitArray :: ci sono piu di 16 bits");
+        if (bitFather.Count != 16 || bitMother.Count != 16)
+            throw new ArgumentException("Genetic Algo :: mix :: non ci sono esattamente 16 bits");
         BitArray bitChild = new BitArray(bitFather);
         for (int i = bitChild.Count / 2; i < bitChild.Count; i++) {
             bitChild[i] = bitMother[i];
@@ -107,11 +109,12 @@ public class GeneticAlgo {
         return bitChild;
     }
 
-    private Int16 getIntFromBitArray(BitArray bitArray) {
-        if (bitArray.Length > 16)
-            throw new ArgumentException("Genetic Algo :: getIntFromBitArray :: ci sono piu di 16 bits");
-        Int16[] array = new Int16[1];
-        bitArray.CopyTo(array, 0);
-        return array[0];
+    private Int16 GetIntFromBitArray(BitArray bitArray) {
+        if (bitArray.Count != 16)
+            throw new ArgumentException("Genetic Algo :: getIntFromBitArray :: non ci sono esattamente 16 bits");
+        byte[] byteArray = new byte[2];
+        bitArray.CopyTo(byteArray, 0);
+        Int16 number = BitConverter.ToInt16(byteArray, 0);
+        return number;
     }
 }
