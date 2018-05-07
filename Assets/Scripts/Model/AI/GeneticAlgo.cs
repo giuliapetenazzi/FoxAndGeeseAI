@@ -73,7 +73,7 @@ public class GeneticAlgo {
             //mutazione
             System.Random random = new System.Random();
             double prob = random.NextDouble();
-            if (prob > mutationProbability) {
+            if (prob < mutationProbability) {
                 bitChild[key] = Mutate(bitChild[key]);
             }
         }
