@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using FoxAndGeese;
 using System;
 
@@ -8,6 +8,7 @@ public class MatchAlgo {
 
 	//lancia un torneo su population e ne fa side effects; alla fine di tutto, ordine i pesi in population in base al migliore risultato del torneo
 	public SortedList<WeightScore, int> LaunchTournament(SortedList<WeightScore, int> population) {
+		Console.WriteLine("inizio LaunchTournament");
 		SortedList<WeightScore, int> newPopulation = new SortedList<WeightScore, int>();
 		Dictionary<WeightScore, int> scores = new Dictionary<WeightScore, int>();
         for (int i = 0; i < population.Count; i++) {
@@ -42,7 +43,7 @@ public class MatchAlgo {
 
 	//fa giocare due ai l'uno contro l'altro per numberOfMatches volte. Se p2 è null, crea un giocatore random.
 	public PairOfScores MatchTwoAi(AlphaBeta p1, AlphaBeta p2, int numberOfMatches) {
-		//Debug.Log("gioco2game");
+		//Console.WriteLine("gioco2game");
 		int player1Score = 0;
 		int player2Score = 0;
 		PawnType pawnType1 = p1.aiPlayer;
@@ -55,7 +56,7 @@ public class MatchAlgo {
 		}
 		AlphaBeta goosePlayer = pawnType1 == PawnType.Goose ? p1 : player2;
 		AlphaBeta foxPlayer = goosePlayer == p1 ? player2 : p1;
-		//Debug.Log("inizio partite");
+		//Console.WriteLine("inizio partite");
 		for (int i = 0; i < numberOfMatches; i++) {
 			int turnLimit = 50;
 			int turnCounter = 0;
@@ -64,12 +65,12 @@ public class MatchAlgo {
 			while (!game.GameOver() && turnCounter < turnLimit) {
 				Move move1 = goosePlayer.RunAlphaBeta(game);
 				game.MovePawn(move1);
-				//Debug.Log("move goose = " + move1);
+				//Console.WriteLine("move goose = " + move1);
 				if (game.GameOver()) {
 					break;
 				}
 				Move move2 = foxPlayer.RunAlphaBeta(game);
-				//Debug.Log("move fox = " + move1);
+				//Console.WriteLine("move fox = " + move1);
 				game.MovePawn(move2);
 				turnCounter++;
 			}
@@ -99,9 +100,9 @@ public class MatchAlgo {
 			//if (game.winner == player2.aiPlayer) {
 			//	player2Score++;
 			//}
-			Debug.LogWarning("game numero " + i + " finito vincitore = " + game.winner + " oche rimaste = " + game.GetGooseNumber());
+			//Console.WriteLine("game numero " + i + " finito vincitore = " + game.winner + " oche rimaste = " + game.GetGooseNumber());
 		}
-		//Debug.Log("player1 ha vinto " + player1Score + " volte contro le " + player2Score + " di player2");
+		//Console.WriteLine("player1 ha vinto " + player1Score + " volte contro le " + player2Score + " di player2");
 		return new PairOfScores(player1Score, player2Score);
 	}
 

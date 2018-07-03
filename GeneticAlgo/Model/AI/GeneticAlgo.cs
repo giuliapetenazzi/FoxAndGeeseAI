@@ -1,21 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using System;
 
 public class GeneticAlgo {
 
 	public SortedList<WeightScore, int> Evolve(SortedList<WeightScore, int> population, double retain, double randomSelect, double mutate) {
-		Debug.Log("start genetic algo evolve");
-		Debug.LogWarning("popolazione = ");
+		Console.WriteLine("start genetic algo evolve");
 
 		foreach (var key in population.Keys) {
-			Debug.Log(key);
+			Console.WriteLine(key);
 		}
 		System.Random rand = new System.Random();
 		int retainIndex = (int)(population.Count * retain);
-		Debug.Log("population size = " + population.Count + " " + retain + " " + randomSelect + " " + mutate);
-		Debug.Log("retain tengo " + retainIndex + " soggetti");
+		Console.WriteLine("population size = " + population.Count + " " + retain + " " + randomSelect + " " + mutate);
+		Console.WriteLine("retain tengo " + retainIndex + " soggetti");
 		SortedList<WeightScore, int> parents = new SortedList<WeightScore, int>();
 
 		var iter = population.GetEnumerator();
@@ -36,14 +35,15 @@ public class GeneticAlgo {
 		int parentsCount = parents.Count;
 		int childrenToGenerate = population.Count - parentsCount; //quanti figli devo generare per ritornare ad avere una popolazione completa
 		int generatedChildren = 0;
-		Debug.LogWarning("fine evolve" + population.Count + " " + parents.Count + " " + childrenToGenerate);
+		Console.WriteLine("fine evolve" + population.Count + " " + parents.Count + " " + childrenToGenerate);
 		
 		//crossover
 		while (parents.Count < population.Count) {
-			//Debug.Log("GeneticAlgo genero figli");
+			//Console.WriteLine("parent count= " + parents.Count + " pop count = " + population.Count);
+			//Console.WriteLine("GeneticAlgo genero figli");
 			int firstN = rand.Next(parentsCount);
 			int secondN = rand.Next(parentsCount);
-			Debug.Log("GeneticAlgo parentsCount = " + parents.Count + "firstN = " + firstN + " secondN " + secondN);
+			//Console.WriteLine("GeneticAlgo parentsCount = " + parents.Count + "firstN = " + firstN + " secondN " + secondN);
 			WeightsForBoardEval male = parents.Keys[firstN].weights;
 			WeightsForBoardEval female = parents.Keys[secondN].weights;
 			if (!male.Equals(female)) {
@@ -53,17 +53,17 @@ public class GeneticAlgo {
 				generatedChildren++;
 			}
 		}
-		Debug.LogWarning("evolve prima di tournament parents=");
-		foreach (var key in parents.Keys) {
-			Debug.Log(key);
-		}
+		//Console.WriteLine("evolve prima di tournament parents=");
+		//foreach (var key in parents.Keys) {
+		//	Console.WriteLine(key);
+		//}
 		return new MatchAlgo().LaunchTournament(parents); //lancia un torneo sulla popolazione e ritorna la popolazione con gli score aggiornati
 		
 	}
 
     // ritorna un WeightsForBoardEval nato da male e female con operazioni bitwise 
     private WeightsForBoardEval CrossoverAndMutate(WeightsForBoardEval male, WeightsForBoardEval female, double mutationProbability) {
-        Debug.Log("genetic algo crossover");
+        Console.WriteLine("genetic algo crossover");
         /*
         //variazione scema scema
         WeightsForBoardEval child = new WeightsForBoardEval(male.wGooseNumber, female.wAheadGooseNumber, male.wFoxEatingMoves, female.wFoxMoves,
@@ -96,7 +96,9 @@ public class GeneticAlgo {
             GetIntFromBitArray(bitChild["wInterness"]),
             GetIntFromBitArray(bitChild["wExterness"])
             );
-		Debug.LogWarning("CrossOverAndMutate ho ricevuto padre= " + male + " madre= " + female + " e ritorno figlio= " + child);
+		Console.WriteLine("CrossOverAndMutate ho ricevuto padre= " + male);
+		Console.WriteLine("madre= " + female);
+		Console.WriteLine("figlio= " + child);
         return child;
     }
 
