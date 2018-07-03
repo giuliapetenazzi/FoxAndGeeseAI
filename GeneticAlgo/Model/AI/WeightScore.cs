@@ -15,7 +15,7 @@ public class WeightScore : IComparable {
 
 	public int CompareTo(object obj) {
 		WeightScore w = (WeightScore)obj;
-		if (score <= w.score) {
+		if (score >= w.score) {
 			return -1;
 		}
 		return 1;
