@@ -244,10 +244,12 @@ namespace FoxAndGeese {
         //la volpe vince quando ci sono 3 oche o meno in tutta la board o avanti a lei
         private bool IsFoxWinner() {
             bool isWinner = false;
-			//int counterGoose = GetGooseNumber();
+			int counterGoose = GetGooseNumber();
 			int counterAheadGoose = GetAheadGooseNumber();
             //return isWinner = counterGoose <= 4 ? true : false;
-            if (isWinner = counterAheadGoose <= 4) {
+            if (isWinner = counterAheadGoose <= 1) {
+                return true;
+            } else if (isWinner = counterGoose <= 4) {
                 return true;
             } else {
                 List<Move> possibleMovesOtherPlayer = GetPossibleMovesOtherPlayer();
@@ -258,8 +260,8 @@ namespace FoxAndGeese {
         private int GetAheadGooseNumber() {
             int counterAheadGoose = 0;
             Vector2 foxCoordinates = FindFoxCoordinates();
-            int rFox = (int)foxCoordinates.x;
-            for (int r = rFox; r < 7; r++) {
+            int rFoxpiuuno = (int)foxCoordinates.x + 1;
+            for (int r = rFoxpiuuno; r < 7; r++) {
                 for (int c = 0; c < 7; c++) {
                     if (board[r, c] == PawnType.Goose) {
                         counterAheadGoose++;
