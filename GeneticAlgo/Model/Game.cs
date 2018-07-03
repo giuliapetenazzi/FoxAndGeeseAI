@@ -344,7 +344,8 @@ namespace FoxAndGeese {
             int counter = 0;
             for (int roundR = r - 1; roundR <= r + 1; roundR++) {
                 for (int roundC = c - 1; roundC <= c + 1; roundC++) {
-                    if (board[roundR, roundC] != null &&
+                    if (roundR > 0 && roundR < 7 && roundC > 0 && roundC < 7 &&
+                        board[roundR, roundC] != null &&
                         board[roundR, roundC] == PawnType.None
                     ) {
                         counter++;
