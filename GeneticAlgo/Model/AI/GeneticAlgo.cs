@@ -31,7 +31,10 @@ public class GeneticAlgo {
 				parents[ws.Key] = ws.Value;
 			}
 		}
-		
+		Console.WriteLine("\n \n \n \n I PADRI SONO ");
+		foreach (var key in parents.Keys) {
+			Console.WriteLine(key);
+		}
 		int parentsCount = parents.Count;
 		int childrenToGenerate = population.Count - parentsCount; //quanti figli devo generare per ritornare ad avere una popolazione completa
 		int generatedChildren = 0;
@@ -41,8 +44,10 @@ public class GeneticAlgo {
 		while (parents.Count < population.Count) {
 			//Console.WriteLine("parent count= " + parents.Count + " pop count = " + population.Count);
 			//Console.WriteLine("GeneticAlgo genero figli");
+			
 			int firstN = rand.Next(parentsCount);
 			int secondN = rand.Next(parentsCount);
+			Console.WriteLine("while parentsCount = " + parentsCount + " firstN = " + firstN + " secondN = " + secondN);
 			//Console.WriteLine("GeneticAlgo parentsCount = " + parents.Count + "firstN = " + firstN + " secondN " + secondN);
 			WeightsForBoardEval male = parents.Keys[firstN].weights;
 			WeightsForBoardEval female = parents.Keys[secondN].weights;
@@ -96,7 +101,8 @@ public class GeneticAlgo {
             GetIntFromBitArray(bitChild["wInterness"]),
             GetIntFromBitArray(bitChild["wExterness"])
             );
-		Console.WriteLine("CrossOverAndMutate ho ricevuto padre= " + male);
+		Console.WriteLine("CrossOverAndMutate");
+		Console.WriteLine("padre= " + male);
 		Console.WriteLine("madre= " + female);
 		Console.WriteLine("figlio= " + child);
         return child;

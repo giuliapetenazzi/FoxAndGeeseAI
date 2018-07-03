@@ -77,10 +77,10 @@ public class WeightsForBoardEval {
 
 
 	public override string ToString() {
-		return "winningState = " + wWinningState + " gooseNumber = " + weightDict["wGooseNumber"] + " aheadGooseNumber = " +
-			weightDict["wAheadGooseNumber"] + " foxEatingMoves = " + weightDict["wFoxEatingMoves"] + " foxMoves = " +
-			weightDict["wFoxMoves"] + " gooseFreedomness = " + weightDict["wGooseFreedomness"] + " interness = "
-			+ weightDict["wInterness"] + " externess = " + weightDict["wExterness"];
+		return "winState = " + wWinningState + " gooseN = " + weightDict["wGooseNumber"] + " ahGooN = " +
+			weightDict["wAheadGooseNumber"] + " fEatMov = " + weightDict["wFoxEatingMoves"] + " fMoves = " +
+			weightDict["wFoxMoves"] + " gFreedom = " + weightDict["wGooseFreedomness"] + " int = "
+			+ weightDict["wInterness"] + " ext = " + weightDict["wExterness"];
 	}
 
 	public override bool Equals(object obj) {
