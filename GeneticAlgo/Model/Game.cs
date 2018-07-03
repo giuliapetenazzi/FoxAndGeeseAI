@@ -344,13 +344,16 @@ namespace FoxAndGeese {
             int counter = 0;
             for (int roundR = r - 1; roundR <= r + 1; roundR++) {
                 for (int roundC = c - 1; roundC <= c + 1; roundC++) {
-                    if (board[r, c] == PawnType.None && r != roundR && c != roundC) {
+                    if (board[roundR, roundC] != null &&
+                        board[roundR, roundC] == PawnType.None
+                    ) {
                         counter++;
                     }
                 }
             }
             return counter / 8;
         }
+
 
         // confronta due board parzialmente, usato per capire se si vince
         private static bool AreBoardsEquals(PawnType[,] board, PawnType[,] winningBoard) {
@@ -543,7 +546,7 @@ namespace FoxAndGeese {
                 ) {
                 return 1;
             } else {
-                return -1;
+                return 0;
             }
         }
 
@@ -559,7 +562,7 @@ namespace FoxAndGeese {
                 ) {
                 return 1;
             } else {
-                return -1;
+                return 0;
             }
         }
 
