@@ -41,7 +41,7 @@ public class GeneticAlgo {
 		Console.WriteLine("fine evolve" + population.Count + " " + parents.Count + " " + childrenToGenerate);
 		
 		//crossover
-		while (parents.Count < population.Count) {
+		while (parents.Count < population.Count - 2) {
 			//Console.WriteLine("parent count= " + parents.Count + " pop count = " + population.Count);
 			//Console.WriteLine("GeneticAlgo genero figli");
 			
@@ -58,6 +58,10 @@ public class GeneticAlgo {
 				generatedChildren++;
 			}
 		}
+		WeightScore ws1 = new WeightScore(new WeightsForBoardEval(rand), 0);
+		WeightScore ws2 = new WeightScore(new WeightsForBoardEval(rand), 0);
+		parents[ws1] = 0;
+		parents[ws2] = 0;
 		//Console.WriteLine("evolve prima di tournament parents=");
 		//foreach (var key in parents.Keys) {
 		//	Console.WriteLine(key);
