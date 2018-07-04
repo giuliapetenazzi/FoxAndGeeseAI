@@ -120,10 +120,28 @@ public class GeneticAlgo {
     private BitArray Mix(BitArray bitFather, BitArray bitMother) {
         if (bitFather.Count != 16 || bitMother.Count != 16)
             throw new ArgumentException("Genetic Algo :: mix :: non ci sono esattamente 16 bits");
+        /*
+        //sezione vecchia: i bit non vanno da sx a dx ma da dx a sx!
         BitArray bitChild = new BitArray(bitFather);
+        Console.WriteLine("Mix method bitChild copiato da bitFather= " + GetIntFromBitArray(bitFather));
+        BitArrayToStr(bitFather);
+        Console.WriteLine("Mix method bitMother= " + GetIntFromBitArray(bitMother));
+        BitArrayToStr(bitMother);
         for (int i = bitChild.Count / 2; i < bitChild.Count; i++) {
+            Console.WriteLine("Mix method indice i che cambio = " + i + " bitMother[i] " + bitMother[i]);
             bitChild[i] = bitMother[i];
         }
+		Console.WriteLine("Mix torno il bitChild = " +GetIntFromBitArray(bitChild));*/
+        BitArray bitChild = new BitArray(bitMother);
+        Console.WriteLine("Mix method bitFather= " + GetIntFromBitArray(bitFather));
+        //BitArrayToStr(bitFather);
+        Console.WriteLine("Mix method bitMother= " + GetIntFromBitArray(bitMother));
+        //BitArrayToStr(bitMother);
+        for (int i = bitChild.Count / 2; i < bitChild.Count; i++) {
+            bitChild[i] = bitFather[i];
+        }
+		Console.WriteLine("Mix torno il bitChild = " +GetIntFromBitArray(bitChild));
+        //BitArrayToStr(bitChild);
         return bitChild;
     }
 
@@ -134,5 +152,11 @@ public class GeneticAlgo {
         bitArray.CopyTo(byteArray, 0);
         Int16 number = BitConverter.ToInt16(byteArray, 0);
         return number;
+    }
+
+    static void BitArrayToStr(BitArray bitArray) {
+        for (int i = 0; i < bitArray.Count; i++) {
+            Console.WriteLine(bitArray[i].ToString());
+        }
     }
 }
