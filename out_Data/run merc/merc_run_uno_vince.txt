@@ -1,0 +1,202 @@
+inizio main ore: 04:31:39
+peso iniz random = winState = 1073741823 gooseN = 25394 ahGooN = 24755 fEatMov = 17407 fMoves = 28154 gFreedom = 24322 int = 22573 ext = 25772
+peso iniz random = winState = 1073741823 gooseN = 23270 ahGooN = 32498 fEatMov = 9402 fMoves = 23646 gFreedom = 1958 int = 22168 ext = 24003
+peso iniz random = winState = 1073741823 gooseN = 10632 ahGooN = 32421 fEatMov = 28164 fMoves = 15871 gFreedom = 3717 int = 20202 ext = 4716
+peso iniz random = winState = 1073741823 gooseN = 11483 ahGooN = 644 fEatMov = 15215 fMoves = 22666 gFreedom = 15994 int = 3582 ext = 20805
+peso iniz random = winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983
+peso iniz random = winState = 1073741823 gooseN = 10854 ahGooN = 30927 fEatMov = 32067 fMoves = 19248 gFreedom = 15675 int = 577 ext = 8087
+peso iniz random = winState = 1073741823 gooseN = 32635 ahGooN = 24917 fEatMov = 3920 fMoves = 26237 gFreedom = 27535 int = 14536 ext = 16795
+peso iniz random = winState = 1073741823 gooseN = 12550 ahGooN = 26081 fEatMov = 5198 fMoves = 310 gFreedom = 18133 int = 25222 ext = 13911
+peso iniz random = winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357
+peso iniz random = winState = 1073741823 gooseN = 1716 ahGooN = 2832 fEatMov = 4576 fMoves = 21983 gFreedom = 20626 int = 9019 ext = 32545
+peso iniz random = winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614
+peso iniz random = winState = 1073741823 gooseN = 8493 ahGooN = 11295 fEatMov = 29196 fMoves = 21225 gFreedom = 21812 int = 4009 ext = 15129
+peso iniz random = winState = 1073741823 gooseN = 4700 ahGooN = 1371 fEatMov = 18759 fMoves = 27375 gFreedom = 9087 int = 1071 ext = 19510
+peso iniz random = winState = 1073741823 gooseN = 28735 ahGooN = 26579 fEatMov = 10920 fMoves = 29451 gFreedom = 28376 int = 12497 ext = 30919
+peso iniz random = winState = 1073741823 gooseN = 22085 ahGooN = 32111 fEatMov = 4254 fMoves = 6909 gFreedom = 5516 int = 17017 ext = 11056
+aiTester finito di craere giocatori single feature
+aiTester weights size = 15
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+aiTester prima di evoluzione
+
+
+
+
+ inizio evoluzione turno 0
+start genetic algo evolve
+weightScore weights = winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983 score = 68
+weightScore weights = winState = 1073741823 gooseN = 12550 ahGooN = 26081 fEatMov = 5198 fMoves = 310 gFreedom = 18133 int = 25222 ext = 13911 score = 65
+weightScore weights = winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614 score = 61
+weightScore weights = winState = 1073741823 gooseN = 23270 ahGooN = 32498 fEatMov = 9402 fMoves = 23646 gFreedom = 1958 int = 22168 ext = 24003 score = 56
+weightScore weights = winState = 1073741823 gooseN = 25394 ahGooN = 24755 fEatMov = 17407 fMoves = 28154 gFreedom = 24322 int = 22573 ext = 25772 score = 54
+weightScore weights = winState = 1073741823 gooseN = 28735 ahGooN = 26579 fEatMov = 10920 fMoves = 29451 gFreedom = 28376 int = 12497 ext = 30919 score = 54
+weightScore weights = winState = 1073741823 gooseN = 32635 ahGooN = 24917 fEatMov = 3920 fMoves = 26237 gFreedom = 27535 int = 14536 ext = 16795 score = 53
+weightScore weights = winState = 1073741823 gooseN = 10632 ahGooN = 32421 fEatMov = 28164 fMoves = 15871 gFreedom = 3717 int = 20202 ext = 4716 score = 51
+weightScore weights = winState = 1073741823 gooseN = 10854 ahGooN = 30927 fEatMov = 32067 fMoves = 19248 gFreedom = 15675 int = 577 ext = 8087 score = 51
+weightScore weights = winState = 1073741823 gooseN = 8493 ahGooN = 11295 fEatMov = 29196 fMoves = 21225 gFreedom = 21812 int = 4009 ext = 15129 score = 47
+weightScore weights = winState = 1073741823 gooseN = 22085 ahGooN = 32111 fEatMov = 4254 fMoves = 6909 gFreedom = 5516 int = 17017 ext = 11056 score = 47
+weightScore weights = winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357 score = 42
+weightScore weights = winState = 1073741823 gooseN = 4700 ahGooN = 1371 fEatMov = 18759 fMoves = 27375 gFreedom = 9087 int = 1071 ext = 19510 score = 26
+weightScore weights = winState = 1073741823 gooseN = 11483 ahGooN = 644 fEatMov = 15215 fMoves = 22666 gFreedom = 15994 int = 3582 ext = 20805 score = 25
+weightScore weights = winState = 1073741823 gooseN = 1716 ahGooN = 2832 fEatMov = 4576 fMoves = 21983 gFreedom = 20626 int = 9019 ext = 32545 score = 12
+population size = 15 0,3 0,5 0,01
+retain tengo 4 soggetti
+
+
+
+
+ I PADRI SONO
+weightScore weights = winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983 score = 68
+weightScore weights = winState = 1073741823 gooseN = 12550 ahGooN = 26081 fEatMov = 5198 fMoves = 310 gFreedom = 18133 int = 25222 ext = 13911 score = 65
+weightScore weights = winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614 score = 61
+weightScore weights = winState = 1073741823 gooseN = 23270 ahGooN = 32498 fEatMov = 9402 fMoves = 23646 gFreedom = 1958 int = 22168 ext = 24003 score = 56
+weightScore weights = winState = 1073741823 gooseN = 28735 ahGooN = 26579 fEatMov = 10920 fMoves = 29451 gFreedom = 28376 int = 12497 ext = 30919 score = 54
+weightScore weights = winState = 1073741823 gooseN = 10632 ahGooN = 32421 fEatMov = 28164 fMoves = 15871 gFreedom = 3717 int = 20202 ext = 4716 score = 51
+weightScore weights = winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357 score = 42
+weightScore weights = winState = 1073741823 gooseN = 11483 ahGooN = 644 fEatMov = 15215 fMoves = 22666 gFreedom = 15994 int = 3582 ext = 20805 score = 25
+fine evolve15 8 7
+while parentsCount = 8 firstN = 6 secondN = 6
+while parentsCount = 8 firstN = 3 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 23270 ahGooN = 32498 fEatMov = 9402 fMoves = 23646 gFreedom = 1958 int = 22168 ext = 24003
+madre= winState = 1073741823 gooseN = 12550 ahGooN = 26081 fEatMov = 5198 fMoves = 310 gFreedom = 18133 int = 25222 ext = 13911
+figlio= winState = 1073741823 gooseN = 4646 ahGooN = 30450 fEatMov = 9342 fMoves = 4118 gFreedom = 18406 int = 21140 ext = 5447
+while parentsCount = 8 firstN = 4 secondN = 6
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 28735 ahGooN = 26579 fEatMov = 10920 fMoves = 29451 gFreedom = 28376 int = 12497 ext = 30919
+madre= winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357
+figlio= winState = 1073741823 gooseN = 31807 ahGooN = 11167 fEatMov = 9836 fMoves = 13195 gFreedom = 27164 int = 12373 ext = 31943
+while parentsCount = 8 firstN = 2 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614
+madre= winState = 1073741823 gooseN = 12550 ahGooN = 26081 fEatMov = 5198 fMoves = 310 gFreedom = 18133 int = 25222 ext = 13911
+figlio= winState = 1073741823 gooseN = 278 ahGooN = 29888 fEatMov = 13901 fMoves = 4356 gFreedom = 17637 int = 29332 ext = 9558
+while parentsCount = 8 firstN = 4 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 28735 ahGooN = 26579 fEatMov = 10920 fMoves = 29451 gFreedom = 28376 int = 12497 ext = 30919
+madre= winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983
+figlio= winState = 1073741823 gooseN = 31795 ahGooN = 27423 fEatMov = 10920 fMoves = 31567 gFreedom = 8916 int = 13333 ext = 14471
+while parentsCount = 8 firstN = 0 secondN = 5
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983
+madre= winState = 1073741823 gooseN = 10632 ahGooN = 32421 fEatMov = 28164 fMoves = 15871 gFreedom = 3717 int = 20202 ext = 4716
+figlio= winState = 1073741823 gooseN = 10408 ahGooN = 31925 fEatMov = 23845 fMoves = 3837 gFreedom = 15750 int = 20170 ext = 12879
+while parentsCount = 8 firstN = 2 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614
+madre= winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983
+figlio= winState = 1073741823 gooseN = 19730 ahGooN = 30732 fEatMov = 14985 fMoves = 22860 gFreedom = 229 int = 13844 ext = 10646
+while parentsCount = 8 firstN = 1 secondN = 3
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 12550 ahGooN = 26081 fEatMov = 5198 fMoves = 310 gFreedom = 18133 int = 25222 ext = 13911
+madre= winState = 1073741823 gooseN = 23270 ahGooN = 32498 fEatMov = 9402 fMoves = 23646 gFreedom = 1958 int = 22168 ext = 24003
+figlio= winState = 1073741823 gooseN = 31174 ahGooN = 28129 fEatMov = 5258 fMoves = 19838 gFreedom = 1685 int = 26250 ext = 32467
+inizio LaunchTournament
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+
+
+
+
+ inizio evoluzione turno 1
+start genetic algo evolve
+weightScore weights = winState = 1073741823 gooseN = 31795 ahGooN = 27423 fEatMov = 10920 fMoves = 31567 gFreedom = 8916 int = 13333 ext = 14471 score = 32172
+weightScore weights = winState = 1073741823 gooseN = 10632 ahGooN = 32421 fEatMov = 28164 fMoves = 15871 gFreedom = 3717 int = 20202 ext = 4716 score = 245
+weightScore weights = winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614 score = 236
+weightScore weights = winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357 score = 233
+weightScore weights = winState = 1073741823 gooseN = 31174 ahGooN = 28129 fEatMov = 5258 fMoves = 19838 gFreedom = 1685 int = 26250 ext = 32467 score = 232
+weightScore weights = winState = 1073741823 gooseN = 4646 ahGooN = 30450 fEatMov = 9342 fMoves = 4118 gFreedom = 18406 int = 21140 ext = 5447 score = 221
+weightScore weights = winState = 1073741823 gooseN = 12550 ahGooN = 26081 fEatMov = 5198 fMoves = 310 gFreedom = 18133 int = 25222 ext = 13911 score = 216
+weightScore weights = winState = 1073741823 gooseN = 31807 ahGooN = 11167 fEatMov = 9836 fMoves = 13195 gFreedom = 27164 int = 12373 ext = 31943 score = 214
+weightScore weights = winState = 1073741823 gooseN = 10408 ahGooN = 31925 fEatMov = 23845 fMoves = 3837 gFreedom = 15750 int = 20170 ext = 12879 score = 212
+weightScore weights = winState = 1073741823 gooseN = 19730 ahGooN = 30732 fEatMov = 14985 fMoves = 22860 gFreedom = 229 int = 13844 ext = 10646 score = 211
+weightScore weights = winState = 1073741823 gooseN = 23270 ahGooN = 32498 fEatMov = 9402 fMoves = 23646 gFreedom = 1958 int = 22168 ext = 24003 score = 207
+weightScore weights = winState = 1073741823 gooseN = 278 ahGooN = 29888 fEatMov = 13901 fMoves = 4356 gFreedom = 17637 int = 29332 ext = 9558 score = 204
+weightScore weights = winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983 score = 198
+weightScore weights = winState = 1073741823 gooseN = 28735 ahGooN = 26579 fEatMov = 10920 fMoves = 29451 gFreedom = 28376 int = 12497 ext = 30919 score = 194
+weightScore weights = winState = 1073741823 gooseN = 11483 ahGooN = 644 fEatMov = 15215 fMoves = 22666 gFreedom = 15994 int = 3582 ext = 20805 score = 140
+population size = 15 0,3 0,5 0,01
+retain tengo 4 soggetti
+
+
+
+
+ I PADRI SONO
+weightScore weights = winState = 1073741823 gooseN = 31795 ahGooN = 27423 fEatMov = 10920 fMoves = 31567 gFreedom = 8916 int = 13333 ext = 14471 score = 32172
+weightScore weights = winState = 1073741823 gooseN = 10632 ahGooN = 32421 fEatMov = 28164 fMoves = 15871 gFreedom = 3717 int = 20202 ext = 4716 score = 245
+weightScore weights = winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614 score = 236
+weightScore weights = winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357 score = 233
+weightScore weights = winState = 1073741823 gooseN = 10408 ahGooN = 31925 fEatMov = 23845 fMoves = 3837 gFreedom = 15750 int = 20170 ext = 12879 score = 212
+weightScore weights = winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983 score = 198
+fine evolve15 6 9
+while parentsCount = 6 firstN = 2 secondN = 2
+while parentsCount = 6 firstN = 2 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614
+madre= winState = 1073741823 gooseN = 10632 ahGooN = 32421 fEatMov = 28164 fMoves = 15871 gFreedom = 3717 int = 20202 ext = 4716
+figlio= winState = 1073741823 gooseN = 2458 ahGooN = 31876 fEatMov = 32261 fMoves = 7628 gFreedom = 3237 int = 32472 ext = 8542
+while parentsCount = 6 firstN = 5 secondN = 5
+while parentsCount = 6 firstN = 0 secondN = 4
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 31795 ahGooN = 27423 fEatMov = 10920 fMoves = 31567 gFreedom = 8916 int = 13333 ext = 14471
+madre= winState = 1073741823 gooseN = 10408 ahGooN = 31925 fEatMov = 23845 fMoves = 3837 gFreedom = 15750 int = 20170 ext = 12879
+figlio= winState = 1073741823 gooseN = 14523 ahGooN = 28567 fEatMov = 28196 fMoves = 16335 gFreedom = 11924 int = 31961 ext = 12367
+while parentsCount = 6 firstN = 4 secondN = 3
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 10408 ahGooN = 31925 fEatMov = 23845 fMoves = 3837 gFreedom = 15750 int = 20170 ext = 12879
+madre= winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357
+figlio= winState = 1073741823 gooseN = 27692 ahGooN = 14525 fEatMov = 5485 fMoves = 697 gFreedom = 30990 int = 582 ext = 32455
+while parentsCount = 6 firstN = 2 secondN = 3
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614
+madre= winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357
+figlio= winState = 1073741823 gooseN = 19742 ahGooN = 14476 fEatMov = 13901 fMoves = 4488 gFreedom = 18477 int = 12884 ext = 28118
+while parentsCount = 6 firstN = 4 secondN = 4
+while parentsCount = 6 firstN = 5 secondN = 2
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983
+madre= winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614
+figlio= winState = 1073741823 gooseN = 9444 ahGooN = 28913 fEatMov = 20973 fMoves = 17017 gFreedom = 32138 int = 17094 ext = 15951
+while parentsCount = 6 firstN = 3 secondN = 3
+while parentsCount = 6 firstN = 0 secondN = 2
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 31795 ahGooN = 27423 fEatMov = 10920 fMoves = 31567 gFreedom = 8916 int = 13333 ext = 14471
+madre= winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614
+figlio= winState = 1073741823 gooseN = 13559 ahGooN = 25555 fEatMov = 25324 fMoves = 29515 gFreedom = 28312 int = 28885 ext = 15439
+while parentsCount = 6 firstN = 5 secondN = 3
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 27680 ahGooN = 30781 fEatMov = 6569 fMoves = 19069 gFreedom = 12742 int = 1542 ext = 14983
+madre= winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357
+figlio= winState = 1073741823 gooseN = 27692 ahGooN = 14525 fEatMov = 5485 fMoves = 697 gFreedom = 30990 int = 582 ext = 32455
+while parentsCount = 6 firstN = 2 secondN = 3
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614
+madre= winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357
+figlio= winState = 1073741823 gooseN = 19742 ahGooN = 14476 fEatMov = 13901 fMoves = 4488 gFreedom = 18477 int = 12884 ext = 28118
+while parentsCount = 6 firstN = 3 secondN = 2
+genetic algo crossover
+CrossOverAndMutate
+padre= winState = 1073741823 gooseN = 24110 ahGooN = 2191 fEatMov = 5487 fMoves = 8328 gFreedom = 18990 int = 4967 ext = 28357
+madre= winState = 1073741823 gooseN = 1494 ahGooN = 28864 fEatMov = 29389 fMoves = 20808 gFreedom = 19625 int = 29396 ext = 11614
+figlio= winState = 1073741823 gooseN = 5862 ahGooN = 16579 fEatMov = 20975 fMoves = 24648 gFreedom = 20138 int = 21479 ext = 11853
+inizio LaunchTournament

@@ -22,7 +22,7 @@ public class WeightsForBoardEval {
 		List<string> keys = new List<string>(weightDict.Keys);
 
 		foreach (var key in keys) {
-			weightDict[key] = (Int16)(rand.Next(Int16.MaxValue));
+			weightDict[key] = (Int16)(rand.Next(Int16.MinValue, Int16.MaxValue));
 		}
 	}
 
@@ -77,10 +77,10 @@ public class WeightsForBoardEval {
 
 
 	public override string ToString() {
-		return "winState = " + wWinningState + " gooseN = " + weightDict["wGooseNumber"] + " ahGooN = " +
-			weightDict["wAheadGooseNumber"] + " fEatMov = " + weightDict["wFoxEatingMoves"] + " fMoves = " +
-			weightDict["wFoxMoves"] + " gFreedom = " + weightDict["wGooseFreedomness"] + " int = "
-			+ weightDict["wInterness"] + " ext = " + weightDict["wExterness"];
+		return "win = " + wWinningState + " gN= " + weightDict["wGooseNumber"] + " agN= " +
+			weightDict["wAheadGooseNumber"] + " fEatMov= " + weightDict["wFoxEatingMoves"] + " fMov= " +
+			weightDict["wFoxMoves"] + " gFre= " + weightDict["wGooseFreedomness"] + " int= "
+			+ weightDict["wInterness"] + " ext= " + weightDict["wExterness"];
 	}
 
 	public override bool Equals(object obj) {

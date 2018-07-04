@@ -131,16 +131,30 @@ public class GeneticAlgo {
             Console.WriteLine("Mix method indice i che cambio = " + i + " bitMother[i] " + bitMother[i]);
             bitChild[i] = bitMother[i];
         }
-		Console.WriteLine("Mix torno il bitChild = " +GetIntFromBitArray(bitChild));*/
+        */
+        //parte nuova
         BitArray bitChild = new BitArray(bitMother);
-        Console.WriteLine("Mix method bitFather= " + GetIntFromBitArray(bitFather));
+        //Console.WriteLine("Mix method bitFather= " + GetIntFromBitArray(bitFather));
         //BitArrayToStr(bitFather);
-        Console.WriteLine("Mix method bitMother= " + GetIntFromBitArray(bitMother));
+        //Console.WriteLine("Mix method bitMother= " + GetIntFromBitArray(bitMother));
         //BitArrayToStr(bitMother);
+        /*
         for (int i = bitChild.Count / 2; i < bitChild.Count; i++) {
             bitChild[i] = bitFather[i];
         }
-		Console.WriteLine("Mix torno il bitChild = " +GetIntFromBitArray(bitChild));
+        */
+        //alternativa: prendo un bit si e uno no dai genitori score 377 20 giocatori
+        /*
+        for (int i = 0; i < bitChild.Count; i+=2) {
+            bitChild[i] = bitFather[i];
+        }
+        */
+        //alternativa: prendo mod 2 e 3
+        for (int i = 0; i < bitChild.Count; i++) {
+            if (i % 4 != 3 && i % 4 != 2)
+            bitChild[i] = bitFather[i];
+        }
+		//Console.WriteLine("Mix torno il bitChild = " +GetIntFromBitArray(bitChild));
         //BitArrayToStr(bitChild);
         return bitChild;
     }

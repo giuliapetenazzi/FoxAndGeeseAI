@@ -38,12 +38,12 @@ public class AiTester {
 		List<WeightsForBoardEval> weights = new List<WeightsForBoardEval>();
 		int counter = 0;
 		//creo 10 giocatori per ogni feature, ognuno con pesi casuali sulla singola feature
-		for (int i = 0; i < 5; i++) { //scorre le feature
-			for (int j = 0; j < 4; j++) { //indica quanti giocatori per ogni tipologia di feature singola creare
+		for (int i = 0; i < 4; i++) { //scorre le feature
+			for (int j = 0; j < 5; j++) { //indica quanti giocatori per ogni tipologia di feature singola creare
 				WeightsForBoardEval w = new WeightsForBoardEval(rand);
 				//WeightsForBoardEval w =  new WeightsForBoardEval(i, (Int16)rand.Next(Int16.MaxValue));
 				weights.Add(w);
-				Console.WriteLine("peso iniz random = " + w);
+				Console.WriteLine("pesInizRand = " + w);
 			}
 		}
 		SortedList<WeightScore, int> scoreMap = new SortedList<WeightScore, int>();
@@ -76,7 +76,7 @@ public class AiTester {
 		// evolve 10 volte la popolazione
 		for (int i = 0; i < 30; i++) {
 			Console.WriteLine("\n \n \n \n inizio evoluzione turno " + i);
-			scoreMap = geneticAlgo.Evolve(scoreMap, 0.3, 0.05, 0.01);
+			scoreMap = geneticAlgo.Evolve(scoreMap, 0.3, 0.1, 0.01);
 		}
 		Console.WriteLine("best weights " + scoreMap.Keys[0]);
 		Console.WriteLine("finito completamente aiTester ore: " + DateTime.Now.ToString("h:mm:ss tt"));

@@ -1,0 +1,237 @@
+inizio main ore: 05:24:32
+pesInizRand = win = 1073741823 gN= -26689 agN= -10712 fEatMov= -30275 fMov= -29627 gFre= -6636 int= -6512 ext= 20463
+pesInizRand = win = 1073741823 gN= -26228 agN= -22445 fEatMov= 2296 fMov= 29328 gFre= -16187 int= -13510 ext= -16557
+pesInizRand = win = 1073741823 gN= 13297 agN= 13290 fEatMov= 12014 fMov= -1323 gFre= 15574 int= 1627 ext= -2385
+pesInizRand = win = 1073741823 gN= -23323 agN= 28004 fEatMov= -17463 fMov= -2936 gFre= 17731 int= 1902 ext= 3621
+pesInizRand = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+pesInizRand = win = 1073741823 gN= 28382 agN= 4956 fEatMov= 21241 fMov= -5341 gFre= 11304 int= 18126 ext= 12872
+pesInizRand = win = 1073741823 gN= 6136 agN= 18114 fEatMov= 17933 fMov= 15265 gFre= 34 int= 26640 ext= -9298
+pesInizRand = win = 1073741823 gN= 14045 agN= -22263 fEatMov= 17009 fMov= 1588 gFre= 3584 int= 5291 ext= 29401
+pesInizRand = win = 1073741823 gN= -5949 agN= 19955 fEatMov= 6076 fMov= 8399 gFre= 24353 int= -15926 ext= -24472
+pesInizRand = win = 1073741823 gN= -7130 agN= 29788 fEatMov= -3675 fMov= 9206 gFre= 18423 int= -15156 ext= 17681
+aiTester finito di craere giocatori single feature
+aiTester weights size = 10
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+aiTester prima di evoluzione
+
+
+
+
+ inizio evoluzione turno 0
+start genetic algo evolve
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 69
+weightScore weights = win = 1073741823 gN= 28382 agN= 4956 fEatMov= 21241 fMov= -5341 gFre= 11304 int= 18126 ext= 12872 score = 55
+weightScore weights = win = 1073741823 gN= -5949 agN= 19955 fEatMov= 6076 fMov= 8399 gFre= 24353 int= -15926 ext= -24472 score = 49
+weightScore weights = win = 1073741823 gN= 13297 agN= 13290 fEatMov= 12014 fMov= -1323 gFre= 15574 int= 1627 ext= -2385 score = 46
+weightScore weights = win = 1073741823 gN= 6136 agN= 18114 fEatMov= 17933 fMov= 15265 gFre= 34 int= 26640 ext= -9298 score = 43
+weightScore weights = win = 1073741823 gN= -26228 agN= -22445 fEatMov= 2296 fMov= 29328 gFre= -16187 int= -13510 ext= -16557 score = 31
+weightScore weights = win = 1073741823 gN= -7130 agN= 29788 fEatMov= -3675 fMov= 9206 gFre= 18423 int= -15156 ext= 17681 score = 30
+weightScore weights = win = 1073741823 gN= 14045 agN= -22263 fEatMov= 17009 fMov= 1588 gFre= 3584 int= 5291 ext= 29401 score = 27
+weightScore weights = win = 1073741823 gN= -23323 agN= 28004 fEatMov= -17463 fMov= -2936 gFre= 17731 int= 1902 ext= 3621 score = 26
+weightScore weights = win = 1073741823 gN= -26689 agN= -10712 fEatMov= -30275 fMov= -29627 gFre= -6636 int= -6512 ext= 20463 score = 24
+population size = 10 0,3 0,1 0,01
+retain tengo 3 soggetti
+
+
+
+
+ I PADRI SONO
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 69
+weightScore weights = win = 1073741823 gN= 28382 agN= 4956 fEatMov= 21241 fMov= -5341 gFre= 11304 int= 18126 ext= 12872 score = 55
+weightScore weights = win = 1073741823 gN= -5949 agN= 19955 fEatMov= 6076 fMov= 8399 gFre= 24353 int= -15926 ext= -24472 score = 49
+weightScore weights = win = 1073741823 gN= -26228 agN= -22445 fEatMov= 2296 fMov= 29328 gFre= -16187 int= -13510 ext= -16557 score = 31
+fine evolve10 4 6
+while parentsCount = 4 firstN = 3 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -26228 agN= -22445 fEatMov= 2296 fMov= 29328 gFre= -16187 int= -13510 ext= -16557
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 22784 agN= 25627 fEatMov= 1208 fMov= 13016 gFre= 3277 int= 882 ext= 31639
+while parentsCount = 4 firstN = 2 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -5949 agN= 19955 fEatMov= 6076 fMov= 8399 gFre= 24353 int= -15926 ext= -24472
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 26627 agN= 17723 fEatMov= 6072 fMov= 8395 gFre= 8173 int= 322 ext= 26788
+while parentsCount = 4 firstN = 2 secondN = 3
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -5949 agN= 19955 fEatMov= 6076 fMov= 8399 gFre= 24353 int= -15926 ext= -24472
+madre= win = 1073741823 gN= -26228 agN= -22445 fEatMov= 2296 fMov= 29328 gFre= -16187 int= -13510 ext= -16557
+figlio= win = 1073741823 gN= -22385 agN= -30349 fEatMov= 7160 fMov= 24707 gFre= -11291 int= -14070 ext= -21408
+while parentsCount = 4 firstN = 0 secondN = 2
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= -5949 agN= 19955 fEatMov= 6076 fMov= 8399 gFre= 24353 int= -15926 ext= -24472
+figlio= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+while parentsCount = 4 firstN = 0 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= 28382 agN= 4956 fEatMov= 21241 fMov= -5341 gFre= 11304 int= 18126 ext= 12872
+figlio= win = 1073741823 gN= 32238 agN= 111 fEatMov= 20699 fMov= -14302 gFre= 7178 int= 18381 ext= 12874
+while parentsCount = 4 firstN = 0 secondN = 0
+while parentsCount = 4 firstN = 2 secondN = 2
+while parentsCount = 4 firstN = 0 secondN = 2
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= -5949 agN= 19955 fEatMov= 6076 fMov= 8399 gFre= 24353 int= -15926 ext= -24472
+figlio= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+inizio LaunchTournament
+Qui qualcuno ha vintooooooooooooooooooo in p1Fox
+Qui qualcuno ha vintooooooooooooooooooo in p1Fox
+Qui qualcuno ha vintooooooooooooooooooo in p1Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+
+
+
+
+ inizio evoluzione turno 1
+start genetic algo evolve
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 32142
+weightScore weights = win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894 score = 32137
+weightScore weights = win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894 score = 32137
+weightScore weights = win = 1073741823 gN= 28382 agN= 4956 fEatMov= 21241 fMov= -5341 gFre= 11304 int= 18126 ext= 12872 score = 32124
+weightScore weights = win = 1073741823 gN= 26627 agN= 17723 fEatMov= 6072 fMov= 8395 gFre= 8173 int= 322 ext= 26788 score = 148
+weightScore weights = win = 1073741823 gN= 22784 agN= 25627 fEatMov= 1208 fMov= 13016 gFre= 3277 int= 882 ext= 31639 score = 136
+weightScore weights = win = 1073741823 gN= -5949 agN= 19955 fEatMov= 6076 fMov= 8399 gFre= 24353 int= -15926 ext= -24472 score = 135
+weightScore weights = win = 1073741823 gN= -22385 agN= -30349 fEatMov= 7160 fMov= 24707 gFre= -11291 int= -14070 ext= -21408 score = 128
+weightScore weights = win = 1073741823 gN= -26228 agN= -22445 fEatMov= 2296 fMov= 29328 gFre= -16187 int= -13510 ext= -16557 score = 127
+weightScore weights = win = 1073741823 gN= 32238 agN= 111 fEatMov= 20699 fMov= -14302 gFre= 7178 int= 18381 ext= 12874 score = 76
+population size = 10 0,3 0,1 0,01
+retain tengo 3 soggetti
+
+
+
+
+ I PADRI SONO
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 32142
+weightScore weights = win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894 score = 32137
+weightScore weights = win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894 score = 32137
+fine evolve10 3 7
+while parentsCount = 3 firstN = 2 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+madre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+figlio= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+while parentsCount = 3 firstN = 2 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+madre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+figlio= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+while parentsCount = 3 firstN = 2 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+madre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+figlio= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+while parentsCount = 3 firstN = 2 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+while parentsCount = 3 firstN = 2 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+while parentsCount = 3 firstN = 1 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+while parentsCount = 3 firstN = 0 secondN = 0
+while parentsCount = 3 firstN = 2 secondN = 2
+while parentsCount = 3 firstN = 2 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+inizio LaunchTournament
+
+
+
+
+ inizio evoluzione turno 2
+start genetic algo evolve
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 140
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 140
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 140
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 140
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 140
+weightScore weights = win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894 score = 130
+weightScore weights = win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894 score = 130
+weightScore weights = win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894 score = 130
+weightScore weights = win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894 score = 130
+weightScore weights = win = 1073741823 gN= -1566 agN= 19683 fEatMov= 5279 fMov= 238 gFre= 23554 int= -15415 ext= -19894 score = 130
+population size = 10 0,3 0,1 0,01
+retain tengo 3 soggetti
+
+
+
+
+ I PADRI SONO
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 140
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 140
+weightScore weights = win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366 score = 140
+fine evolve10 3 7
+while parentsCount = 3 firstN = 1 secondN = 1
+while parentsCount = 3 firstN = 0 secondN = 0
+while parentsCount = 3 firstN = 2 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+while parentsCount = 3 firstN = 2 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+while parentsCount = 3 firstN = 2 secondN = 2
+while parentsCount = 3 firstN = 2 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+while parentsCount = 3 firstN = 2 secondN = 2
+while parentsCount = 3 firstN = 2 secondN = 2
+while parentsCount = 3 firstN = 1 secondN = 1
+while parentsCount = 3 firstN = 1 secondN = 2
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+while parentsCount = 3 firstN = 1 secondN = 2
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+while parentsCount = 3 firstN = 2 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+while parentsCount = 3 firstN = 2 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+madre= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+figlio= win = 1073741823 gN= 31010 agN= 17451 fEatMov= 5275 fMov= 234 gFre= 7374 int= 833 ext= 31366
+inizio LaunchTournament

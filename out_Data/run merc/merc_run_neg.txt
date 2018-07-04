@@ -1,0 +1,85 @@
+inizio main ore: 05:35:11
+pesInizRand = win = 1073741823 gN= -11994 agN= 22275 fEatMov= 13901 fMov= -31766 gFre= -32045 int= 13249 ext= 5406
+pesInizRand = win = 1073741823 gN= 17457 agN= -20582 fEatMov= 5481 fMov= -23582 gFre= 14584 int= -28361 ext= -24228
+pesInizRand = win = 1073741823 gN= 11842 agN= 22941 fEatMov= -17203 fMov= 26858 gFre= 17089 int= 6879 ext= -20336
+pesInizRand = win = 1073741823 gN= 32399 agN= 14791 fEatMov= -18570 fMov= 19941 gFre= 21421 int= 14231 ext= -28245
+pesInizRand = win = 1073741823 gN= 24165 agN= 31970 fEatMov= -32533 fMov= 2899 gFre= -6687 int= -7583 ext= 22161
+pesInizRand = win = 1073741823 gN= 28866 agN= -8586 fEatMov= -27561 fMov= -3364 gFre= 345 int= -28354 ext= -15454
+pesInizRand = win = 1073741823 gN= 23148 agN= 31452 fEatMov= 31716 fMov= 20556 gFre= -28322 int= -6574 ext= -27661
+pesInizRand = win = 1073741823 gN= -904 agN= 2949 fEatMov= -21670 fMov= -2395 gFre= -28972 int= 21368 ext= -11626
+pesInizRand = win = 1073741823 gN= -25284 agN= -297 fEatMov= -18941 fMov= -20700 gFre= 31784 int= 882 ext= 26058
+pesInizRand = win = 1073741823 gN= -19785 agN= 5246 fEatMov= 6285 fMov= -11498 gFre= 11989 int= -13623 ext= 15743
+aiTester finito di craere giocatori single feature
+aiTester weights size = 10
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+Qui qualcuno ha vintooooooooooooooooooo in p2Fox
+aiTester prima di evoluzione
+
+
+
+
+ inizio evoluzione turno 0
+start genetic algo evolve
+weightScore weights = win = 1073741823 gN= 24165 agN= 31970 fEatMov= -32533 fMov= 2899 gFre= -6687 int= -7583 ext= 22161 score = 65
+weightScore weights = win = 1073741823 gN= 32399 agN= 14791 fEatMov= -18570 fMov= 19941 gFre= 21421 int= 14231 ext= -28245 score = 61
+weightScore weights = win = 1073741823 gN= 23148 agN= 31452 fEatMov= 31716 fMov= 20556 gFre= -28322 int= -6574 ext= -27661 score = 48
+weightScore weights = win = 1073741823 gN= -904 agN= 2949 fEatMov= -21670 fMov= -2395 gFre= -28972 int= 21368 ext= -11626 score = 46
+weightScore weights = win = 1073741823 gN= 11842 agN= 22941 fEatMov= -17203 fMov= 26858 gFre= 17089 int= 6879 ext= -20336 score = 45
+weightScore weights = win = 1073741823 gN= -11994 agN= 22275 fEatMov= 13901 fMov= -31766 gFre= -32045 int= 13249 ext= 5406 score = 40
+weightScore weights = win = 1073741823 gN= 17457 agN= -20582 fEatMov= 5481 fMov= -23582 gFre= 14584 int= -28361 ext= -24228 score = 31
+weightScore weights = win = 1073741823 gN= 28866 agN= -8586 fEatMov= -27561 fMov= -3364 gFre= 345 int= -28354 ext= -15454 score = 30
+weightScore weights = win = 1073741823 gN= -19785 agN= 5246 fEatMov= 6285 fMov= -11498 gFre= 11989 int= -13623 ext= 15743 score = 13
+weightScore weights = win = 1073741823 gN= -25284 agN= -297 fEatMov= -18941 fMov= -20700 gFre= 31784 int= 882 ext= 26058 score = 6
+population size = 10 0,3 0,1 0,01
+retain tengo 3 soggetti
+
+
+
+
+ I PADRI SONO
+weightScore weights = win = 1073741823 gN= 24165 agN= 31970 fEatMov= -32533 fMov= 2899 gFre= -6687 int= -7583 ext= 22161 score = 65
+weightScore weights = win = 1073741823 gN= 32399 agN= 14791 fEatMov= -18570 fMov= 19941 gFre= 21421 int= 14231 ext= -28245 score = 61
+weightScore weights = win = 1073741823 gN= 23148 agN= 31452 fEatMov= 31716 fMov= 20556 gFre= -28322 int= -6574 ext= -27661 score = 48
+weightScore weights = win = 1073741823 gN= -11994 agN= 22275 fEatMov= 13901 fMov= -31766 gFre= -32045 int= 13249 ext= 5406 score = 40
+fine evolve10 4 6
+while parentsCount = 4 firstN = 0 secondN = 1
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 24165 agN= 31970 fEatMov= -32533 fMov= 2899 gFre= -6687 int= -7583 ext= 22161
+madre= win = 1073741823 gN= 32399 agN= 14791 fEatMov= -18570 fMov= 19941 gFre= 21421 int= 14231 ext= -28245
+figlio= win = 1073741823 gN= 24237 agN= 14566 fEatMov= -31641 fMov= 20439 gFre= 25005 int= 9893 ext= -28007
+while parentsCount = 4 firstN = 1 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 32399 agN= 14791 fEatMov= -18570 fMov= 19941 gFre= 21421 int= 14231 ext= -28245
+madre= win = 1073741823 gN= 24165 agN= 31970 fEatMov= -32533 fMov= 2899 gFre= -6687 int= -7583 ext= 22161
+figlio= win = 1073741823 gN= 32327 agN= 32195 fEatMov= -19462 fMov= 2401 gFre= -10271 int= -3245 ext= 21923
+while parentsCount = 4 firstN = 2 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 23148 agN= 31452 fEatMov= 31716 fMov= 20556 gFre= -28322 int= -6574 ext= -27661
+madre= win = 1073741823 gN= 24165 agN= 31970 fEatMov= -32533 fMov= 2899 gFre= -6687 int= -7583 ext= 22161
+figlio= win = 1073741823 gN= 24164 agN= 32464 fEatMov= -19480 fMov= 6208 gFre= -10798 int= -7598 ext= 22451
+while parentsCount = 4 firstN = 1 secondN = 0
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 32399 agN= 14791 fEatMov= -18570 fMov= 19941 gFre= 21421 int= 14231 ext= -28245
+madre= win = 1073741823 gN= 24165 agN= 31970 fEatMov= -32533 fMov= 2899 gFre= -6687 int= -7583 ext= 22161
+figlio= win = 1073741823 gN= 32327 agN= 32195 fEatMov= -19462 fMov= 2401 gFre= -10271 int= -3245 ext= 21923
+while parentsCount = 4 firstN = 0 secondN = 3
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 24165 agN= 31970 fEatMov= -32533 fMov= 2899 gFre= -6687 int= -7583 ext= 22161
+madre= win = 1073741823 gN= -11994 agN= 22275 fEatMov= 13901 fMov= -31766 gFre= -32045 int= 13249 ext= 5406
+figlio= win = 1073741823 gN= -11739 agN= 29730 fEatMov= 1135 fMov= -31781 gFre= -24095 int= 8929 ext= 5661
+while parentsCount = 4 firstN = 1 secondN = 2
+genetic algo crossover
+CrossOverAndMutate
+padre= win = 1073741823 gN= 32399 agN= 14791 fEatMov= -18570 fMov= 19941 gFre= 21421 int= 14231 ext= -28245
+madre= win = 1073741823 gN= 23148 agN= 31452 fEatMov= 31716 fMov= 20556 gFre= -28322 int= -6574 ext= -27661
+figlio= win = 1073741823 gN= 31311 agN= 31183 fEatMov= 31734 fMov= 16749 gFre= -27795 int= -2221 ext= -28189
+inizio LaunchTournament

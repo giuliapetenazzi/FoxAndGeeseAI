@@ -77,10 +77,12 @@ public class MatchAlgo {
 			//TODO sistemare numeri hardcoded
 			
 			if (game.winner == p1.aiPlayer) {
-				player1Score += 60;
+                Console.WriteLine("Qui qualcuno ha vintooooooooooooooooooo in p1" + p1.aiPlayer.ToString());
+				player1Score += 32000;
 			}
 			else if (game.winner == player2.aiPlayer) {
-				player2Score += 60;
+                Console.WriteLine("Qui qualcuno ha vintooooooooooooooooooo in p2" + player2.aiPlayer.ToString());
+				player2Score += 32000;
 			}
 			else {
 				if (p1.aiPlayer == PawnType.Fox) {
