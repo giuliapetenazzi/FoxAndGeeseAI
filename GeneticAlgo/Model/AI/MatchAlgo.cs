@@ -91,7 +91,7 @@ public class MatchAlgo {
 		AlphaBeta foxPlayer = goosePlayer == p1 ? player2 : p1;
 		//Console.WriteLine("inizio partite");
 		for (int i = 0; i < numberOfMatches; i++) {
-			int turnLimit = 50;
+			int turnLimit = 100;
 			int turnCounter = 0;
 			Game game = new Game(15, true);
 
@@ -114,7 +114,7 @@ public class MatchAlgo {
 				player1Score += 32000;
 			}
 			else if (game.winner == player2.aiPlayer) {
-				//Console.WriteLine("Qui qualcuno ha vinto" + player2.aiPlayer.ToString());
+				Console.WriteLine("Player2 n° " + indexOfP2 + "(uno dei 2 prefissati) ha vinto contro il giocatore generato n°" + indexOfP2);
 				player2Score += 32000;
 			}
 			else {
