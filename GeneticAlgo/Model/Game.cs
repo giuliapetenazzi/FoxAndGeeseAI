@@ -247,10 +247,10 @@ namespace FoxAndGeese {
 			int counterGoose = GetGooseNumber();
 			int counterAheadGoose = GetAheadGooseNumber();
             //return isWinner = counterGoose <= 4 ? true : false;
-            if (isWinner = counterAheadGoose <= 1) {
+            if (counterAheadGoose <= 1) {
                 //Console.WriteLine("FOX WINS WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW FOX WINS1");
                 return true;
-            } else if (isWinner = counterGoose <= 4) {
+            } else if (counterGoose <= 4) {
                 //Console.WriteLine("FOX WINS WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW FOX WINS4");
                 return true;
             } else {
