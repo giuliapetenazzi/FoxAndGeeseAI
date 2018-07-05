@@ -10,8 +10,71 @@ public class AiTester {
 	static void Main() {
 		Console.WriteLine("inizio main ore: " + DateTime.Now.ToString("hh:mm:ss tt"));
 
-		new AiTester().StartTest();
+		new AiTester().StartTestAllCombinations(-2, 2);
 	}
+
+
+	public void StartTestAllCombinations(short minW, short maxW) {
+
+		//WeightScore ws1 = new WeightScore(new WeightsForBoardEval(0, 101, 0, 0, 0, 0, 0, 0), 3);
+		//WeightScore ws2 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
+		//WeightScore ws3 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
+		//WeightScore ws4 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
+
+
+		//Console.WriteLine("equals = " + ws1.Equals(ws2));
+		//Console.WriteLine("compareTO = " + ws1.CompareTo(ws2));
+		//SortedList<WeightScore, int> test = new SortedList<WeightScore, int>();
+		//test.Add(ws1, 0);
+		//test.Add(ws2, 8);
+		//test.Add(ws3, 0);
+		//test.Add(ws4, 0);
+		//Console.WriteLine("test size = " + test.Count);
+		//Console.WriteLine("containsKey = " + test.ContainsKey(ws3));
+
+		MatchAlgo matchAlgo = new MatchAlgo();
+		GeneticAlgo geneticAlgo = new GeneticAlgo();
+		System.Random rand = new System.Random();
+		//List<WeightsForBoardEval> weights = new List<WeightsForBoardEval>();
+		SortedList<WeightScore, int> scoreMap = new SortedList<WeightScore, int>();
+		int counter = 0;
+		//creo 10 giocatori per ogni feature, ognuno con pesi casuali sulla singola feature
+		for (short i = minW; i <= maxW; i++) {
+			for (short j = minW; j <= maxW; j++) {
+				for (short k = minW; k <= maxW; k++) {
+					for (short l = minW; l <= maxW; l++) {
+						for (short m = minW; m <= maxW; m++) {
+							//for (short n = minW; n <= maxW; n++) {
+								//for (short o = minW; o <= maxW; o++) {
+									WeightsForBoardEval w = new WeightsForBoardEval(i, j, k, l, m, 0, 0);
+									scoreMap.Add(new WeightScore(w, 0), 0);
+								//}
+							//}
+						}
+					}
+				}
+			}
+
+		}
+		
+		
+		Console.WriteLine("aiTester finito di craere giocatori single feature ");
+		Console.WriteLine("aiTester weights size = " + scoreMap.Count);
+
+		List<WeightsForBoardEval> testPopulation = new List<WeightsForBoardEval>();
+		testPopulation.Add(new WeightsForBoardEval(1, 0, 0, 0, 0, 0, 0));
+		testPopulation.Add(new WeightsForBoardEval(2, 2, -2, -2, -1, -1, 0));
+
+		scoreMap = new MatchAlgo().LaunchTournament(scoreMap, testPopulation);
+
+		for (int i = 0; i < 200; i++) {
+			Console.WriteLine("miglior giocatore di indice " + i + " pesi = " + scoreMap.Keys[i]);
+		}
+
+		Console.WriteLine("finito completamente aiTester ore: " + DateTime.Now.ToString("h:mm:ss tt"));
+		Console.ReadKey();
+	}
+
 
 
 	public void StartTest() {
