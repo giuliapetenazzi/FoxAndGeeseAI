@@ -14,7 +14,7 @@ public class MatchAlgo {
 		for (int i = 0; i < population.Count; i++) {
 			WeightScore ws1 = population.Keys[i];
 			for (int j = 0; j < testPopulation.Count; j++) {
-				WeightsForBoardEval testPlayer = testPopulation[i];
+				WeightsForBoardEval testPlayer = testPopulation[j];
 				AlphaBeta ws1AsGoose = new AlphaBeta(PawnType.Goose, 3, ws1.weights, false);
 				AlphaBeta ws1AsFox = new AlphaBeta(PawnType.Fox, 3, ws1.weights, false);
 				AlphaBeta ws2AsGoose = new AlphaBeta(PawnType.Goose, 3, testPlayer, false);
