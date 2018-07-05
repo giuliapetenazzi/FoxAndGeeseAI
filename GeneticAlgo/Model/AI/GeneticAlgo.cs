@@ -66,7 +66,10 @@ public class GeneticAlgo {
 		//foreach (var key in parents.Keys) {
 		//	Console.WriteLine(key);
 		//}
-		return new MatchAlgo().LaunchTournament(parents); //lancia un torneo sulla popolazione e ritorna la popolazione con gli score aggiornati
+		List<WeightsForBoardEval> testPopulation = new List<WeightsForBoardEval>();
+		testPopulation.Add(new WeightsForBoardEval(1, 0, 0, 0, 0, 0, 0));
+		testPopulation.Add(new WeightsForBoardEval(2, 2, -2, -2, -1, -1, 0));
+		return new MatchAlgo().LaunchTournament(parents, testPopulation); //lancia un torneo sulla popolazione e ritorna la popolazione con gli score aggiornati
 		
 	}
 

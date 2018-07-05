@@ -56,8 +56,8 @@ public class AiTester {
 			WeightsForBoardEval weight = weights[i];
 			AlphaBeta playerAsFox = new AlphaBeta(PawnType.Fox, 3, weight, false);
 			AlphaBeta playerAsGoose = new AlphaBeta(PawnType.Goose, 3, weight, false);
-			score = matchAlgo.MatchTwoAi(playerAsFox, null, 3).first;
-			score += matchAlgo.MatchTwoAi(playerAsGoose, null, 3).first;
+			score = matchAlgo.MatchTwoAi(playerAsFox, null, 3, -1, -1).first;
+			score += matchAlgo.MatchTwoAi(playerAsGoose, null, 3, -1, -1).first;
 			WeightScore ws = new WeightScore(weight, score);
 			//for (int j = 0; i < scoreMap.Count; j++) {
 			//	WeightScore w = scoreMap.Keys[j];
