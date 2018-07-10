@@ -40,7 +40,6 @@ namespace FoxAndGeese {
 			winningBoards = MyUtility.CreateWinningBoards();
 			correctMoves = MyUtility.CreateCorrectMoves();
 			isSimulation = isSimulationReceived;
-			//InitializeBoard();
 			Reset();
 			if (!isSimulation) {
 				this.PostNotification(finishedPlacingPawnsNotification);
@@ -126,7 +125,6 @@ namespace FoxAndGeese {
 				int y = (int)interpolPawn.y;
 				board[x, y] = PawnType.None;
 				if (!isSimulation) {
-					Console.WriteLine("Game non è simulazione");
 					this.PostNotification(pawnEatenNotification, interpolPawn);
 				}
 			}
