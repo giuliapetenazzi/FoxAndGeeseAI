@@ -148,6 +148,7 @@ namespace FoxAndGeese {
 			if (foxWon || IsGooseWinner()) {
 				//o le oche o la volpe hanno vinto, controllo quale dei due e reimposto il gioco
 				winner = (foxWon == true) ? PawnType.Fox : PawnType.Goose;
+				Debug.LogWarning("Game ChecKForWin winner is = " + winner);
 				turn = PawnType.None;
 				if (!isSimulation) {
 					this.PostNotification(endGameNotification);
