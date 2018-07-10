@@ -51,7 +51,7 @@ public class GameController : StateMachine {
 		ClearBoard();
 		mainCamera.GetComponent<MoveCamera>().PositionCamera(humanPlayer);
 		game = new Game(15, false);
-		alphaBeta = new AlphaBeta(cpuPlayer, 5, new WeightsForBoardEval(2, 1, 0, 0, 0, 0, 0), false);
+		alphaBeta = new AlphaBeta(cpuPlayer, 5, new WeightsForBoardEval(4, 3, 0, 1, 0, 0, 0), false);
 		CheckState();
 		if (game.turn == cpuPlayer) {
 			AiMoves();
@@ -107,7 +107,6 @@ public class GameController : StateMachine {
 	private IEnumerator AiMovesCoroutine() {
 		yield return new WaitForSeconds(0.1f);
 		Move move = alphaBeta.RunAlphaBeta(game);
-		Debug.Log("GC OnChangeTurn mossa computer " + move.ToString());
 		game.MovePawn(move); // makes move in the model
 		PawnData pawn = gameBoard.GetPawnAtCoord(move.startingX, move.startingZ);
 		pawn.x = move.finalX;
@@ -125,7 +124,6 @@ public class GameController : StateMachine {
 		Draggable draggablePawn = (Draggable)sender;
 		PawnData pawn = draggablePawn.gameObject.GetComponent<PawnData>();
 		if (!IsPawnTypeValid(pawn, humanPlayer)) {
-			//StartCoroutine(WriteHint("You can only move a pawn of your type!", 3));
 			return;
 		}
 		GameObject obj = pawn.gameObject;
@@ -135,7 +133,6 @@ public class GameController : StateMachine {
 
 	/** Manages when the user releases the mouse and tries to make a move */
 	public void ConfirmMovePawn(object sender, object args) {
-		Debug.Log("GC ConfirmMovePawn ");
 		GameObject obj = ((Draggable)sender).gameObject;
 		PawnData pawn = obj.GetComponent<PawnData>();
 		Tile initialTile = pawn.GetContainingTile(); // gets the pawn previous position (Tile)
@@ -146,7 +143,6 @@ public class GameController : StateMachine {
 		if (finalTile != null) {
 			Move move = new Move(pawn.pawnType, initialTile.x, initialTile.z, finalTile.x, finalTile.z);
 			if (game.IsMoveValid(move)) {
-				Debug.Log("GC mossa valida ");
 				realFinalPos = finalTile.transform.localPosition;
 				pawn.x = finalTile.x;
 				pawn.z = finalTile.z;

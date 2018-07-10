@@ -12,171 +12,131 @@ namespace FoxAndGeese {
 		Goose, //2	
 	}
 
-    public class Game {
-        private int geeseNumber;
+	public class Game {
+		private int geeseNumber;
 
-        public const string finishedPlacingPawnsNotification = "Game.BeginGameNotification"; //iniziata partita
-        public const string movePawnNotification = "Game.MovePawnNotification"; //mossa pedina
-        public const string changeTurnNotification = "Game.ChangeTurnNotification"; //cambiato turno
-        public const string endGameNotification = "Game.EndGameNotification"; //finita partita
-                                                                              //aggiunte da me
-        public const string placePawnNotification = "Game.PlacePawnNotification";
-        public const string pawnEatenNotification = "Game.pawnEatenNotification";
+		public const string finishedPlacingPawnsNotification = "Game.BeginGameNotification"; //iniziata partita
+		public const string movePawnNotification = "Game.MovePawnNotification"; //mossa pedina
+		public const string changeTurnNotification = "Game.ChangeTurnNotification"; //cambiato turno
+		public const string endGameNotification = "Game.EndGameNotification"; //finita partita
+																			  //aggiunte da me
+		public const string placePawnNotification = "Game.PlacePawnNotification";
+		public const string pawnEatenNotification = "Game.pawnEatenNotification";
 
-        public PawnType turn { get; private set; } // inizia sempre l'oca
-        public PawnType winner { get; private set; }
-        public PawnType[,] board { get; private set; }
-        private Dictionary<string, PawnType[,]> winningBoards;
-        private Dictionary<string, List<Move>> correctMoves;
-        private bool isSimulation = false;
+		public PawnType turn { get; private set; } // inizia sempre l'oca
+		public PawnType winner { get; private set; }
+		public PawnType[,] board { get; private set; }
+		private Dictionary<string, PawnType[,]> winningBoards;
+		private Dictionary<string, List<Move>> correctMoves;
+		private bool isSimulation = false;
 
-        public Game() {
-        }
+		public Game() {
+		}
 
-        //costruttore
-        public Game(int geeseNumber, bool isSimulationReceived) {
-            this.geeseNumber = geeseNumber;
-            board = new PawnType[7, 7]; //inizializzata a 0, quindi con tutti PawnType a None
-            winningBoards = MyUtility.CreateWinningBoards();
-            correctMoves = MyUtility.CreateCorrectMoves();
-            isSimulation = isSimulationReceived;
-            //InitializeBoard();
-            Reset();
-            if (!isSimulation) {
-                this.PostNotification(finishedPlacingPawnsNotification);
-            }
-        }
-
-        // inizializza la board
-        private void InitializeBoard() {
-            PlacePawn(new Placement(PawnType.Fox, 2, 3)); //piazza la volpe
-
-            for (int i = 0; i < 7; i++) {
-                PlacePawn(new Placement(PawnType.Goose, 4, i));
-            }
-
-            for (int i = 2; i < 5; i++) {
-                PlacePawn(new Placement(PawnType.Goose, 5, i));
-            }
-
-            for (int i = 2; i < 5; i++) {
-                PlacePawn(new Placement(PawnType.Goose, 6, i));
-            }
-
-            if (geeseNumber >= 15) {
-                PlacePawn(new Placement(PawnType.Goose, 3, 0));
-                PlacePawn(new Placement(PawnType.Goose, 3, 6));
-            }
-
-            if (geeseNumber == 17) {
-                PlacePawn(new Placement(PawnType.Goose, 3, 1));
-                PlacePawn(new Placement(PawnType.Goose, 3, 5));
-            }
-        }
-
-        // setta a null il turno
-        public void SetToNullTheTurn() {
-            this.turn = PawnType.None;
-        }
-
-        // ritorna se una mossa è valida
-        public bool IsMoveValid(Move move) {
-            /*
-			Debug.Log("Game inizio IsMoveValid");
-            // questo copre sia i casi di destinazione occupata sia i casi di movimento nella stessa posizione
-			if (board[move.finalX, move.finalZ] != PawnType.None) {
-				Debug.Log("Game IsMoveValid false - casella occupata");
-				return false;
+		//costruttore
+		public Game(int geeseNumber, bool isSimulationReceived) {
+			this.geeseNumber = geeseNumber;
+			board = new PawnType[7, 7]; //inizializzata a 0, quindi con tutti PawnType a None
+			winningBoards = MyUtility.CreateWinningBoards();
+			correctMoves = MyUtility.CreateCorrectMoves();
+			isSimulation = isSimulationReceived;
+			//InitializeBoard();
+			Reset();
+			if (!isSimulation) {
+				this.PostNotification(finishedPlacingPawnsNotification);
 			}
-            // il passo è al massimo 1 per le oche e 2 per la volpe
-            int maxStep = move.pawnType == PawnType.Goose ? 1 : 2;
-            if (
-                // questa riga controlla che solo la volpe può tornare indietro
-                (PawnType.Goose == move.pawnType && move.startingZ - move.finalZ < 0) ||
-                // questa riga controlla che l'oca NON puo andare in diagonale
-                (PawnType.Goose == move.pawnType && Math.Abs(move.finalX - move.startingX) > 0 && Math.Abs(move.finalZ - move.startingZ) > 0) || 
-                Math.Abs(move.finalX - move.startingX) > maxStep ||
-                Math.Abs(move.finalZ - move.startingZ) > maxStep
-                ) {
-				Debug.Log("Game inizio IsMoveValid false - torna indietro o in diagonale" + move);
-				return false;
-            }
-            // controlli le mosse normali solo se al passo precedente non hai mangiato
-                //se è una mossa normale e la trova, torna true
-                String coordinatesString = move.startingX.ToString() + move.startingZ.ToString();
-                List<Move> correctMovesForThisPosition = correctMoves[coordinatesString];
-                bool found = false;
-                for (int i = 0; i < correctMovesForThisPosition.Count && !found; i++) {
-                    if (correctMovesForThisPosition[i] == move) {
-                        Debug.Log("Game inizio IsMoveValid true");
-                        return true;
-                }
-            }
-            // se non è una mossa normale allora guarda se è una mangiata
-            bool eatenCorrectly = false;
-            Vector2 interpolPawn = EatingPawnPosition(move);
-            eatenCorrectly = (interpolPawn.x != -1 && interpolPawn.y != -1);
-			// la mossa è corretta sse la pedina è stata mangiata correttamente
-			Debug.Log("Game inizio IsMoveValid " + eatenCorrectly + " - mangiata");
-			return eatenCorrectly;
-            */
-            List<Move> possibleMoves = GetPossibleMoves();
-            foreach (Move possibleMove in possibleMoves) {
-                if (possibleMove == move) {
-                    return true;
-                }
-            }
-            Debug.Log("Mossa non valida per la " + turn);
-            return false;
-        }
+		}
 
-        // torna le coordinate della pedina mangiata
-        // se la mossa ricevuta non è una mangiata corretta torna (-1, -1)
-        private Vector2 EatingPawnPosition(Move move) {
-            bool eatenCorrectly = false;
-            Vector2 interpolPawn = Vector2.zero;
-            if (move.pawnType == PawnType.Fox) {
-                interpolPawn = move.InterpolateEatenPawn();
-                // se è una mossa interpolabile
-                if (interpolPawn.x != -1 && interpolPawn.y != -1) {
-                    int x = (int)interpolPawn.x;
-                    int y = (int)interpolPawn.y;
-                    //se sotto l'interpolazione sta un'oca 
-                    if (board[x, y] == PawnType.Goose) {
-                        eatenCorrectly = true;
-                    }
-                }
-            }
-            return ((eatenCorrectly == true) ? interpolPawn : (new Vector2 (-1, -1)));
-        }
+		// inizializza la board
+		private void InitializeBoard() {
+			PlacePawn(new Placement(PawnType.Fox, 2, 3)); //piazza la volpe
 
-        //muove la pedina, e se la mossa è di mangiamento allora mangia
+			for (int i = 0; i < 7; i++) {
+				PlacePawn(new Placement(PawnType.Goose, 4, i));
+			}
+
+			for (int i = 2; i < 5; i++) {
+				PlacePawn(new Placement(PawnType.Goose, 5, i));
+			}
+
+			for (int i = 2; i < 5; i++) {
+				PlacePawn(new Placement(PawnType.Goose, 6, i));
+			}
+
+			if (geeseNumber >= 15) {
+				PlacePawn(new Placement(PawnType.Goose, 3, 0));
+				PlacePawn(new Placement(PawnType.Goose, 3, 6));
+			}
+
+			if (geeseNumber == 17) {
+				PlacePawn(new Placement(PawnType.Goose, 3, 1));
+				PlacePawn(new Placement(PawnType.Goose, 3, 5));
+			}
+		}
+
+		// setta a null il turno
+		public void SetToNullTheTurn() {
+			this.turn = PawnType.None;
+		}
+
+		// ritorna se una mossa è valida
+		public bool IsMoveValid(Move move) {
+			List<Move> possibleMoves = GetPossibleMoves();
+			foreach (Move possibleMove in possibleMoves) {
+				if (possibleMove == move) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		// torna le coordinate della pedina mangiata
+		// se la mossa ricevuta non è una mangiata corretta torna (-1, -1)
+		private Vector2 EatingPawnPosition(Move move) {
+			bool eatenCorrectly = false;
+			Vector2 interpolPawn = new Vector2();
+			if (move.pawnType == PawnType.Fox) {
+				interpolPawn = move.InterpolateEatenPawn();
+				// se è una mossa interpolabile
+				if (interpolPawn.x != -1 && interpolPawn.y != -1) {
+					int x = (int)interpolPawn.x;
+					int y = (int)interpolPawn.y;
+					//se sotto l'interpolazione sta un'oca 
+					if (board[x, y] == PawnType.Goose) {
+						eatenCorrectly = true;
+					}
+				}
+			}
+			return ((eatenCorrectly == true) ? interpolPawn : (new Vector2(-1, -1)));
+		}
+
+		//muove la pedina, e se la mossa è di mangiamento allora mangia
 		public void MovePawn(Move move) {
 			if (!isSimulation) {
-				Debug.Log("Game MovePawn");
+				Console.WriteLine("Game MovePawn");
 			}
 			board[move.startingX, move.startingZ] = PawnType.None;
 			board[move.finalX, move.finalZ] = move.pawnType;
-            Vector2 interpolPawn = EatingPawnPosition(move);
-            //se la mossa è di mangiamento e corretta
-            bool existsEatingMove = false;
-            if (interpolPawn.x != -1 && interpolPawn.y != -1) {
-                //mangia l'oca sotto l'interpolazione
-                int x = (int)interpolPawn.x;
-                int y = (int)interpolPawn.y;
-                board[x, y] = PawnType.None;
+			Vector2 interpolPawn = EatingPawnPosition(move);
+			//se la mossa è di mangiamento e corretta
+			bool existsEatingMove = false;
+			if (interpolPawn.x != -1 && interpolPawn.y != -1) {
+				//mangia l'oca sotto l'interpolazione
+				int x = (int)interpolPawn.x;
+				int y = (int)interpolPawn.y;
+				board[x, y] = PawnType.None;
 				if (!isSimulation) {
-					Debug.Log("Game non è simulazione");
+					Console.WriteLine("Game non è simulazione");
 					this.PostNotification(pawnEatenNotification, interpolPawn);
 				}
-            }
+			}
 			bool isWinningState = CheckForWin();
-            if (!isWinningState && turn != PawnType.None && !existsEatingMove) {
-                ChangeTurn();
-            }
+			if (!isWinningState && turn != PawnType.None && !existsEatingMove) {
+				ChangeTurn();
+			}
 		}
 
-        // cambia il turno
+		// cambia il turno
 		public void ChangeTurn() {
 			turn = (turn == PawnType.Fox) ? PawnType.Goose : PawnType.Fox;
 			if (!isSimulation) {
@@ -184,23 +144,23 @@ namespace FoxAndGeese {
 			}
 		}
 
-        // controlla se qualcuno ha vinto
+		// controlla se qualcuno ha vinto
 		private bool CheckForWin() {
-            bool foxWon = IsFoxWinner();
+			bool foxWon = IsFoxWinner();
 			if (foxWon || IsGooseWinner()) {
-                //o le oche o la volpe hanno vinto, controllo quale dei due e reimposto il gioco
-                winner = (foxWon == true) ? PawnType.Fox : PawnType.Goose;
+				//o le oche o la volpe hanno vinto, controllo quale dei due e reimposto il gioco
+				winner = (foxWon == true) ? PawnType.Fox : PawnType.Goose;
 				turn = PawnType.None;
 				if (!isSimulation) {
 					this.PostNotification(endGameNotification);
 				}
-                return true;  
+				return true;
 			}
-            //nessuno dei due ha vinto
-            return false;
+			//nessuno dei due ha vinto
+			return false;
 		}
 
-        // resetta la board e altri campi ausiliari
+		// resetta la board e altri campi ausiliari
 		public void Reset() {
 			for (int i = 0; i < board.GetLength(0); i++) {
 				for (int j = 0; j < board.GetLength(1); j++) {
@@ -210,7 +170,6 @@ namespace FoxAndGeese {
 			winner = PawnType.None;
 			turn = PawnType.Goose; //inizia sempre l'oca
 			InitializeBoard();
-			//if (!isSimulation) this.PostNotification(beginGameNotification);
 		}
 
 		public Game GetDeepCopy() {
@@ -241,34 +200,36 @@ namespace FoxAndGeese {
 			}
 		}
 
-        // dice se la volpe ha vinto
-        //la volpe vince quando ci sono 3 oche o meno in tutta la board o avanti a lei
-        private bool IsFoxWinner() {
-            bool isWinner = false;
-			//int counterGoose = GetGooseNumber();
+		// dice se la volpe ha vinto
+		//la volpe vince quando ci sono 3 oche o meno in tutta la board o avanti a lei
+		private bool IsFoxWinner() {
+			int counterGoose = GetGooseNumber();
 			int counterAheadGoose = GetAheadGooseNumber();
-            //return isWinner = counterGoose <= 4 ? true : false;
-            if (isWinner = counterAheadGoose <= 4) {
-                return true;
-            } else {
-                List<Move> possibleMovesOtherPlayer = GetPossibleMovesOtherPlayer();
-                return possibleMovesOtherPlayer.Count() == 0;
-            }
-        }
+			if (counterAheadGoose <= 1) {
+				return true;
+			}
+			else if (counterGoose <= 4) {
+				return true;
+			}
+			else {
+				List<Move> possibleMovesOtherPlayer = GetPossibleMovesOtherPlayer();
+				return possibleMovesOtherPlayer.Count() == 0;
+			}
+		}
 
-        private int GetAheadGooseNumber() {
-            int counterAheadGoose = 0;
-            Vector2 foxCoordinates = FindFoxCoordinates();
-            int rFox = (int)foxCoordinates.x;
-            for (int r = rFox; r < 7; r++) {
-                for (int c = 0; c < 7; c++) {
-                    if (board[r, c] == PawnType.Goose) {
-                        counterAheadGoose++;
-                    }
-                }
-            }
-            return counterAheadGoose;
-        }
+		private int GetAheadGooseNumber() {
+			int counterAheadGoose = 0;
+			Vector2 foxCoordinates = FindFoxCoordinates();
+			int rFoxpiuuno = (int)foxCoordinates.x + 1;
+			for (int r = rFoxpiuuno; r < 7; r++) {
+				for (int c = 0; c < 7; c++) {
+					if (board[r, c] == PawnType.Goose) {
+						counterAheadGoose++;
+					}
+				}
+			}
+			return counterAheadGoose;
+		}
 
 		// ritorna il numero di oche
 		public int GetGooseNumber() {
@@ -282,289 +243,282 @@ namespace FoxAndGeese {
 			}
 			return counterGoose;
 		}
-		      
-        // dice se le oche hanno vinto
-        // le oche hanno vinto quando hanno circondato la volpe
-        private bool IsGooseWinner () {
-            List<Move> possibleMovesOtherPlayer = GetPossibleMovesOtherPlayer();
-            return possibleMovesOtherPlayer.Count() == 0;
-            /*\
-            Vector2 foxCoordinates = FindFoxCoordinates();
-            if (foxCoordinates.x == 0 && foxCoordinates.y == 0) {
-                // caso eccezionale
-                return false;
-            }
-            int xFoxCoordinate = (int)foxCoordinates.x;
-            int yFoxCoordinate = (int)foxCoordinates.y;
-            String foxCoordinatesString = xFoxCoordinate.ToString() + yFoxCoordinate.ToString();
-            if (AreBoardsEquals (board, winningBoards[foxCoordinatesString])) {
-                return true;
-            } else {
-                return false;
-            }
-            */
-        }
 
-        //date le coordinate della fox torna quante oche ci sono a distanza euclidea >2
-        private double GetNumberOfFarGoose(int rFox, int cFox) {
-            int count = 0;
-            for (int currentR = 0; currentR < 7; currentR++) {
-                for (int currentC = 0; currentC < 7; currentC++) {
-                    if (
-                        !MyUtility.IsPositionOutOfCross(currentR, currentC) &&
-                        currentR != rFox-1 &&
-                        currentC != cFox-1 &&
-                        currentR != rFox &&
-                        currentC != cFox &&
-                        currentR != rFox+1 &&
-                        currentC != cFox+1 &&
-                        board[currentR, currentC] == PawnType.Goose
-                        ) {
-                        count++;
-                    }
-                }
-            }
-            return count;
-        }
+		// dice se le oche hanno vinto
+		// le oche hanno vinto quando hanno circondato la volpe
+		private bool IsGooseWinner() {
+			List<Move> possibleMovesOtherPlayer = GetPossibleMovesOtherPlayer();
+			if (possibleMovesOtherPlayer.Count() == 0) {
+				return true;
+			}
+			return false;
+		}
 
-        //torna il grado di compattezza della board come media delle posizioni libere in ogni oca
-        private double GetGooseFreedomness() {
-            //TODO
-            double degree = 0;
-            for (int r = 0; r < board.GetLength(0); r++) {
-                for (int c = 0; c < board.GetLength(1); c++) {
-                    if (board[r, c] == PawnType.Goose) {
-                        degree += calculateMeanOfFreePositions(r, c);
-                    }
-                }
-            }
-            return degree / GetGooseNumber();
-        }
+		//date le coordinate della fox torna quante oche ci sono a distanza euclidea >2
+		private double GetNumberOfFarGoose(int rFox, int cFox) {
+			int count = 0;
+			for (int currentR = 0; currentR < 7; currentR++) {
+				for (int currentC = 0; currentC < 7; currentC++) {
+					if (
+						!MyUtility.IsPositionOutOfCross(currentR, currentC) &&
+						currentR != rFox - 1 &&
+						currentC != cFox - 1 &&
+						currentR != rFox &&
+						currentC != cFox &&
+						currentR != rFox + 1 &&
+						currentC != cFox + 1 &&
+						board[currentR, currentC] == PawnType.Goose
+						) {
+						count++;
+					}
+				}
+			}
+			return count;
+		}
 
-        private double calculateMeanOfFreePositions(int r, int c) {
-            int counter = 0;
-            for (int roundR = r - 1; roundR <= r + 1; roundR++) {
-                for (int roundC = c - 1; roundC <= c + 1; roundC++) {
-                    if (board[r, c] == PawnType.None && r != roundR && c != roundC) {
-                        counter++;
-                    }
-                }
-            }
-            return counter / 8;
-        }
+		//torna il grado di compattezza della board come media delle posizioni libere in ogni oca
+		private double GetGooseFreedomness() {
+			double degree = 0;
+			for (int r = 0; r < board.GetLength(0); r++) {
+				for (int c = 0; c < board.GetLength(1); c++) {
+					if (board[r, c] == PawnType.Goose) {
+						degree += calculateMeanOfFreePositions(r, c);
+					}
+				}
+			}
+			return degree / GetGooseNumber();
+		}
 
-        // confronta due board parzialmente, usato per capire se si vince
-        private static bool AreBoardsEquals(PawnType[,] board, PawnType[,] winningBoard) {
-            bool areEquals = true;
-            for (int r = 0; r < board.GetLength(0) && areEquals; r++) {
-                for (int c = 0; c < board.GetLength(1) && areEquals; c++) {
-                    if (winningBoard[r, c] != PawnType.None && winningBoard[r,c] != board[r, c]) {
-                        areEquals = false;
-                    }
-                }
-            }
-            return areEquals;
-        }
+		private double calculateMeanOfFreePositions(int r, int c) {
+			int counter = 0;
+			for (int roundR = r - 1; roundR <= r + 1; roundR++) {
+				for (int roundC = c - 1; roundC <= c + 1; roundC++) {
+					if (roundR > 0 && roundR < 7 && roundC > 0 && roundC < 7 &&
+						board[roundR, roundC] != null &&
+						board[roundR, roundC] == PawnType.None
+					) {
+						counter++;
+					}
+				}
+			}
+			return counter / 8;
+		}
 
-        // trova le coordinate della volpe (se non c'è, impossibile, torna 0 0)
-        private Vector2 FindFoxCoordinates() {
-            for (int r = 0; r < board.GetLength(0); r++) {
-                for (int c = 0; c < board.GetLength(1); c++) {
-                    if (board[r, c] == PawnType.Fox) {
-                        return new Vector2(r, c);
-                    }
-                }
-            }
-            // non ho trovato la volpe, impossibile,
-            return new Vector2(0, 0);
-        }
 
-        //ritorna se esiste una eatingMove da un certo centro
-        private bool ExistsEatingMove(int r, int c) {
-            //le mosse pari hanno la diagonale
-            if ((r + c) % 2 == 0) {
-                int roundR2 = r - 2;
-                while (roundR2 <= r + 2) {
-                    int roundC = c - 2;
-                    while (roundC <= c + 2) {
-                        if (!MyUtility.IsPositionOutOfCross(roundR2, roundC)) {
-                            Move hypoteticMove = new Move(PawnType.Fox, r, c, roundR2, roundC);
-                            Vector2 interpolPawn = hypoteticMove.InterpolateEatenPawn();
-                            // se è una mossa interpolabile
-                            if (interpolPawn.x != -1 && interpolPawn.y != -1) {
-                                int x = (int)interpolPawn.x;
-                                int y = (int)interpolPawn.y;
-                                //se sotto la mossa che tento di fare c'è un'oca non posso sovrappormi
-                                if (board[hypoteticMove.finalX, hypoteticMove.finalZ] == PawnType.None) {
-                                    //se sotto l'interpolazione sta un'oca 
-                                    if (board[x, y] == PawnType.Goose) {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                        roundC = roundC + 2;
-                    }
-                    roundR2 = roundR2 + 2;
-                }
-            } else {
-                // le mosse dispari non hanno la diagonale
-                for (int roundR = r - 2; roundR <= r + 2; roundR++) {
-                    if (!MyUtility.IsPositionOutOfCross(roundR, c)) {
-                        Move hypoteticMove = new Move(PawnType.Fox, r, c, roundR, c);
-                        Vector2 interpolPawn = hypoteticMove.InterpolateEatenPawn();
-                        // se è una mossa interpolabile
-                        if (interpolPawn.x != -1 && interpolPawn.y != -1) {
-                            int x = (int)interpolPawn.x;
-                            int y = (int)interpolPawn.y;
-                            //se sotto la mossa che tento di fare c'è un'oca non posso sovrappormi
-                            if (board[hypoteticMove.finalX, hypoteticMove.finalZ] == PawnType.None) {
-                                //se sotto l'interpolazione sta un'oca 
-                                if (board[x, y] == PawnType.Goose) {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-                for (int roundC = c - 2; roundC <= c + 2; roundC++) {
-                    if (!MyUtility.IsPositionOutOfCross(r, roundC)) {
-                        Move hypoteticMove = new Move(PawnType.Fox, r, c, r, roundC);
-                        Vector2 interpolPawn = hypoteticMove.InterpolateEatenPawn();
-                        // se è una mossa interpolabile
-                        if (interpolPawn.x != -1 && interpolPawn.y != -1) {
-                            int x = (int)interpolPawn.x;
-                            int y = (int)interpolPawn.y;
-                            //se sotto la mossa che tento di fare c'è un'oca non posso sovrappormi
-                            if (board[hypoteticMove.finalX, hypoteticMove.finalZ] == PawnType.None) {
-                                //se sotto l'interpolazione sta un'oca 
-                                if (board[x, y] == PawnType.Goose) {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            // se tutte le interpolazioni falliscono non esiste una eatingMove
-            return false;
-        }
+		// confronta due board parzialmente, usato per capire se si vince
+		private static bool AreBoardsEquals(PawnType[,] board, PawnType[,] winningBoard) {
+			bool areEquals = true;
+			for (int r = 0; r < board.GetLength(0) && areEquals; r++) {
+				for (int c = 0; c < board.GetLength(1) && areEquals; c++) {
+					if (winningBoard[r, c] != PawnType.None && winningBoard[r, c] != board[r, c]) {
+						areEquals = false;
+					}
+				}
+			}
+			return areEquals;
+		}
 
-        //dato un game (board e turno) ritorna tutte le mosse possibili per quel turno
+		// trova le coordinate della volpe (se non c'è, impossibile, torna 0 0)
+		private Vector2 FindFoxCoordinates() {
+			for (int r = 0; r < board.GetLength(0); r++) {
+				for (int c = 0; c < board.GetLength(1); c++) {
+					if (board[r, c] == PawnType.Fox) {
+						return new Vector2(r, c);
+					}
+				}
+			}
+			// non ho trovato la volpe, impossibile,
+			return new Vector2(0, 0);
+		}
+
+		//ritorna se esiste una eatingMove da un certo centro
+		private bool ExistsEatingMove(int r, int c) {
+			//le mosse pari hanno la diagonale
+			if ((r + c) % 2 == 0) {
+				int roundR2 = r - 2;
+				while (roundR2 <= r + 2) {
+					int roundC = c - 2;
+					while (roundC <= c + 2) {
+						if (!MyUtility.IsPositionOutOfCross(roundR2, roundC)) {
+							Move hypoteticMove = new Move(PawnType.Fox, r, c, roundR2, roundC);
+							Vector2 interpolPawn = hypoteticMove.InterpolateEatenPawn();
+							// se è una mossa interpolabile
+							if (interpolPawn.x != -1 && interpolPawn.y != -1) {
+								int x = (int)interpolPawn.x;
+								int y = (int)interpolPawn.y;
+								//se sotto la mossa che tento di fare c'è un'oca non posso sovrappormi
+								if (board[hypoteticMove.finalX, hypoteticMove.finalZ] == PawnType.None) {
+									//se sotto l'interpolazione sta un'oca 
+									if (board[x, y] == PawnType.Goose) {
+										return true;
+									}
+								}
+							}
+						}
+						roundC = roundC + 2;
+					}
+					roundR2 = roundR2 + 2;
+				}
+			}
+			else {
+				// le mosse dispari non hanno la diagonale
+				for (int roundR = r - 2; roundR <= r + 2; roundR++) {
+					if (!MyUtility.IsPositionOutOfCross(roundR, c)) {
+						Move hypoteticMove = new Move(PawnType.Fox, r, c, roundR, c);
+						Vector2 interpolPawn = hypoteticMove.InterpolateEatenPawn();
+						// se è una mossa interpolabile
+						if (interpolPawn.x != -1 && interpolPawn.y != -1) {
+							int x = (int)interpolPawn.x;
+							int y = (int)interpolPawn.y;
+							//se sotto la mossa che tento di fare c'è un'oca non posso sovrappormi
+							if (board[hypoteticMove.finalX, hypoteticMove.finalZ] == PawnType.None) {
+								//se sotto l'interpolazione sta un'oca 
+								if (board[x, y] == PawnType.Goose) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+				for (int roundC = c - 2; roundC <= c + 2; roundC++) {
+					if (!MyUtility.IsPositionOutOfCross(r, roundC)) {
+						Move hypoteticMove = new Move(PawnType.Fox, r, c, r, roundC);
+						Vector2 interpolPawn = hypoteticMove.InterpolateEatenPawn();
+						// se è una mossa interpolabile
+						if (interpolPawn.x != -1 && interpolPawn.y != -1) {
+							int x = (int)interpolPawn.x;
+							int y = (int)interpolPawn.y;
+							//se sotto la mossa che tento di fare c'è un'oca non posso sovrappormi
+							if (board[hypoteticMove.finalX, hypoteticMove.finalZ] == PawnType.None) {
+								//se sotto l'interpolazione sta un'oca 
+								if (board[x, y] == PawnType.Goose) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+			// se tutte le interpolazioni falliscono non esiste una eatingMove
+			return false;
+		}
+
+		//dato un game (board e turno) ritorna tutte le mosse possibili per quel turno
 		public List<Move> GetPossibleMoves() {
-            List<Move> allPossibleMoves = new List<Move>();
-            if (turn == PawnType.Goose) {
-                for (int r = 0; r < 7; r++) {
-                    for (int c = 0; c < 7; c++) {
-                        if (board[r, c] == PawnType.Goose && !MyUtility.IsPositionOutOfCross(r, c)) {
-                            allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
-                        }
-                    }
-                }
-            } else if (turn == PawnType.Fox) {
-                Vector2 foxCoordinates = FindFoxCoordinates();
-                // nel vector2 la x è la rz e la y è la xc
-                int r = (int)foxCoordinates.x;
-                int c = (int)foxCoordinates.y;
-                if (!MyUtility.IsPositionOutOfCross(r, c)) {
-                    //Debug.Log("Fox posC=" + c + " posR=" + r + " simulation=" + isSimulation);
-                    allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
-                    allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
-                }
-            } else if (turn == null) { throw new Exception("Game::GetPossibileMoves::turno null"); }
-            return allPossibleMoves;
+			List<Move> allPossibleMoves = new List<Move>();
+			if (turn == PawnType.Goose) {
+				for (int r = 0; r < 7; r++) {
+					for (int c = 0; c < 7; c++) {
+						if (board[r, c] == PawnType.Goose && !MyUtility.IsPositionOutOfCross(r, c)) {
+							allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
+						}
+					}
+				}
+			}
+			else if (turn == PawnType.Fox) {
+				Vector2 foxCoordinates = FindFoxCoordinates();
+				// nel vector2 la x è la rz e la y è la xc
+				int r = (int)foxCoordinates.x;
+				int c = (int)foxCoordinates.y;
+				if (!MyUtility.IsPositionOutOfCross(r, c)) {
+					allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
+					allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
+				}
+			}
+			return allPossibleMoves;
 		}
 
 		public List<Move> GetPossibleMovesOtherPlayer() {
-            List<Move> allPossibleMoves = new List<Move>();
-            if (turn == PawnType.Fox) {
-                for (int r = 0; r < 7; r++) {
-                    for (int c = 0; c < 7; c++) {
-                        if (board[r, c] == PawnType.Goose && !MyUtility.IsPositionOutOfCross(r, c)) {
-                            allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
-                        }
-                    }
-                }
-            } else if (turn == PawnType.Goose) {
-                Vector2 foxCoordinates = FindFoxCoordinates();
-                // nel vector2 la x è la rz e la y è la xc
-                int r = (int)foxCoordinates.x;
-                int c = (int)foxCoordinates.y;
-                if (!MyUtility.IsPositionOutOfCross(r, c)) {
-                    //Debug.Log("Fox posC=" + c + " posR=" + r + " simulation=" + isSimulation);
-                    allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
-                    allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
-                }
-            } else if (turn == null) { throw new Exception("Game::GetPossibileMoves::turno null"); }
-            return allPossibleMoves;
+			List<Move> allPossibleMoves = new List<Move>();
+			if (turn == PawnType.Fox) {
+				for (int r = 0; r < 7; r++) {
+					for (int c = 0; c < 7; c++) {
+						if (board[r, c] == PawnType.Goose && !MyUtility.IsPositionOutOfCross(r, c)) {
+							allPossibleMoves.AddRange(IACalculateGooseValidMoves(r, c));
+						}
+					}
+				}
+			}
+			else if (turn == PawnType.Goose) {
+				Vector2 foxCoordinates = FindFoxCoordinates();
+				// nel vector2 la x è la rz e la y è la xc
+				int r = (int)foxCoordinates.x;
+				int c = (int)foxCoordinates.y;
+				if (!MyUtility.IsPositionOutOfCross(r, c)) {
+					//Console.WriteLine("Fox posC=" + c + " posR=" + r + " simulation=" + isSimulation);
+					allPossibleMoves.AddRange(IACalculateFoxValidMoves(r, c));
+					allPossibleMoves.AddRange(IACalculateFoxValidEatingMoves(r, c));
+				}
+			}
+			return allPossibleMoves;
 		}
 
-        //valuta la qualità della board
+		//valuta la qualità della board
 		public int EvaluateBoard(PawnType aiPlayer, WeightsForBoardEval weights) {
-            //TODO GIULIA
-            //return winner == player ? 1 : -1;
-            int score = 0;
-            //winningState
-            int signOfPlayer = aiPlayer == PawnType.Goose ? 1 : -1;
-            if (IsGooseWinner()) { return weights.wWinningState * signOfPlayer; }
-            if (IsFoxWinner()) { return weights.wWinningState * signOfPlayer * -1; }
-            //AIplayer == oca e vince oca torna +200
-            //AIplayer == oca e vince volpe torna -200
-            //AIplayer == volpe e vince volpe torna +200
-            //AIplayer == volpe e vince oca -200
-            // else non ha vinto nessuno
-            //Debug.Log("game weights = " + weights);
-            //gooseNumber
-            score += GetGooseNumber() * weights.weightDict["wGooseNumber"];
-            //aheadGooseNumber
-            score += GetAheadGooseNumber() * weights.weightDict["wAheadGooseNumber"];
-            //foxEatingMoves
-            Vector2 foxCoordinates = FindFoxCoordinates();
-            int rFox = (int)foxCoordinates.x;
-            int cFox = (int)foxCoordinates.y;
-            score -= IACalculateFoxValidEatingMoves(rFox, cFox).Count() * weights.weightDict["wFoxEatingMoves"];
-            //foxMoves
-            score -= IACalculateFoxValidMoves(rFox, cFox).Count() * weights.weightDict["wFoxMoves"];
-            //freedomness
-            score -= (int)Math.Round(GetGooseFreedomness() * weights.weightDict["wGooseFreedomness"], 0);
-            //interness
-            score -= GetInterness(rFox, cFox) * weights.weightDict["wInterness"];
-            //externess
-            score += GetExterness(rFox, cFox) * weights.weightDict["wExterness"];
-            //Debug.Log("score evaluated: " + score * signOfPlayer);
-            return score * signOfPlayer;
+
+			int score = 0;
+			//winningState
+			int signOfPlayer = aiPlayer == PawnType.Goose ? 1 : -1;
+			if (IsGooseWinner()) { return weights.wWinningState * signOfPlayer; }
+			if (IsFoxWinner()) { return weights.wWinningState * signOfPlayer * -1; }
+			//AIplayer == oca e vince oca torna +200
+			//AIplayer == oca e vince volpe torna -200
+			//AIplayer == volpe e vince volpe torna +200
+			//AIplayer == volpe e vince oca -200
+			// else non ha vinto nessuno
+			//gooseNumber
+			score += GetGooseNumber() * weights.weightDict["wGooseNumber"];
+			//aheadGooseNumber
+			score += GetAheadGooseNumber() * weights.weightDict["wAheadGooseNumber"];
+			//foxEatingMoves
+			Vector2 foxCoordinates = FindFoxCoordinates();
+			int rFox = (int)foxCoordinates.x;
+			int cFox = (int)foxCoordinates.y;
+			//cambio
+			score += IACalculateFoxValidEatingMoves(rFox, cFox).Count() * weights.weightDict["wFoxEatingMoves"];
+			//foxMoves
+			score += IACalculateFoxValidMoves(rFox, cFox).Count() * weights.weightDict["wFoxMoves"];
+			//freedomness
+			score += (int)Math.Round(GetGooseFreedomness() * weights.weightDict["wGooseFreedomness"], 0);
+			//interness
+			score += GetInterness(rFox, cFox) * weights.weightDict["wInterness"];
+			//externess
+			score += GetExterness(rFox, cFox) * weights.weightDict["wExterness"];
+			return score * signOfPlayer;
 		}
 
-        //ritorna 1 se la volpe è nel quadrante centrale else -1
-        private int GetInterness (int rFox, int cFox) {
-            if (
-                (rFox == 2 && cFox == 2) || (rFox == 2 && cFox == 3) || (rFox == 2 && cFox == 4) ||
-                (rFox == 3 && cFox == 2) || (rFox == 3 && cFox == 3) || (rFox == 3 && cFox == 4) || 
-                (rFox == 4 && cFox == 2) || (rFox == 4 && cFox == 3) || (rFox == 4 && cFox == 4)
-                ) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
+		//ritorna 1 se la volpe è nel quadrante centrale else -1
+		private int GetInterness(int rFox, int cFox) {
+			if (
+				(rFox == 2 && cFox == 2) || (rFox == 2 && cFox == 3) || (rFox == 2 && cFox == 4) ||
+				(rFox == 3 && cFox == 2) || (rFox == 3 && cFox == 3) || (rFox == 3 && cFox == 4) ||
+				(rFox == 4 && cFox == 2) || (rFox == 4 && cFox == 3) || (rFox == 4 && cFox == 4)
+				) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
 
-        //ritorna 1 se la volpe è in una delle 8 posizioni svantaggiate else -1
-        private int GetExterness (int rFox, int cFox) {
-            if (
-                (rFox == 0 && cFox == 3) || (rFox == 3 && cFox == 6) ||
-                (rFox == 6 && cFox == 3) || (rFox == 3 && cFox == 0) ||
-                (rFox == 1 && cFox == 2) || (rFox == 1 && cFox == 4) ||
-                (rFox == 2 && cFox == 5) || (rFox == 4 && cFox == 5) ||
-                (rFox == 2 && cFox == 1) || (rFox == 4 && cFox == 1) ||
-                (rFox == 5 && cFox == 2) || (rFox == 5 && cFox == 4) 
-                ) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
+		//ritorna 1 se la volpe è in una delle 8 posizioni svantaggiate else -1
+		private int GetExterness(int rFox, int cFox) {
+			if (
+				(rFox == 0 && cFox == 3) || (rFox == 3 && cFox == 6) ||
+				(rFox == 6 && cFox == 3) || (rFox == 3 && cFox == 0) ||
+				(rFox == 1 && cFox == 2) || (rFox == 1 && cFox == 4) ||
+				(rFox == 2 && cFox == 5) || (rFox == 4 && cFox == 5) ||
+				(rFox == 2 && cFox == 1) || (rFox == 4 && cFox == 1) ||
+				(rFox == 5 && cFox == 2) || (rFox == 5 && cFox == 4)
+				) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
 
-        // Sezione aggiunta per la IA=================================================
+		// Sezione aggiunta per la IA=================================================
 		//la goose non puo andare in diagonale
 		//non puo retrocedere di riga (anzi, cioò per gli indici avanzare)
 		//restano solo tre mosse: avanti, dx, sx
@@ -587,8 +541,8 @@ namespace FoxAndGeese {
 				for (int roundC = c - 1; roundC <= c + 1; roundC++) {
 					if (!MyUtility.IsPositionOutOfCross(roundR, roundC) &&
 						!(roundR == r && roundC == c) &&
-                        //le mosse dispari saltano le destinazioni dispari cioe saltano la diagonale
-                        !((r + c) % 2 != 0 && (roundR + roundC) % 2 != 0) && 
+						//le mosse dispari saltano le destinazioni dispari cioe saltano la diagonale
+						!((r + c) % 2 != 0 && (roundR + roundC) % 2 != 0) &&
 						board[roundR, roundC] == PawnType.None) {
 						foxValidMoves.Add(new Move(PawnType.Fox, r, c, roundR, roundC));
 					}
@@ -609,8 +563,8 @@ namespace FoxAndGeese {
 						!MyUtility.IsPositionOutOfCross((roundR + r) / 2, (roundC + c) / 2) &&
 						//non ci si può muovere verso la stessa casella di partenza
 						!(roundR == r && roundC == c) &&
-                        //le mosse dispari saltano le destinazioni dispari cioe saltano la diagonale
-                        !(((r + c) % 2 != 0) && ((roundR != r) && (roundC != c))) &&
+						//le mosse dispari saltano le destinazioni dispari cioe saltano la diagonale
+						!(((r + c) % 2 != 0) && ((roundR != r) && (roundC != c))) &&
 						//la casella di destinazione deve essere vuota
 						board[roundR, roundC] == PawnType.None &&
 						//la casella interpolata deve avere una goose sotto

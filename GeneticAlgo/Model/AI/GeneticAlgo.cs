@@ -31,7 +31,7 @@ public class GeneticAlgo {
 				parents[ws.Key] = ws.Value;
 			}
 		}
-		Console.WriteLine("\n \n \n \n I PADRI SONO ");
+
 		foreach (var key in parents.Keys) {
 			Console.WriteLine(key);
 		}
@@ -47,8 +47,6 @@ public class GeneticAlgo {
 			
 			int firstN = rand.Next(parentsCount);
 			int secondN = rand.Next(parentsCount);
-			Console.WriteLine("while parentsCount = " + parentsCount + " firstN = " + firstN + " secondN = " + secondN);
-			//Console.WriteLine("GeneticAlgo parentsCount = " + parents.Count + "firstN = " + firstN + " secondN " + secondN);
 			WeightsForBoardEval male = parents.Keys[firstN].weights;
 			WeightsForBoardEval female = parents.Keys[secondN].weights;
 			if (!male.Equals(female)) {
@@ -62,25 +60,15 @@ public class GeneticAlgo {
 		WeightScore ws2 = new WeightScore(new WeightsForBoardEval(rand), 0);
 		parents[ws1] = 0;
 		parents[ws2] = 0;
-		//Console.WriteLine("evolve prima di tournament parents=");
-		//foreach (var key in parents.Keys) {
-		//	Console.WriteLine(key);
-		//}
 		List<WeightsForBoardEval> testPopulation = new List<WeightsForBoardEval>();
 		testPopulation.Add(new WeightsForBoardEval(1, 0, 0, 0, 0, 0, 0));
 		testPopulation.Add(new WeightsForBoardEval(2, 2, -2, -2, -1, -1, 0));
 		return new MatchAlgo().LaunchTournament(parents, testPopulation); //lancia un torneo sulla popolazione e ritorna la popolazione con gli score aggiornati
-		
 	}
 
     // ritorna un WeightsForBoardEval nato da male e female con operazioni bitwise 
     private WeightsForBoardEval CrossoverAndMutate(WeightsForBoardEval male, WeightsForBoardEval female, double mutationProbability) {
         Console.WriteLine("genetic algo crossover");
-        /*
-        //variazione scema scema
-        WeightsForBoardEval child = new WeightsForBoardEval(male.wGooseNumber, female.wAheadGooseNumber, male.wFoxEatingMoves, female.wFoxMoves,
-            male.wGooseFreedomness, female.wInterness, male.wExterness);
-        */
         Dictionary<String, BitArray> bitFather = new Dictionary<String, BitArray>();
         Dictionary<String, BitArray> bitMother = new Dictionary<String, BitArray>();
         Dictionary<String, BitArray> bitChild = new Dictionary<String, BitArray>();
@@ -108,10 +96,6 @@ public class GeneticAlgo {
             GetIntFromBitArray(bitChild["wInterness"]),
             GetIntFromBitArray(bitChild["wExterness"])
             );
-		Console.WriteLine("CrossOverAndMutate");
-		Console.WriteLine("padre= " + male);
-		Console.WriteLine("madre= " + female);
-		Console.WriteLine("figlio= " + child);
         return child;
     }
 
@@ -127,42 +111,11 @@ public class GeneticAlgo {
     private BitArray Mix(BitArray bitFather, BitArray bitMother) {
         if (bitFather.Count != 16 || bitMother.Count != 16)
             throw new ArgumentException("Genetic Algo :: mix :: non ci sono esattamente 16 bits");
-        /*
-        //sezione vecchia: i bit non vanno da sx a dx ma da dx a sx!
-        BitArray bitChild = new BitArray(bitFather);
-        Console.WriteLine("Mix method bitChild copiato da bitFather= " + GetIntFromBitArray(bitFather));
-        BitArrayToStr(bitFather);
-        Console.WriteLine("Mix method bitMother= " + GetIntFromBitArray(bitMother));
-        BitArrayToStr(bitMother);
-        for (int i = bitChild.Count / 2; i < bitChild.Count; i++) {
-            Console.WriteLine("Mix method indice i che cambio = " + i + " bitMother[i] " + bitMother[i]);
-            bitChild[i] = bitMother[i];
-        }
-        */
-        //parte nuova
         BitArray bitChild = new BitArray(bitMother);
-        //Console.WriteLine("Mix method bitFather= " + GetIntFromBitArray(bitFather));
-        //BitArrayToStr(bitFather);
-        //Console.WriteLine("Mix method bitMother= " + GetIntFromBitArray(bitMother));
-        //BitArrayToStr(bitMother);
-        /*
-        for (int i = bitChild.Count / 2; i < bitChild.Count; i++) {
-            bitChild[i] = bitFather[i];
-        }
-        */
-        //alternativa: prendo un bit si e uno no dai genitori score 377 20 giocatori
-        /*
-        for (int i = 0; i < bitChild.Count; i+=2) {
-            bitChild[i] = bitFather[i];
-        }
-        */
-        //alternativa: prendo mod 2 e 3
         for (int i = 0; i < bitChild.Count; i++) {
             if (i % 4 != 3 && i % 4 != 2)
             bitChild[i] = bitFather[i];
         }
-		//Console.WriteLine("Mix torno il bitChild = " +GetIntFromBitArray(bitChild));
-        //BitArrayToStr(bitChild);
         return bitChild;
     }
 

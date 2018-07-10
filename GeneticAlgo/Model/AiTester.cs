@@ -9,111 +9,25 @@ public class AiTester {
 
 	static void Main() {
 		Console.WriteLine("inizio main ore: " + DateTime.Now.ToString("hh:mm:ss tt"));
-
-		new AiTester().StartTestAllCombinations(-2, 2);
+		new AiTester().StartTest();
 	}
-
-
-	public void StartTestAllCombinations(short minW, short maxW) {
-
-		//WeightScore ws1 = new WeightScore(new WeightsForBoardEval(0, 101, 0, 0, 0, 0, 0, 0), 3);
-		//WeightScore ws2 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
-		//WeightScore ws3 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
-		//WeightScore ws4 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
-
-
-		//Console.WriteLine("equals = " + ws1.Equals(ws2));
-		//Console.WriteLine("compareTO = " + ws1.CompareTo(ws2));
-		//SortedList<WeightScore, int> test = new SortedList<WeightScore, int>();
-		//test.Add(ws1, 0);
-		//test.Add(ws2, 8);
-		//test.Add(ws3, 0);
-		//test.Add(ws4, 0);
-		//Console.WriteLine("test size = " + test.Count);
-		//Console.WriteLine("containsKey = " + test.ContainsKey(ws3));
-
-		MatchAlgo matchAlgo = new MatchAlgo();
-		GeneticAlgo geneticAlgo = new GeneticAlgo();
-		System.Random rand = new System.Random();
-		//List<WeightsForBoardEval> weights = new List<WeightsForBoardEval>();
-		SortedList<WeightScore, int> scoreMap = new SortedList<WeightScore, int>();
-		int counter = 0;
-		//creo 10 giocatori per ogni feature, ognuno con pesi casuali sulla singola feature
-		for (short i = minW; i <= maxW; i++) {
-			for (short j = minW; j <= maxW; j++) {
-				for (short k = minW; k <= maxW; k++) {
-					for (short l = minW; l <= maxW; l++) {
-						for (short m = minW; m <= maxW; m++) {
-							//for (short n = minW; n <= maxW; n++) {
-								//for (short o = minW; o <= maxW; o++) {
-									WeightsForBoardEval w = new WeightsForBoardEval(i, j, k, l, m, 0, 0);
-									scoreMap.Add(new WeightScore(w, 0), 0);
-								//}
-							//}
-						}
-					}
-				}
-			}
-
-		}
-		
-		
-		Console.WriteLine("aiTester finito di craere giocatori single feature ");
-		Console.WriteLine("aiTester weights size = " + scoreMap.Count);
-
-		List<WeightsForBoardEval> testPopulation = new List<WeightsForBoardEval>();
-		testPopulation.Add(new WeightsForBoardEval(1, 0, 0, 0, 0, 0, 0));
-		testPopulation.Add(new WeightsForBoardEval(2, 2, -2, -2, -1, -1, 0));
-
-		scoreMap = new MatchAlgo().LaunchTournament(scoreMap, testPopulation);
-
-		for (int i = 0; i < 200; i++) {
-			Console.WriteLine("miglior giocatore di indice " + i + " pesi = " + scoreMap.Keys[i]);
-		}
-
-		Console.WriteLine("finito completamente aiTester ore: " + DateTime.Now.ToString("h:mm:ss tt"));
-		Console.ReadKey();
-	}
-
-
 
 	public void StartTest() {
-		
-		//WeightScore ws1 = new WeightScore(new WeightsForBoardEval(0, 101, 0, 0, 0, 0, 0, 0), 3);
-		//WeightScore ws2 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
-		//WeightScore ws3 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
-		//WeightScore ws4 = new WeightScore(new WeightsForBoardEval(0, 102, 0, 0, 0, 0, 0, 0), 3);
 
-
-		//Console.WriteLine("equals = " + ws1.Equals(ws2));
-		//Console.WriteLine("compareTO = " + ws1.CompareTo(ws2));
-		//SortedList<WeightScore, int> test = new SortedList<WeightScore, int>();
-		//test.Add(ws1, 0);
-		//test.Add(ws2, 8);
-		//test.Add(ws3, 0);
-		//test.Add(ws4, 0);
-		//Console.WriteLine("test size = " + test.Count);
-		//Console.WriteLine("containsKey = " + test.ContainsKey(ws3));
-		
 		MatchAlgo matchAlgo = new MatchAlgo();
 		GeneticAlgo geneticAlgo = new GeneticAlgo();
 		System.Random rand = new System.Random();
 		List<WeightsForBoardEval> weights = new List<WeightsForBoardEval>();
-		int counter = 0;
-		//creo 10 giocatori per ogni feature, ognuno con pesi casuali sulla singola feature
-		for (int i = 0; i < 4; i++) { //scorre le feature
-			for (int j = 0; j < 5; j++) { //indica quanti giocatori per ogni tipologia di feature singola creare
-				WeightsForBoardEval w = new WeightsForBoardEval(rand);
-				//WeightsForBoardEval w =  new WeightsForBoardEval(i, (Int16)rand.Next(Int16.MaxValue));
-				weights.Add(w);
-				Console.WriteLine("pesInizRand = " + w);
-			}
+
+		for (int i = 0; i < 50; i++) {
+			WeightsForBoardEval w = new WeightsForBoardEval(rand);
+			weights.Add(w);
+			Console.WriteLine("pesInizRand = " + w);
 		}
+
 		SortedList<WeightScore, int> scoreMap = new SortedList<WeightScore, int>();
-		Console.WriteLine("aiTester finito di craere giocatori single feature ");
-		Console.WriteLine("aiTester weights size = " + weights.Count);
-		
-		//per ogni peso = giocatore, fa giocare 25 match come oca e 25 match come volpe al giocatore contro un giocatore casuale 
+
+		//per ogni peso = giocatore, fa giocare 3 match come oca e 3 match come volpe al giocatore contro un giocatore casuale 
 		for (int i = 0; i < weights.Count; i++) {
 			int score = 0;
 			WeightsForBoardEval weight = weights[i];
@@ -122,23 +36,13 @@ public class AiTester {
 			score = matchAlgo.MatchTwoAi(playerAsFox, null, 3, -1, -1).first;
 			score += matchAlgo.MatchTwoAi(playerAsGoose, null, 3, -1, -1).first;
 			WeightScore ws = new WeightScore(weight, score);
-			//for (int j = 0; i < scoreMap.Count; j++) {
-			//	WeightScore w = scoreMap.Keys[j];
-			//	if (w.CompareTo(ws) == 0) {
-			//		Console.WriteLine("w già contenuto =  " + w);
-			//		Console.WriteLine("ws nuovo = " + ws);
-			//	}
-			//}
-			
-			//Console.WriteLine("ws = " + ws + " contains = " + scoreMap.ContainsKey(ws));
 			scoreMap.Add(ws, score);
 		}
-		
+
 		Console.WriteLine("aiTester prima di evoluzione");
-		//Console.WriteLine("aiTester scoreMap size = " + scoreMap.Count);
-		// evolve 10 volte la popolazione
-		for (int i = 0; i < 30; i++) {
-			Console.WriteLine("\n \n \n \n inizio evoluzione turno " + i);
+		// evolve 50 volte la popolazione
+		for (int i = 0; i < 50; i++) {
+			Console.WriteLine("\n \n \n \n inizio evoluzione generazione " + i);
 			scoreMap = geneticAlgo.Evolve(scoreMap, 0.3, 0.1, 0.01);
 		}
 		Console.WriteLine("best weights " + scoreMap.Keys[0]);
