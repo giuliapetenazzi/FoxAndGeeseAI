@@ -51,6 +51,7 @@ public class GameController : StateMachine {
 		ClearBoard();
 		mainCamera.GetComponent<MoveCamera>().PositionCamera(humanPlayer);
 		game = new Game(15, false);
+        //weights must be in absolute value
 		alphaBeta = new AlphaBeta(cpuPlayer, 5, new WeightsForBoardEval(4, 3, 0, 1, 0, 0, 0), false);
 		CheckState();
 		if (game.turn == cpuPlayer) {

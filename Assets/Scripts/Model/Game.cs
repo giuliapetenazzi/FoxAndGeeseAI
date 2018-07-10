@@ -473,14 +473,14 @@ namespace FoxAndGeese {
 			Vector2 foxCoordinates = FindFoxCoordinates();
 			int rFox = (int)foxCoordinates.x;
 			int cFox = (int)foxCoordinates.y;
-			//cambio
-			score += IACalculateFoxValidEatingMoves(rFox, cFox).Count() * weights.weightDict["wFoxEatingMoves"];
+			//foxEatingMoves
+			score -= IACalculateFoxValidEatingMoves(rFox, cFox).Count() * weights.weightDict["wFoxEatingMoves"];
 			//foxMoves
-			score += IACalculateFoxValidMoves(rFox, cFox).Count() * weights.weightDict["wFoxMoves"];
+			score -= IACalculateFoxValidMoves(rFox, cFox).Count() * weights.weightDict["wFoxMoves"];
 			//freedomness
-			score += (int)Math.Round(GetGooseFreedomness() * weights.weightDict["wGooseFreedomness"], 0);
+			score -= (int)Math.Round(GetGooseFreedomness() * weights.weightDict["wGooseFreedomness"], 0);
 			//interness
-			score += GetInterness(rFox, cFox) * weights.weightDict["wInterness"];
+			score -= GetInterness(rFox, cFox) * weights.weightDict["wInterness"];
 			//externess
 			score += GetExterness(rFox, cFox) * weights.weightDict["wExterness"];
 			return score * signOfPlayer;
